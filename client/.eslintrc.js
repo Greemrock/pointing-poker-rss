@@ -13,15 +13,6 @@ module.exports = {
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    // 'import/extensions': [
-    //   'error',
-    //   'ignorePackages',
-    //   {
-    //     js: 'never',
-    //     ts: 'never',
-    //     tsx: 'never',
-    //   },
-    // ],
     'react/jsx-filename-extension': [
       2,
       {
@@ -31,17 +22,6 @@ module.exports = {
     'no-use-before-define': 'off',
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
-    // 'prettier/prettier': [
-    //   'error',
-    //   {
-    //     endOfLine: 'auto',
-    //     semi: true,
-    //     trailingComma: 'all',
-    //     singleQuote: true,
-    //     printWidth: 100,
-    //     tabWidth: 2,
-    //   },
-    // ],
   },
   globals: {
     React: true,
@@ -62,8 +42,8 @@ module.exports = {
     },
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.ts', '.tsx'],
       },
     },
   },
-}
+};
