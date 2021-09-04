@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import './App.css';
+import { StartExitBtn } from './components/StartExitBtn/StartExitBtn';
 
 export const App: FC = () => {
-  return <div>1</div>;
+  return <StartExitBtn isAdmin={true} />;
 };
