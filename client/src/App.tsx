@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import './App.css';
-import { Member } from './components/Member/Member';
-import Img from './components/assets/img/blane.png';
+import { PlayerCard } from './components/PlayerCard/';
+import Avatar from './assets/img/qwe.png';
 
 export const App: FC = () => {
   return (
-    <Member
-      firstName={'David'}
-      lastName={'Blane'}
-      jobPosition={'street magic'}
-      image={Img}
-      isYou={false}
+    <PlayerCard
+      id={1}
+      name={'David'}
+      surname={'Blane Blane'}
+      position={'street magic'}
+      image={Avatar}
     />
   );
 };
