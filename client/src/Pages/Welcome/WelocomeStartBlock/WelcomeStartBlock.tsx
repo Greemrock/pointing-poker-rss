@@ -4,6 +4,7 @@ import {
   makeStyles,
   TextField,
   Typography,
+  withStyles,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import WelcomeFormDialog from '../WelcomeDialogForm/WelcomeDialogForm';
@@ -50,6 +51,16 @@ const useStyles = makeStyles((theme) => ({
 const validationSchema = yup.object({
   id: yup.string().required('Id is required'),
 });
+const CustomizedBorderTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: 'blue',
+        borderWidth: '1px',
+      },
+    },
+  },
+})(TextField);
 
 const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({ isConnect }) => {
   const [open, setOpen] = useState(false);
@@ -109,7 +120,7 @@ const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({ isConnect }) => {
               autoComplete="off"
               onSubmit={formik.handleSubmit}
             >
-              <TextField
+              <CustomizedBorderTextField
                 label="Id"
                 id="id"
                 size="small"
@@ -119,7 +130,7 @@ const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({ isConnect }) => {
                 onChange={formik.handleChange}
                 error={formik.touched.id && Boolean(formik.errors.id)}
                 helperText={formik.touched.id && formik.errors.id}
-              ></TextField>
+              ></CustomizedBorderTextField>
               <Button
                 className={welcomeStartStyles.welcomeStartButton}
                 variant="contained"
