@@ -29,21 +29,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 const WelcomeBlock: FC = () => {
-  const WelcomeBlockStyles = useStyles();
+  const welcomeBlockStyles = useStyles();
   return (
     <Container
-      className={WelcomeBlockStyles.welcomeMainContainer}
+      className={welcomeBlockStyles.welcomeMainContainer}
       maxWidth="lg"
     >
-      <Container className={WelcomeBlockStyles.welocmeHeadingWithImageBlock}>
+      <Container className={welcomeBlockStyles.welocmeHeadingWithImageBlock}>
         <img
-          className={WelcomeBlockStyles.welcomePageImage}
+          className={welcomeBlockStyles.welcomePageImage}
           src={cardsImage}
           alt="cards image"
         />
-        <Container className={WelcomeBlockStyles.welcomeHeadingBlock}>
+        <Container className={welcomeBlockStyles.welcomeHeadingBlock}>
           <Typography
-            className={WelcomeBlockStyles.welcomeHeadingText}
+            className={welcomeBlockStyles.welcomeHeadingText}
             component="h1"
             variant="h2"
             color="inherit"
@@ -52,7 +52,7 @@ const WelcomeBlock: FC = () => {
             Poker
           </Typography>
           <Typography
-            className={WelcomeBlockStyles.welcomeHeadingText}
+            className={welcomeBlockStyles.welcomeHeadingText}
             component="h2"
             variant="h2"
             color="inherit"
