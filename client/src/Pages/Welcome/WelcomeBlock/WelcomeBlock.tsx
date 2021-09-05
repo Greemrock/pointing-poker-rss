@@ -1,7 +1,7 @@
 import { Container, makeStyles, Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 import cardsImage from '../../../assets/img/CardsWelcome.png';
-import WelcomeStartBlock from '../WelocomeStartBlock/WelcomeStartBlock';
+import { WelcomeStartBlock } from '../WelocomeStartBlock/WelcomeStartBlock';
 
 const useStyles = makeStyles(() => ({
   welcomeMainContainer: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const WelcomeBlock: FC = () => {
+export const WelcomeBlock: FC = () => {
   const welcomeBlockStyles = useStyles();
   return (
     <Container
@@ -67,4 +67,3 @@ const WelcomeBlock: FC = () => {
     </Container>
   );
 };
-export default WelcomeBlock;

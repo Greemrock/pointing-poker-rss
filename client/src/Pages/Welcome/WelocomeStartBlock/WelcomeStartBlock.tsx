@@ -7,11 +7,10 @@ import {
   withStyles,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
-import WelcomeFormDialog from '../WelcomeDialogForm/WelcomeDialogForm';
+import { WelcomeFormDialog } from '../WelcomeDialogForm/';
+import { lightGreen } from '@material-ui/core/colors';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
-const startHeadingColor = '#66999b';
 
 const useStyles = makeStyles((theme) => ({
   welcomeStartBlock: {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   welcomeStartHeading: {
     fontWeight: 700,
-    color: startHeadingColor,
+    color: lightGreen[500],
   },
   welcomeStartButton: {
     padding: theme.spacing(1),
@@ -62,7 +61,9 @@ const CustomizedBorderTextField = withStyles({
   },
 })(TextField);
 
-const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({ isConnect }) => {
+export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
+  isConnect,
+}) => {
   const [open, setOpen] = useState(false);
   const welcomeStartStyles = useStyles();
 
@@ -148,4 +149,3 @@ const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({ isConnect }) => {
     </div>
   );
 };
-export default WelcomeStartBlock;

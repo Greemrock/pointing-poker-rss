@@ -44,7 +44,7 @@ const GreeenSwitch = withStyles({
   track: {},
 })(Switch);
 
-const WelcomeFormDialog: FC<{
+export const WelcomeFormDialog: FC<{
   open: boolean;
   handleClose: () => void;
 }> = ({ open, handleClose }) => {
@@ -159,4 +159,3 @@ const WelcomeFormDialog: FC<{
     </Dialog>
   );
 };
-export default WelcomeFormDialog;
