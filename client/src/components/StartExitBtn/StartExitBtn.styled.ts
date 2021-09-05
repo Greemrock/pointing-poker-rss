@@ -1,8 +1,9 @@
+import { SPACE_LG, SPACE_MD, SPACE_XS } from './../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
 
 export const useStartExitGameStyles = makeStyles({
   root: {
-    margin: '24px 0',
+    margin: `${SPACE_MD} 0`,
   },
   link: {
     display: 'flex',
@@ -10,12 +11,12 @@ export const useStartExitGameStyles = makeStyles({
     width: '300px',
   },
   btn: {
-    marginLeft: '-8px',
+    marginLeft: `-${SPACE_XS}`,
   },
   container: {
     display: 'flex',
     justifyContent: ({ admin }: { admin: boolean }) =>
       admin ? 'space-between' : 'flex-end',
-    marginTop: '32px',
+    marginTop: SPACE_LG,
   },
 });
