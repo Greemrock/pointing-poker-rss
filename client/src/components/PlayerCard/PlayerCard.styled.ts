@@ -1,25 +1,32 @@
 import { createStyles, makeStyles } from '@material-ui/core';
+import {
+  GREEN_2,
+  SIZE_XS,
+  SIZE_XXS,
+  SPACE_SM,
+  SPACE_XS,
+} from '../../Shared/cssConstants';
 
 export const usePlayerCardStyles = makeStyles(() =>
   createStyles({
     field: {
       display: 'flex',
       justifyContent: 'space-between',
+      alignItems: 'center',
       fontFamily: 'Roboto',
       width: '300px',
       height: '75px',
-      padding: '8px 8px 8px 16px',
+      padding: `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
     },
     container: {
       display: 'flex',
+      alignItems: 'center',
       overflow: 'hidden',
     },
-    userIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+    avatar: {
       width: '60px',
-      height: '100%',
+      height: '60px',
+      background: GREEN_2,
     },
     img: {
       height: '100%',
@@ -30,21 +37,22 @@ export const usePlayerCardStyles = makeStyles(() =>
       flexDirection: 'column',
       justifyContent: 'space-between',
       whiteSpace: 'nowrap',
-      marginLeft: '8px',
+      marginLeft: SPACE_XS,
     },
     userPointer: {
       height: '12px',
       fontWeight: 'bold',
-      fontSize: '8px',
+      fontSize: SIZE_XXS,
     },
     userName: {
       fontWeight: 300,
     },
     userJob: {
       fontWeight: 300,
-      fontSize: '10px',
+      fontSize: SIZE_XS,
     },
     svg: {
+      height: '40px',
       padding: '0',
       '& svg': {
         width: '40px',
