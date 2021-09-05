@@ -3,10 +3,10 @@ import { Button, Container, Paper, TextField } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 
-interface Props {
+type Props = {
   admin: boolean;
   link: string;
-}
+};
 
 export const StartExitBtn: React.FC<Props> = ({ admin, link }) => {
   const classes = useStartExitGameStyles({ admin });
