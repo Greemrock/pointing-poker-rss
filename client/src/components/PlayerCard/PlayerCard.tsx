@@ -2,9 +2,11 @@ import React from 'react';
 import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
 import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { sliceFirstWords } from '../../Service/sliceFirstWords';
 
 type Props = {
   id: number;
+  playerId: number;
   name: string;
   surname: string;
   position: string;
@@ -14,6 +16,7 @@ type Props = {
 
 export const PlayerCard: React.FC<Props> = ({
   id,
+  playerId,
   name,
   surname,
   position,
@@ -24,25 +27,32 @@ export const PlayerCard: React.FC<Props> = ({
   return (
     <Paper elevation={3} className={classes.field}>
       <div className={classes.container}>
-        <Avatar className={classes.avatar} alt="Remy Sharp" src={image}>
-          {name.slice(0, 1)}
-          {surname.slice(0, 1)}
+        <Avatar
+          className={classes.avatar}
+          alt={`${name} ${surname}`}
+          src={image}
+        >
+          {sliceFirstWords(name, surname)}
         </Avatar>
         <div className={classes.userInformation}>
-          <Typography className={classes.userPointer}>
-            {id ? "IT'S YOU" : ''}
-          </Typography>
+          {id === playerId ? (
+            <Typography className={classes.userPointer}>
+              {id === playerId ? "IT'S YOU" : ''}
+            </Typography>
+          ) : null}
           <Typography className={classes.userName} variant="h5">
             {name} {surname}
           </Typography>
-          {size === 'small' ? null : (
+          {size !== 'small' ? (
             <Typography className={classes.userJob}>{position}</Typography>
-          )}
+          ) : null}
         </div>
       </div>
-      <IconButton aria-label="kick palyer" className={classes.svg}>
-        <HighlightOffIcon />
-      </IconButton>
+      {id !== playerId ? (
+        <IconButton aria-label="kick palyer" className={classes.svg}>
+          <HighlightOffIcon />
+        </IconButton>
+      ) : null}
     </Paper>
   );
 };
