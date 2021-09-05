@@ -3,24 +3,24 @@ import { Button, Container, Paper, TextField } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 
-interface IStartExitGame {
-  isAdmin: boolean;
+interface Props {
+  admin: boolean;
+  link: string;
 }
 
-export const StartExitBtn: React.FC<IStartExitGame> = ({ isAdmin }) => {
-  const classes = useStartExitGameStyles({ isAdmin });
+export const StartExitBtn: React.FC<Props> = ({ admin, link }) => {
+  const classes = useStartExitGameStyles({ admin });
   return (
     <Container className={classes.root}>
-      {isAdmin ? (
+      {admin ? (
         <Paper className={classes.link} component="div" elevation={2}>
           <TextField
-            className={classes.input}
             label="Link to lobby"
             InputProps={{
               readOnly: true,
             }}
             variant="outlined"
-            value={'./default_link/#1'}
+            value={link}
           />
           <Button
             className={classes.btn}
@@ -28,6 +28,7 @@ export const StartExitBtn: React.FC<IStartExitGame> = ({ isAdmin }) => {
             aria-label="copy"
             variant="contained"
             color="primary"
+            onClick={() => navigator.clipboard.writeText(link)}
             startIcon={<FileCopyIcon />}
           >
             copy
@@ -35,7 +36,7 @@ export const StartExitBtn: React.FC<IStartExitGame> = ({ isAdmin }) => {
         </Paper>
       ) : null}
       <div className={classes.container}>
-        {isAdmin ? (
+        {admin ? (
           <Button variant="contained" color="primary">
             Start
           </Button>
