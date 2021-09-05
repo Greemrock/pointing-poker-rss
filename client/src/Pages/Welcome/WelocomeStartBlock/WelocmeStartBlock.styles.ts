@@ -1,6 +1,8 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { lightGreen } from '@material-ui/core/colors';
 import { SPACE_XL, SPACE_XS, SPACE_XXS } from '../../../Shared/cssConstants';
+import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from '@material-ui/core/TextField/TextField';
 
 export const useStyles = makeStyles(() => ({
   welcomeStartBlock: {
@@ -38,3 +40,14 @@ export const useStyles = makeStyles(() => ({
     borderRadius: `0 ${SPACE_XXS} ${SPACE_XXS} 0`,
   },
 }));
+
+export const CustomizedBorderTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: 'blue',
+        borderWidth: '1px',
+      },
+    },
+  },
+})(TextField);

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 
-import { useStyles, GreeenSwitch } from './WelcomeDialogFormStyles';
+import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 
 type Props = {
   open: boolean;
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
-  const welcomeDialogFormStyles = useStyles();
+  const classes = useStyles();
   const [file, setFile] = useState<File | null>();
   const [avatarSrc, setAvatarSrc] = useState<string | null>();
   const [isObserver, setIsObserver] = useState(false);
@@ -47,7 +47,7 @@ export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
       aria-labelledby="form-dialog-title"
     >
       <Typography
-        className={welcomeDialogFormStyles.welcomeDialogTitle}
+        className={classes.welcomeDialogTitle}
         component="h3"
         variant="h3"
       >
@@ -91,7 +91,7 @@ export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
         />
         <input
           accept="image/*"
-          className={welcomeDialogFormStyles.photoInput}
+          className={classes.photoInput}
           id="icon-button-file"
           type="file"
           onChange={(event) => {
@@ -112,12 +112,9 @@ export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
           </IconButton>
         </label>
         {avatarSrc ? (
-          <Avatar
-            className={welcomeDialogFormStyles.avatar}
-            src={avatarSrc}
-          ></Avatar>
+          <Avatar className={classes.avatar} src={avatarSrc}></Avatar>
         ) : (
-          <Avatar className={welcomeDialogFormStyles.avatar}>{'HH'}</Avatar>
+          <Avatar className={classes.avatar}>{'HH'}</Avatar>
         )}
       </DialogContent>
       <DialogActions>
