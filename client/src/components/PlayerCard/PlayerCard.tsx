@@ -9,6 +9,7 @@ type Props = {
   surname: string;
   position: string;
   image?: string;
+  size?: 'small' | undefined;
 };
 
 export const PlayerCard: React.FC<Props> = ({
@@ -17,30 +18,31 @@ export const PlayerCard: React.FC<Props> = ({
   surname,
   position,
   image,
+  size,
 }) => {
-  const classes = usePlayerCardStyles();
+  const classes = usePlayerCardStyles({ size });
   return (
-    <>
-      <Paper elevation={3} className={classes.field}>
-        <div className={classes.container}>
-          <Avatar className={classes.avatar} alt="Remy Sharp" src={image}>
-            {name.slice(0, 1)}
-            {surname.slice(0, 1)}
-          </Avatar>
-          <div className={classes.userInformation}>
-            <Typography className={classes.userPointer}>
-              {!id ? "IT'S YOU" : ''}
-            </Typography>
-            <Typography className={classes.userName} variant="h5">
-              {name} {surname}
-            </Typography>
+    <Paper elevation={3} className={classes.field}>
+      <div className={classes.container}>
+        <Avatar className={classes.avatar} alt="Remy Sharp" src={image}>
+          {name.slice(0, 1)}
+          {surname.slice(0, 1)}
+        </Avatar>
+        <div className={classes.userInformation}>
+          <Typography className={classes.userPointer}>
+            {id ? "IT'S YOU" : ''}
+          </Typography>
+          <Typography className={classes.userName} variant="h5">
+            {name} {surname}
+          </Typography>
+          {size === 'small' ? null : (
             <Typography className={classes.userJob}>{position}</Typography>
-          </div>
+          )}
         </div>
-        <IconButton aria-label="kick palyer" className={classes.svg}>
-          <HighlightOffIcon />
-        </IconButton>
-      </Paper>
-    </>
+      </div>
+      <IconButton aria-label="kick palyer" className={classes.svg}>
+        <HighlightOffIcon />
+      </IconButton>
+    </Paper>
   );
 };
