@@ -1,18 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import { withStyles } from '@material-ui/core/styles';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  makeStyles,
+  Typography,
+  FormControlLabel,
+  Switch,
+  withStyles,
+  IconButton,
+  Avatar,
+} from '@material-ui/core';
 import { blue, lightGreen } from '@material-ui/core/colors';
-import IconButton from '@material-ui/core/IconButton';
 import { PhotoCamera } from '@material-ui/icons';
-import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
   welcomeDialogTitle: {
@@ -44,10 +46,12 @@ const GreeenSwitch = withStyles({
   track: {},
 })(Switch);
 
-export const WelcomeFormDialog: FC<{
+type Props = {
   open: boolean;
   handleClose: () => void;
-}> = ({ open, handleClose }) => {
+};
+
+export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
   const welcomeDialogFormStyles = useStyles();
   const [file, setFile] = useState<File | null>();
   const [avatarSrc, setAvatarSrc] = useState<string | null>();
