@@ -1,52 +1,16 @@
 import {
   Button,
   Container,
-  makeStyles,
   TextField,
   Typography,
   withStyles,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { WelcomeFormDialog } from '../WelcomeDialogForm/';
-import { lightGreen } from '@material-ui/core/colors';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useStyles } from './WelocmeStartBlockStyles';
 
-const useStyles = makeStyles((theme) => ({
-  welcomeStartBlock: {
-    width: '100%',
-  },
-  welcomeStartAsDillerBlock: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '10%',
-  },
-  welcomeStartAsDillerButton: {
-    marginLeft: '2%',
-  },
-  welcomeStartAsPlayerBlock: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  welcomeStartForm: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  welcomeStartHeading: {
-    fontWeight: 700,
-    color: lightGreen[500],
-  },
-  welcomeStartButton: {
-    padding: theme.spacing(1),
-    marginLeft: '-5px',
-  },
-}));
 const validationSchema = yup.object({
   id: yup.string().required('Id is required'),
 });

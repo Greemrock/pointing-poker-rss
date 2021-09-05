@@ -5,46 +5,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  makeStyles,
   Typography,
   FormControlLabel,
-  Switch,
-  withStyles,
   IconButton,
   Avatar,
 } from '@material-ui/core';
-import { blue, lightGreen } from '@material-ui/core/colors';
 import { PhotoCamera } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
-  welcomeDialogTitle: {
-    margin: theme.spacing(1),
-    fontWeight: 700,
-  },
-  photoInput: {
-    display: 'none',
-  },
-  avatar: {
-    color: theme.palette.getContrastText(blue[500]),
-    backgroundColor: blue[500],
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-  },
-}));
-
-const GreeenSwitch = withStyles({
-  switchBase: {
-    color: lightGreen[300],
-    '&$checked': {
-      color: lightGreen[500],
-    },
-    '&$checked + $track': {
-      backgroundColor: lightGreen[500],
-    },
-  },
-  checked: {},
-  track: {},
-})(Switch);
+import { useStyles, GreeenSwitch } from './WelcomeDialogFormStyles';
 
 type Props = {
   open: boolean;
