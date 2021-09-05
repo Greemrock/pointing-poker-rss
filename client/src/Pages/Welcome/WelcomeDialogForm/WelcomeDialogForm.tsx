@@ -54,6 +54,7 @@ export const WelcomeFormDialog: FC<Props> = ({
         observer: isObserver,
         admin: isAdmin,
       };
+      console.log(payloadObject);
       addUser(payloadObject);
     },
   });
