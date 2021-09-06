@@ -1,15 +1,14 @@
 import axios from 'axios';
 
-export const getAllPlayers = async (): Promise<void> => {
-  const result = await axios.get(
-    'https://safe-lowlands-48809.herokuapp.com/users'
-  );
-  // return result.data;
+const axiosInstance = axios.create({
+  baseURL: 'https://safe-lowlands-48809.herokuapp.com/',
+});
+
+export const getAllPlayers = async (): Promise<requestPlayerType> => {
+  const result = await axiosInstance.get('users');
+  return result.data;
 };
 
 export const addPlayer = async (payload: payloadType): Promise<void> => {
-  const result = await axios.post(
-    'https://safe-lowlands-48809.herokuapp.com/users',
-    payload
-  );
+  const result = await axiosInstance.post('users', payload);
 };
