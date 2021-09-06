@@ -10,16 +10,36 @@ import {
   IconButton,
   Avatar,
 } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import PersonIcon from '@material-ui/icons/Person';
 import * as yup from 'yup';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { getInitialLetters } from '../../../Util/getInitialLetters';
 
 const validationSchema = yup.object({
-  name: yup.string().required('First name is required'),
-  surname: yup.string().required('Last name is required'),
-  position: yup.string().required('Job position is required'),
+  name: yup
+    .string()
+    .required('First name is required')
+    .test('alphabets', 'First name must only contain alphabets', (value) => {
+      return value ? /^[A-Za-z]+$/.test(value) : false;
+    }),
+  surname: yup
+    .string()
+    .required('Last name is required')
+    .test('alphabets', 'Last must only contain alphabets', (value) => {
+      return value ? /^[A-Za-z]+$/.test(value) : false;
+    }),
+  position: yup
+    .string()
+    .required('Job position is required')
+    .test(
+      'alphabets',
+      'Position must only contain alphabets and spaces',
+      (value) => {
+        return value ? /^[A-Za-z ]+$/.test(value) : false;
+      }
+    ),
 });
 
 type Props = {
@@ -42,9 +62,9 @@ export const WelcomeFormDialog: FC<Props> = ({
 
   const formik = useFormik({
     initialValues: {
-      name: 'First Name',
-      surname: 'Second Name',
-      position: 'Job position',
+      name: '',
+      surname: '',
+      position: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -164,7 +184,11 @@ export const WelcomeFormDialog: FC<Props> = ({
             ></Avatar>
           ) : (
             <Avatar className={welcomeDialogFormStyles.avatar}>
-              {getInitialLetters(formik.values.name, formik.values.surname)}
+              {formik.values.name === '' && formik.values.surname === '' ? (
+                <PersonIcon fontSize="large" />
+              ) : (
+                getInitialLetters(formik.values.name, formik.values.surname)
+              )}
             </Avatar>
           )}
         </DialogContent>
