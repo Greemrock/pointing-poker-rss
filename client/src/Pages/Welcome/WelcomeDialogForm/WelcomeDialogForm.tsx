@@ -14,7 +14,7 @@ import { PhotoCamera } from '@material-ui/icons';
 import * as yup from 'yup';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
-import { addUser } from '../../../api/usersRequests';
+import { getInitialLetters } from '../../../Util/getInitialLetters';
 
 const validationSchema = yup.object({
   name: yup.string().required('First name is required'),
@@ -54,8 +54,6 @@ export const WelcomeFormDialog: FC<Props> = ({
         observer: isObserver,
         admin: isAdmin,
       };
-      console.log(payloadObject);
-      addUser(payloadObject);
     },
   });
 
@@ -165,7 +163,9 @@ export const WelcomeFormDialog: FC<Props> = ({
               src={image}
             ></Avatar>
           ) : (
-            <Avatar className={welcomeDialogFormStyles.avatar}>{'HH'}</Avatar>
+            <Avatar className={welcomeDialogFormStyles.avatar}>
+              {getInitialLetters(formik.values.name, formik.values.surname)}
+            </Avatar>
           )}
         </DialogContent>
         <DialogActions>
