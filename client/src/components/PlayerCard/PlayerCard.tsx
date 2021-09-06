@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
 import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { getInitialLetters } from '../../Util/sliceFirstWords';
+import { getInitialLetters } from '../../Util/getInitialLetters';
 
 type Props = {
   id: number;
