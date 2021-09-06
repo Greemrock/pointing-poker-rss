@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
 import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { sliceFirstWords } from '../../Service/sliceFirstWords';
+import { getInitialLetters } from '../../Util/sliceFirstWords';
 
 type Props = {
   id: number;
@@ -32,7 +32,7 @@ export const PlayerCard: React.FC<Props> = ({
           alt={`${name} ${surname}`}
           src={image}
         >
-          {sliceFirstWords(name, surname)}
+          {getInitialLetters(name, surname)}
         </Avatar>
         <div className={classes.userInformation}>
           {id === playerId ? (
@@ -49,7 +49,7 @@ export const PlayerCard: React.FC<Props> = ({
         </div>
       </div>
       {id !== playerId ? (
-        <IconButton aria-label="kick palyer" className={classes.svg}>
+        <IconButton aria-label="kick player" className={classes.svg}>
           <HighlightOffIcon />
         </IconButton>
       ) : null}
