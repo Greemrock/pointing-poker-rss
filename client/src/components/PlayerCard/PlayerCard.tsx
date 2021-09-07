@@ -9,7 +9,7 @@ type Props = {
   playerId: number;
   name: string;
   surname: string;
-  position: string;
+  job: string;
   image?: string;
   size?: 'small' | undefined;
 };
@@ -19,7 +19,7 @@ export const PlayerCard: React.FC<Props> = ({
   playerId,
   name,
   surname,
-  position,
+  job,
   image,
   size,
 }) => {
@@ -35,16 +35,14 @@ export const PlayerCard: React.FC<Props> = ({
           {getInitialLetters(name, surname)}
         </Avatar>
         <div className={classes.userInformation}>
-          {id === playerId ? (
-            <Typography className={classes.userPointer}>
-              {id === playerId ? "IT'S YOU" : ''}
-            </Typography>
-          ) : null}
+          <Typography className={classes.userPointer}>
+            {id === playerId ? "IT'S YOU" : ''}
+          </Typography>
           <Typography className={classes.userName} variant="h5">
             {name} {surname}
           </Typography>
           {size !== 'small' ? (
-            <Typography className={classes.userJob}>{position}</Typography>
+            <Typography className={classes.userJob}>{job}</Typography>
           ) : null}
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
   SPACE_SM,
   SPACE_XS,
   SPACE_XXS,
+  SPACE_XXXS,
 } from '../../Shared/cssConstants';
 
 export const usePlayerCardStyles = makeStyles({
@@ -14,7 +15,7 @@ export const usePlayerCardStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: SPACE_XXS,
+    margin: SPACE_XXXS,
     width: ({ size }: { size: string | undefined }) =>
       size === 'small' ? '160px' : '300px',
     height: ({ size }: { size: string | undefined }) =>
