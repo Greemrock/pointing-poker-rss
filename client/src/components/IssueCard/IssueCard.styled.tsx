@@ -25,7 +25,7 @@ export const useIssueCardStyles = makeStyles({
     flexDirection: 'column',
     overflow: 'hidden',
   },
-  wrapperBtns: {
+  adminWView: {
     display: 'flex',
     flexDirection: 'row',
   },
@@ -40,6 +40,7 @@ export const useIssueCardStyles = makeStyles({
   },
   title: {
     fontSize: SIZE_MD,
+    fontWeight: 300,
     lineHeight: '32px',
   },
   delete: {
@@ -61,6 +62,19 @@ export const useIssueCardStyles = makeStyles({
     '& svg': {
       width: '32px',
       height: '32px',
+    },
+    '&:hover': {
+      '& path': {
+        fill: DARK_BLUE,
+      },
+    },
+  },
+  add: {
+    width: '46px',
+    height: '46px',
+    '& svg': {
+      width: '46px',
+      height: '46px',
     },
     '&:hover': {
       '& path': {
