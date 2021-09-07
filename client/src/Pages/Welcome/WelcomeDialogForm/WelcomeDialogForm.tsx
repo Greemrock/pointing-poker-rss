@@ -14,6 +14,8 @@ import * as yup from 'yup';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
+import { postImage } from '../../../api/imgbbRequest';
+import { addPlayer, getAllPlayers } from '../../../api/playersRequests';
 
 const validationSchema = yup.object({
   name: yup
@@ -68,10 +70,18 @@ export const WelcomeFormDialog: FC<Props> = ({
     onSubmit: (values) => {
       const payloadObject = {
         ...values,
-        image,
+        image: '',
         observer: isObserver,
         admin: isAdmin,
       };
+      postImage(image).then((response) => {
+        if (response) {
+          payloadObject.image = response;
+          addPlayer(payloadObject).then(() => {
+            handleClose();
+          });
+        }
+      });
     },
   });
 
