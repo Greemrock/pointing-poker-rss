@@ -6,6 +6,7 @@ type payloadType = {
   observer: boolean;
   admin: boolean;
 };
+
 type requestPlayerType = {
   id: number;
   name: string;
