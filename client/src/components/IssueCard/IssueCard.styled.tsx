@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import {
   DARK_BLUE,
+  GREEN_1,
   RED,
   SIZE_MD,
   SIZE_XXS,
@@ -19,6 +20,15 @@ export const useIssueCardStyles = makeStyles({
     height: '75px',
     padding: `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
     boxSizing: 'border-box',
+    background: ({
+      isDone,
+      id,
+      currentId,
+    }: {
+      isDone: boolean;
+      id: number;
+      currentId: number;
+    }) => (isDone || id === currentId ? GREEN_1 : ''),
   },
   wrapperText: {
     display: 'flex',

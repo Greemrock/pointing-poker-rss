@@ -7,13 +7,23 @@ import { getTrimString } from '../../Util/getTrimString';
 import { useIssueCardStyles } from './IssueCard.styled';
 
 type Props = {
+  id: number;
   title?: string | undefined;
   priority?: string | undefined;
   view?: 'lobby' | 'game' | undefined;
+  isDone: boolean;
+  currentId: number;
 };
 
-export const IssueCard: React.FC<Props> = ({ title, priority, view }) => {
-  const classes = useIssueCardStyles({ view });
+export const IssueCard: React.FC<Props> = ({
+  id,
+  title,
+  priority,
+  view,
+  isDone,
+  currentId,
+}) => {
+  const classes = useIssueCardStyles({ isDone, id, currentId });
   const TRIM_STRING = view === 'game' ? 13 : 11;
   return (
     <Paper elevation={3} className={classes.field}>
@@ -21,7 +31,9 @@ export const IssueCard: React.FC<Props> = ({ title, priority, view }) => {
         <Typography className={classes.title}>Create new Issue</Typography>
       ) : (
         <div className={classes.wrapperText}>
-          <Typography className={classes.current}>current</Typography>
+          <Typography className={classes.current}>
+            {id === currentId ? 'current' : ''}
+          </Typography>
           <Typography className={classes.title}>
             {getTrimString(title, TRIM_STRING)}
           </Typography>
