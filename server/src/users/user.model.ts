@@ -30,7 +30,7 @@ export class User extends Model<User, UserCreationAttributes> {
     unique: false,
     allowNull: true,
   })
-  position: string;
+  job: string;
   @Column({
     type: DataType.STRING,
     unique: false,
@@ -42,7 +42,7 @@ export class User extends Model<User, UserCreationAttributes> {
     unique: false,
     defaultValue: false,
   })
-  admin: boolean;
+  isAdmin: boolean;
   @Column({
     type: DataType.BOOLEAN,
     unique: false,
