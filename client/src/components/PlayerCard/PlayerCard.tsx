@@ -3,6 +3,7 @@ import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
 import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getInitialLetters } from '../../Util/getInitialLetters';
+import { getTrimString } from '../../Util/getTrimString';
 
 type Props = {
   id: number;
@@ -24,6 +25,7 @@ export const PlayerCard: React.FC<Props> = ({
   size,
 }) => {
   const classes = usePlayerCardStyles({ size });
+  const TRIM_STRING = size === 'small' && id === playerId ? 15 : 12;
   return (
     <Paper elevation={3} className={classes.field}>
       <div className={classes.container}>
@@ -39,10 +41,12 @@ export const PlayerCard: React.FC<Props> = ({
             {id === playerId ? "IT'S YOU" : ''}
           </Typography>
           <Typography className={classes.userName} variant="h5">
-            {name} {surname}
+            {getTrimString(`${name} ${surname}`, TRIM_STRING)}
           </Typography>
           {size !== 'small' ? (
-            <Typography className={classes.userJob}>{job}</Typography>
+            <Typography className={classes.userJob}>
+              {getTrimString(job, 25)}
+            </Typography>
           ) : null}
         </div>
       </div>

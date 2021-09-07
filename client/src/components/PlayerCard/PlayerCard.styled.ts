@@ -49,7 +49,8 @@ export const usePlayerCardStyles = makeStyles({
     marginLeft: SPACE_XS,
   },
   userPointer: {
-    height: '12px',
+    height: ({ size }: { size: string | undefined }) =>
+      size === 'small' ? '' : '12px',
     fontWeight: 'bold',
     fontSize: SIZE_XXS,
   },
