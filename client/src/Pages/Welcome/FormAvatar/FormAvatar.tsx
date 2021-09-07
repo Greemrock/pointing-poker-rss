@@ -6,15 +6,15 @@ import { getInitialLetters } from '../../../Util/getInitialLetters';
 type Props = {
   image: string | null | undefined;
   avatarCSSClass: string;
-  firstLetterName: string;
-  firstLetterSurname: string;
+  name: string;
+  surname: string;
 };
 
 export const FormAvatar: FC<Props> = ({
   image,
   avatarCSSClass,
-  firstLetterName,
-  firstLetterSurname,
+  name,
+  surname,
 }) => {
   return (
     <div>
@@ -22,10 +22,10 @@ export const FormAvatar: FC<Props> = ({
         <Avatar className={avatarCSSClass} src={image}></Avatar>
       ) : (
         <Avatar className={avatarCSSClass}>
-          {firstLetterName === '' && firstLetterSurname === '' ? (
+          {name === '' && surname === '' ? (
             <PersonIcon fontSize="large" />
           ) : (
-            getInitialLetters(firstLetterName, firstLetterSurname)
+            getInitialLetters(name, surname)
           )}
         </Avatar>
       )}

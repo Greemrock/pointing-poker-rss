@@ -178,8 +178,8 @@ export const WelcomeFormDialog: FC<Props> = ({
           <FormAvatar
             image={image}
             avatarCSSClass={welcomeDialogFormStyles.avatar}
-            firstLetterName={formik.values.name}
-            firstLetterSurname={formik.values.surname}
+            name={formik.values.name}
+            surname={formik.values.surname}
           />
         </DialogContent>
         <DialogActions>
