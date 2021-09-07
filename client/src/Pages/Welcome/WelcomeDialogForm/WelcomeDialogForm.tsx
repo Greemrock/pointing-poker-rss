@@ -8,14 +8,12 @@ import {
   Typography,
   FormControlLabel,
   IconButton,
-  Avatar,
 } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import PersonIcon from '@material-ui/icons/Person';
 import * as yup from 'yup';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
-import { getInitialLetters } from '../../../Util/getInitialLetters';
+import { FormAvatar } from '../FormAvatar/FormAvatar';
 
 const validationSchema = yup.object({
   name: yup
@@ -177,20 +175,12 @@ export const WelcomeFormDialog: FC<Props> = ({
               <PhotoCamera />
             </IconButton>
           </label>
-          {image ? (
-            <Avatar
-              className={welcomeDialogFormStyles.avatar}
-              src={image}
-            ></Avatar>
-          ) : (
-            <Avatar className={welcomeDialogFormStyles.avatar}>
-              {formik.values.name === '' && formik.values.surname === '' ? (
-                <PersonIcon fontSize="large" />
-              ) : (
-                getInitialLetters(formik.values.name, formik.values.surname)
-              )}
-            </Avatar>
-          )}
+          <FormAvatar
+            image={image}
+            avatarCSSClass={welcomeDialogFormStyles.avatar}
+            firstLetterName={formik.values.name}
+            firstLetterSurname={formik.values.surname}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary" variant="contained">
