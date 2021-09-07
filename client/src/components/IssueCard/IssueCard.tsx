@@ -3,6 +3,7 @@ import { Paper, Typography, IconButton } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
+import { getTrimString } from '../../Util/getTrimString';
 import { useIssueCardStyles } from './IssueCard.styled';
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 
 export const IssueCard: React.FC<Props> = ({ title, priority, view }) => {
   const classes = useIssueCardStyles({ view });
+  const TRIM_STRING = view === 'game' ? 13 : 11;
   return (
     <Paper elevation={3} className={classes.field}>
       {title === undefined && priority === undefined && view === undefined ? (
@@ -20,7 +22,9 @@ export const IssueCard: React.FC<Props> = ({ title, priority, view }) => {
       ) : (
         <div className={classes.wrapperText}>
           <Typography className={classes.current}>current</Typography>
-          <Typography className={classes.title}>{title}</Typography>
+          <Typography className={classes.title}>
+            {getTrimString(title, TRIM_STRING)}
+          </Typography>
           <Typography className={classes.priority}>{priority}</Typography>
         </div>
       )}
