@@ -2,7 +2,7 @@ import axios from 'axios';
 const API_KEY = '1df4cb38923edba9f813994063d84816';
 export const postImage = async (
   image: string | null | undefined
-): Promise<void> => {
+): Promise<string | void> => {
   if (image) {
     const imageContent = image.split(',')[1];
     const body = new FormData();
@@ -13,6 +13,6 @@ export const postImage = async (
       url: 'https://api.imgbb.com/1/upload',
       data: body,
     });
-    console.log(result.data);
+    return result.data.data.display_url;
   }
 };
