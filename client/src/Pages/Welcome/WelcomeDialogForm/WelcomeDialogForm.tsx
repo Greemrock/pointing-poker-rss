@@ -16,6 +16,7 @@ import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
 import { addPlayer, getAllPlayers } from '../../../api/playersRequests';
+import { PreloaderForForm } from '../../../components/Preloader/Preloader';
 
 const validationSchema = yup.object({
   name: yup
@@ -58,6 +59,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const welcomeDialogFormStyles = useStyles();
   const [file, setFile] = useState<File | null>();
   const [image, setImage] = useState<string | null>();
+  const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
 
   const formik = useFormik({
@@ -68,6 +70,7 @@ export const WelcomeFormDialog: FC<Props> = ({
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       const payloadObject = {
         ...values,
         image: '',
@@ -78,6 +81,7 @@ export const WelcomeFormDialog: FC<Props> = ({
         if (response) {
           payloadObject.image = response;
           addPlayer(payloadObject).then(() => {
+            setIsLoading(false);
             handleClose();
           });
         }
@@ -113,94 +117,98 @@ export const WelcomeFormDialog: FC<Props> = ({
       >
         Connect to lobby
       </Typography>
-      <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="First name"
-            type="text"
-            variant="outlined"
-            fullWidth
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
-          <TextField
-            margin="dense"
-            id="surname"
-            label="Last Name"
-            type="text"
-            variant="outlined"
-            fullWidth
-            value={formik.values.surname}
-            onChange={formik.handleChange}
-            error={formik.touched.surname && Boolean(formik.errors.surname)}
-            helperText={formik.touched.surname && formik.errors.surname}
-          />
-          <TextField
-            margin="dense"
-            id="position"
-            label="Job position"
-            type="text"
-            variant="outlined"
-            fullWidth
-            value={formik.values.position}
-            onChange={formik.handleChange}
-            error={formik.touched.position && Boolean(formik.errors.position)}
-            helperText={formik.touched.position && formik.errors.position}
-          />
-          <FormControlLabel
-            control={
-              <GreeenSwitch
-                checked={isObserver}
-                onChange={handleChange}
-                id="observer"
-                name="observer"
-              />
-            }
-            label="Connect as Observer"
-          />
-          <input
-            accept="image/*"
-            className={welcomeDialogFormStyles.photoInput}
-            id="icon-button-file"
-            type="file"
-            onChange={(event) => {
-              if (event.target.files) {
-                const file = event.target.files[0];
-                if (file) setFile(file);
-                else setFile(null);
+      {isLoading ? (
+        <PreloaderForForm />
+      ) : (
+        <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="First name"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+            <TextField
+              margin="dense"
+              id="surname"
+              label="Last Name"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.surname}
+              onChange={formik.handleChange}
+              error={formik.touched.surname && Boolean(formik.errors.surname)}
+              helperText={formik.touched.surname && formik.errors.surname}
+            />
+            <TextField
+              margin="dense"
+              id="position"
+              label="Job position"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.position}
+              onChange={formik.handleChange}
+              error={formik.touched.position && Boolean(formik.errors.position)}
+              helperText={formik.touched.position && formik.errors.position}
+            />
+            <FormControlLabel
+              control={
+                <GreeenSwitch
+                  checked={isObserver}
+                  onChange={handleChange}
+                  id="observer"
+                  name="observer"
+                />
               }
-            }}
-          />
-          <label htmlFor="icon-button-file">
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-          <FormAvatar
-            image={image}
-            avatarCSSClass={welcomeDialogFormStyles.avatar}
-            name={formik.values.name}
-            surname={formik.values.surname}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="contained">
-            Cancel
-          </Button>
-          <Button color="primary" variant="contained" type="submit">
-            Subscribe
-          </Button>
-        </DialogActions>
-      </form>
+              label="Connect as Observer"
+            />
+            <input
+              accept="image/*"
+              className={welcomeDialogFormStyles.photoInput}
+              id="icon-button-file"
+              type="file"
+              onChange={(event) => {
+                if (event.target.files) {
+                  const file = event.target.files[0];
+                  if (file) setFile(file);
+                  else setFile(null);
+                }
+              }}
+            />
+            <label htmlFor="icon-button-file">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+            </label>
+            <FormAvatar
+              image={image}
+              avatarCSSClass={welcomeDialogFormStyles.avatar}
+              name={formik.values.name}
+              surname={formik.values.surname}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary" variant="contained">
+              Cancel
+            </Button>
+            <Button color="primary" variant="contained" type="submit">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </form>
+      )}
     </Dialog>
   );
 };
