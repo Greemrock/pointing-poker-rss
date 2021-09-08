@@ -6,9 +6,10 @@ import {
   Tooltip,
   Typography,
 } from '@material-ui/core';
-import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getInitialLetters } from '../../Util/getInitialLetters';
+import { usePlayerCardStyles } from './PlayerCard.styled';
+import { ViewComponent } from '../../Shared/enums';
 
 type Props = {
   id: number;
@@ -17,7 +18,7 @@ type Props = {
   surname: string;
   job: string;
   image?: string;
-  size?: 'small' | undefined;
+  size: ViewComponent | '';
 };
 
 export const PlayerCard: React.FC<Props> = ({
@@ -31,7 +32,7 @@ export const PlayerCard: React.FC<Props> = ({
 }) => {
   const classes = usePlayerCardStyles({ size });
   return (
-    <Paper elevation={3} className={classes.field} style={{ margin: '100px' }}>
+    <Paper elevation={3} className={classes.field}>
       <div className={classes.container}>
         <Avatar
           className={classes.avatar}
@@ -49,7 +50,7 @@ export const PlayerCard: React.FC<Props> = ({
               {`${name} ${surname}`}
             </Typography>
           </Tooltip>
-          {size !== 'small' ? (
+          {!size ? (
             <Tooltip title={job} placement="bottom-start">
               <Typography className={classes.userJob}>{job}</Typography>
             </Tooltip>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
+import { ViewComponent } from '../../Shared/enums';
 
 type Props = {
   playersCards: {
@@ -10,7 +11,7 @@ type Props = {
     surname: string;
     job: string;
   }[];
-  view?: 'game' | undefined;
+  view: ViewComponent;
   playerId: number;
 };
 
@@ -22,12 +23,11 @@ export const PlayerContainer: React.FC<Props> = ({
   const classes = usePlayerContainerStyles();
   return (
     <>
-      {view !== 'game' ? (
+      {!view ? (
         <Typography variant="h6" align="center" className={classes.title}>
           Members:
         </Typography>
       ) : null}
-
       <Container className={classes.container} maxWidth="md">
         {playersCards.map(({ id, job, name, surname }) => {
           return (
@@ -38,7 +38,7 @@ export const PlayerContainer: React.FC<Props> = ({
               name={name}
               surname={surname}
               playerId={playerId}
-              size={view === 'game' ? 'small' : undefined}
+              size={view === ViewComponent.game ? ViewComponent.small : ''}
             />
           );
         })}
