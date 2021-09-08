@@ -15,8 +15,8 @@ import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
-import { addPlayer, getAllPlayers } from '../../../api/playersRequests';
-import { PreloaderForForm } from '../../../components/Preloader/Preloader';
+import { addPlayer } from '../../../api/playersRequests';
+import { PreloaderForForm } from '../../../components/PreloaderForForm';
 
 const validationSchema = yup.object({
   name: yup
@@ -81,8 +81,8 @@ export const WelcomeFormDialog: FC<Props> = ({
         if (response) {
           payloadObject.image = response;
           addPlayer(payloadObject).then(() => {
-            setIsLoading(false);
             handleClose();
+            setIsLoading(false);
           });
         }
       });
