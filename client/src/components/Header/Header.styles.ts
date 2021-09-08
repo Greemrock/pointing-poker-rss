@@ -19,7 +19,7 @@ export const useStyles = makeStyles({
     justifyContent: 'space-between',
     backgroundColor: DARK_BLUE,
     width: '100%',
-    height: SPACE_LG,
+    height: SPACE_L,
   },
   bottomBlock: {
     backgroundColor: GREEN_3,
@@ -46,6 +46,7 @@ export const useStyles = makeStyles({
     transform: `rotateZ(-45deg) translate(${SPACE_XL}, -${SPACE_XL})`,
   },
   chat: {
+    marginRight: SPACE_LG,
     '&:hover': {
       '& path': {
         fill: WHITE,

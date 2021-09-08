@@ -1,5 +1,11 @@
 import React from 'react';
-import { AppBar, Paper, Typography, IconButton } from '@material-ui/core';
+import {
+  AppBar,
+  Paper,
+  Typography,
+  IconButton,
+  Tooltip,
+} from '@material-ui/core';
 import ChatIcon from '@material-ui/icons/Chat';
 import { useStyles } from './Header.styles';
 
@@ -13,9 +19,11 @@ export const Header: React.FC = () => {
             <Typography className={classes.firstLetter}>p</Typography>
             <Typography className={classes.secondLetter}>p</Typography>
           </Paper>
-          <IconButton className={classes.chat}>
-            <ChatIcon />
-          </IconButton>
+          <Tooltip title="Chat" aria-label="chat">
+            <IconButton className={classes.chat}>
+              <ChatIcon />
+            </IconButton>
+          </Tooltip>
         </div>
         <div className={classes.bottomBlock}></div>
       </AppBar>
