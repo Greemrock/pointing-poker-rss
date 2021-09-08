@@ -9,7 +9,7 @@ export const PreloaderForForm: FC = () => {
   return (
     <Container className={classes.preloaderBlock}>
       <Typography className={classes.loadingText}>Please wait ...</Typography>
-      <CircularProgress size={50} thickness={4} />
+      <CircularProgress size={50} thickness={4.2} />
     </Container>
   );
 };
