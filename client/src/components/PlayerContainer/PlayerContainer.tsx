@@ -11,7 +11,7 @@ type Props = {
     surname: string;
     job: string;
   }[];
-  view: ViewComponent;
+  view?: ViewComponent;
   playerId: number;
 };
 
