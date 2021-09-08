@@ -16,4 +16,12 @@ export class UsersService {
     const users = await this.userRepository.findAll();
     return users;
   }
+
+  async removeUser(id: string) {
+    await this.userRepository.destroy({
+      where: { id: id },
+    });
+    const users = await this.userRepository.findAll();
+    return users;
+  }
 }
