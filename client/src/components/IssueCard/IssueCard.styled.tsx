@@ -47,11 +47,14 @@ export const useIssueCardStyles = makeStyles({
   },
   priority: {
     fontSize: SIZE_XXS,
+    textTransform: 'capitalize',
   },
   title: {
     fontSize: SIZE_MD,
     fontWeight: 300,
     lineHeight: '32px',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   delete: {
     width: '42px',
