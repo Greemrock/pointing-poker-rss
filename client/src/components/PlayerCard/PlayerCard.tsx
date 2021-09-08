@@ -9,7 +9,7 @@ import {
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getInitialLetters } from '../../Util/getInitialLetters';
 import { usePlayerCardStyles } from './PlayerCard.styled';
-import { ViewComponent } from '../../Shared/enums';
+import { SizeCard } from '../../Shared/enums';
 
 type Props = {
   id: number;
@@ -18,7 +18,7 @@ type Props = {
   surname: string;
   job: string;
   image?: string;
-  size: ViewComponent | '';
+  size?: SizeCard;
 };
 
 export const PlayerCard: React.FC<Props> = ({

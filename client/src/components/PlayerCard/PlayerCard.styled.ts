@@ -9,6 +9,7 @@ import {
   SPACE_XXS,
   SPACE_XXXS,
 } from '../../Shared/cssConstants';
+import { SizeCard } from '../../Shared/enums';
 
 export const usePlayerCardStyles = makeStyles({
   field: {
@@ -16,11 +17,11 @@ export const usePlayerCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    width: ({ size }: { size: string }) =>
+    width: ({ size }: { size: SizeCard | undefined }) =>
       size === 'small' ? '160px' : '300px',
-    height: ({ size }: { size: string }) =>
+    height: ({ size }: { size: SizeCard | undefined }) =>
       size === 'small' ? '40px' : '75px',
-    padding: ({ size }: { size: string }) =>
+    padding: ({ size }: { size: SizeCard | undefined }) =>
       size === 'small'
         ? `${SPACE_XXS} ${SPACE_XXS} ${SPACE_XXS} ${SPACE_XS}`
         : `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
@@ -31,8 +32,9 @@ export const usePlayerCardStyles = makeStyles({
     overflow: 'hidden',
   },
   avatar: {
-    width: ({ size }: { size: string }) => (size === 'small' ? '30px' : '60px'),
-    height: ({ size }: { size: string }) =>
+    width: ({ size }: { size: SizeCard | undefined }) =>
+      size === 'small' ? '30px' : '60px',
+    height: ({ size }: { size: SizeCard | undefined }) =>
       size === 'small' ? '30px' : '60px',
     background: GREEN_2,
   },
@@ -50,12 +52,14 @@ export const usePlayerCardStyles = makeStyles({
     marginLeft: SPACE_XS,
   },
   userPointer: {
-    height: ({ size }: { size: string }) => (size === 'small' ? '' : '12px'),
+    height: ({ size }: { size: SizeCard | undefined }) =>
+      size === 'small' ? '' : '12px',
     fontWeight: 'bold',
     fontSize: SIZE_XXS,
   },
   userName: {
-    fontSize: ({ size }: { size: string }) => (size === 'small' ? SIZE_XS : ''),
+    fontSize: ({ size }: { size: SizeCard | undefined }) =>
+      size === 'small' ? SIZE_XS : '',
     fontWeight: 300,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -67,13 +71,13 @@ export const usePlayerCardStyles = makeStyles({
     overflow: 'hidden',
   },
   svg: {
-    height: ({ size }: { size: string }) =>
+    height: ({ size }: { size: SizeCard | undefined }) =>
       size === 'small' ? '30px' : '40px',
     padding: '0',
     '& svg': {
-      width: ({ size }: { size: string }) =>
+      width: ({ size }: { size: SizeCard | undefined }) =>
         size === 'small' ? '30px' : '40px',
-      height: ({ size }: { size: string }) =>
+      height: ({ size }: { size: SizeCard | undefined }) =>
         size === 'small' ? '30px' : '40px',
     },
     '&:hover': {

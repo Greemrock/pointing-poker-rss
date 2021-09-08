@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
-import { ViewComponent } from '../../Shared/enums';
+import { Place, SizeCard } from '../../Shared/enums';
 
 type Props = {
   playersCards: {
@@ -11,7 +11,7 @@ type Props = {
     surname: string;
     job: string;
   }[];
-  view?: ViewComponent;
+  view?: Place;
   playerId: number;
 };
 
@@ -38,7 +38,7 @@ export const PlayerContainer: React.FC<Props> = ({
               name={name}
               surname={surname}
               playerId={playerId}
-              size={view === ViewComponent.game ? ViewComponent.small : ''}
+              size={view === Place.game ? SizeCard.small : undefined}
             />
           );
         })}
