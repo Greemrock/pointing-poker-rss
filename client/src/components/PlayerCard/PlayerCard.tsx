@@ -1,9 +1,14 @@
 import React from 'react';
-import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import { usePlayerCardStyles } from './PlayerCard.styled';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getInitialLetters } from '../../Util/getInitialLetters';
-import { getTrimString } from '../../Util/getTrimString';
 
 type Props = {
   id: number;
@@ -25,9 +30,8 @@ export const PlayerCard: React.FC<Props> = ({
   size,
 }) => {
   const classes = usePlayerCardStyles({ size });
-  const TRIM_STRING = size === 'small' && id === playerId ? 15 : 12;
   return (
-    <Paper elevation={3} className={classes.field}>
+    <Paper elevation={3} className={classes.field} style={{ margin: '100px' }}>
       <div className={classes.container}>
         <Avatar
           className={classes.avatar}
@@ -40,20 +44,24 @@ export const PlayerCard: React.FC<Props> = ({
           <Typography className={classes.userPointer}>
             {id === playerId ? "IT'S YOU" : ''}
           </Typography>
-          <Typography className={classes.userName} variant="h5">
-            {getTrimString(`${name} ${surname}`, TRIM_STRING)}
-          </Typography>
-          {size !== 'small' ? (
-            <Typography className={classes.userJob}>
-              {getTrimString(job, 25)}
+          <Tooltip title={`${name} ${surname}`} placement="bottom-start">
+            <Typography className={classes.userName} variant="h5">
+              {`${name} ${surname}`}
             </Typography>
+          </Tooltip>
+          {size !== 'small' ? (
+            <Tooltip title={job} placement="bottom-start">
+              <Typography className={classes.userJob}>{job}</Typography>
+            </Tooltip>
           ) : null}
         </div>
       </div>
       {id !== playerId ? (
-        <IconButton aria-label="kick player" className={classes.svg}>
-          <HighlightOffIcon />
-        </IconButton>
+        <Tooltip title="kick player" placement="bottom-start">
+          <IconButton aria-label="kick player" className={classes.svg}>
+            <HighlightOffIcon />
+          </IconButton>
+        </Tooltip>
       ) : null}
     </Paper>
   );

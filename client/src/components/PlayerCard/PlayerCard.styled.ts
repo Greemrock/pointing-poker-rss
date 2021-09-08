@@ -42,6 +42,8 @@ export const usePlayerCardStyles = makeStyles({
     width: 'auto',
   },
   userInformation: {
+    width: '100%',
+    maxWidth: '70%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -58,10 +60,14 @@ export const usePlayerCardStyles = makeStyles({
     fontSize: ({ size }: { size: string | undefined }) =>
       size === 'small' ? SIZE_XS : '',
     fontWeight: 300,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   userJob: {
     fontWeight: 300,
     fontSize: SIZE_XS,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   svg: {
     height: ({ size }: { size: string | undefined }) =>

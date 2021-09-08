@@ -30,7 +30,7 @@ export const PlayerContainer: React.FC<Props> = ({
 
       <Container className={classes.container} maxWidth="md">
         {playersCards.map(({ id, job, name, surname }) => {
-          return view === 'game' ? (
+          return (
             <PlayerCard
               key={id}
               id={id}
@@ -38,16 +38,7 @@ export const PlayerContainer: React.FC<Props> = ({
               name={name}
               surname={surname}
               playerId={playerId}
-              size="small"
-            />
-          ) : (
-            <PlayerCard
-              key={id}
-              id={id}
-              job={job}
-              name={name}
-              surname={surname}
-              playerId={playerId}
+              size={view === 'game' ? 'small' : undefined}
             />
           );
         })}
