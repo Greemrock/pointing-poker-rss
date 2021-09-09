@@ -1,14 +1,10 @@
 import {
   DARK_BLUE,
   GREEN_3,
-  SPACE_MD,
   SPACE_LG,
-  SPACE_L,
   SAND,
   WHITE,
-  SPACE_XXS,
   SIZE_MD,
-  SPACE_XL,
 } from '../../Shared/cssConstants';
 
 import { makeStyles } from '@material-ui/core';
