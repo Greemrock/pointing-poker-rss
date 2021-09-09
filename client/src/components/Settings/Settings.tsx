@@ -3,9 +3,9 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Container,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -17,6 +17,8 @@ import { useStyles, AntSwitch } from './Settings.styles';
 export const Settings: React.FC = () => {
   const [deck, setDeck] = useState<string>('fibonacci');
   const [isTimer, setIsTimer] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
   const classes = useStyles();
 
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -24,6 +26,16 @@ export const Settings: React.FC = () => {
   };
   const handleSwitcherChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTimer(event.target.checked);
+  };
+  const handleSecondsChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setSeconds(event.target.value as number);
+  };
+  const handleMinutesChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setMinutes(event.target.value as number);
   };
   return (
     <Container className={classes.mainSettingsBlock}>
@@ -68,6 +80,50 @@ export const Settings: React.FC = () => {
             />
             <Typography>Would you like a story timer?</Typography>
           </FormControl>
+          {isTimer ? (
+            <Box className={classes.boxTimer}>
+              <Typography>Timer: </Typography>
+              <FormControl variant="filled">
+                <InputLabel id="minutesInput">Min.</InputLabel>
+                <Select
+                  className={classes.minutes}
+                  labelId="minutesSelect"
+                  id="minutesSelect"
+                  value={minutes}
+                  onChange={handleMinutesChange}
+                >
+                  <MenuItem value={0}>0</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={6}>6</MenuItem>
+                  <MenuItem value={7}>7</MenuItem>
+                  <MenuItem value={8}>8</MenuItem>
+                  <MenuItem value={9}>9</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="filled">
+                <InputLabel id="secondsInput">Sec.</InputLabel>
+                <Select
+                  className={classes.seconds}
+                  labelId="secondsSelect"
+                  id="secondsSelect"
+                  value={seconds}
+                  onChange={handleSecondsChange}
+                >
+                  <MenuItem value={0}>0</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={30}>30</MenuItem>
+                  <MenuItem value={40}>40</MenuItem>
+                  <MenuItem value={50}>50</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          ) : null}
         </AccordionDetails>
       </Accordion>
     </Container>

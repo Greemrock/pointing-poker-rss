@@ -9,7 +9,6 @@ import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Switch from '@material-ui/core/Switch/Switch';
-import { findByLabelText } from '@testing-library/dom';
 
 export const AntSwitch = withStyles((theme: Theme) =>
   createStyles({
@@ -65,5 +64,18 @@ export const useStyles = makeStyles(() => ({
     '& .MuiTypography-root': {
       margin: `0 ${SPACE_XS}`,
     },
+  },
+  boxTimer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '70%',
+  },
+  minutes: {
+    marginLeft: SPACE_XS,
+    borderRadius: '5px 0 0 0',
+  },
+  seconds: {
+    borderRadius: '0 5px 0 0',
   },
 }));
