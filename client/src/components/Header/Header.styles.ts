@@ -47,9 +47,14 @@ export const useStyles = makeStyles({
   },
   chat: {
     marginRight: SPACE_LG,
-    '&:hover': {
+    '&': {
       '& path': {
         fill: WHITE,
+      },
+    },
+    '&:hover': {
+      '& path': {
+        fill: SAND,
       },
     },
   },
