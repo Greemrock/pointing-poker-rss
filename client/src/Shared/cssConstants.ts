@@ -1,4 +1,5 @@
 const SPACE_UNIT = 16;
+export const SPACE_XXXS = `${0.125 * SPACE_UNIT}px`; // 2px
 export const SPACE_XXS = `${0.25 * SPACE_UNIT}px`; // 4px
 export const SPACE_XS = `${0.5 * SPACE_UNIT}px`; // 8px
 export const SPACE_SM = `${0.75 * SPACE_UNIT}px`; // 12px
