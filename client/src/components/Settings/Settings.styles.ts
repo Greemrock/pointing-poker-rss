@@ -71,11 +71,7 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center',
     width: '70%',
   },
-  minutes: {
-    marginLeft: SPACE_XS,
-    borderRadius: '5px 0 0 0',
-  },
-  seconds: {
-    borderRadius: '0 5px 0 0',
+  timerText: {
+    marginRight: SPACE_XS,
   },
 }));

@@ -82,15 +82,15 @@ export const Settings: React.FC = () => {
           </FormControl>
           {isTimer ? (
             <Box className={classes.boxTimer}>
-              <Typography>Timer: </Typography>
-              <FormControl variant="filled">
+              <Typography className={classes.timerText}>Timer: </Typography>
+              <FormControl variant="outlined">
                 <InputLabel id="minutesInput">Min.</InputLabel>
                 <Select
-                  className={classes.minutes}
                   labelId="minutesSelect"
                   id="minutesSelect"
                   value={minutes}
                   onChange={handleMinutesChange}
+                  label="Min."
                 >
                   <MenuItem value={0}>0</MenuItem>
                   <MenuItem value={1}>1</MenuItem>
@@ -105,14 +105,14 @@ export const Settings: React.FC = () => {
                   <MenuItem value={10}>10</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="filled">
+              <FormControl variant="outlined">
                 <InputLabel id="secondsInput">Sec.</InputLabel>
                 <Select
-                  className={classes.seconds}
                   labelId="secondsSelect"
                   id="secondsSelect"
                   value={seconds}
                   onChange={handleSecondsChange}
+                  label="Sec."
                 >
                   <MenuItem value={0}>0</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
