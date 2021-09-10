@@ -4,12 +4,12 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import { useIssueCardStyles } from './IssueCard.styled';
-import { Issue, Priority } from '../../Shared/enums';
+import { Issue } from '../../Shared/enums';
 
 type Props = {
   id: number;
   title?: string | undefined;
-  priority?: Priority;
+  priority?: 'low' | 'middle' | 'hight';
   view?: Issue;
   isDone: boolean;
   currentId: number;
@@ -23,7 +23,7 @@ export const IssueCard: React.FC<Props> = ({
   isDone,
   currentId,
 }) => {
-  const classes = useIssueCardStyles({ isDone, id, currentId });
+  const classes = useIssueCardStyles({ isDone, id, currentId, view });
   return (
     <Paper elevation={3} className={classes.field}>
       {view === Issue.create ? (

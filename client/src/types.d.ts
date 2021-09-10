@@ -16,6 +16,15 @@ type requestPlayerType = {
   admin: boolean;
   obserever: boolean;
 };
+
 type payloadImage = {
   image: string | null | undefined;
+};
+
+type IssueType = {
+  id: number;
+  currentId: number;
+  isDone: boolean;
+  priority: 'low' | 'middle' | 'hight';
+  title: string;
 };
