@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  IconButton,
-  Paper,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { Container, Paper, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
@@ -39,7 +31,7 @@ export const LobbyPage: React.FC<Props> = ({
     >
       <div className={classes.nameGame}>
         <Typography variant="h6" align="center">
-          Name game
+          Meeting room
         </Typography>
       </div>
       <StartExitBtn link={link} isAdmin={isAdmin} />
