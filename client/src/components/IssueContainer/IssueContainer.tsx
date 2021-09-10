@@ -17,10 +17,11 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
         Issue:
       </Typography>
       <Container className={classes.container} maxWidth="md">
-        {issues.map(({ id, currentId, isDone, priority, title }) => (
+        {issues.map(({ id, currentId, linkCard, isDone, priority, title }) => (
           <IssueCard
             key={id}
             id={id}
+            linkCard={linkCard}
             currentId={currentId}
             isDone={isDone}
             priority={priority}

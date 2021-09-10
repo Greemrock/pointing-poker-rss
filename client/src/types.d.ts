@@ -27,4 +27,5 @@ type IssueType = {
   isDone: boolean;
   priority: 'low' | 'middle' | 'hight';
   title: string;
+  linkCard: string;
 };
