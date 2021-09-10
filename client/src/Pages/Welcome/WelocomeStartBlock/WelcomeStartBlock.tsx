@@ -16,6 +16,8 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
   isConnect,
 }) => {
   const [open, setOpen] = useState(false);
+  const [gameId, setGameId] = useState<string>('test');
+  const [isAdmin, setISAdmin] = useState<boolean>(false);
   const classes = useStyles();
 
   const formik = useFormik({
@@ -24,12 +26,13 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
-      handleClickOpen();
+      handleClickOpen(false, values.id);
     },
   });
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (admin: boolean, id?: string): void => {
+    if (id) setGameId(id);
+    setISAdmin(admin);
     setOpen(true);
   };
 
@@ -58,7 +61,9 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
               className={classes.welcomeStartAsDillerButton}
               variant="contained"
               color="primary"
-              onClick={handleClickOpen}
+              onClick={() => {
+                handleClickOpen(true);
+              }}
             >
               Start new game
             </Button>
@@ -96,7 +101,12 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
           </Container>
         )}
       </Container>
-      <WelcomeFormDialog open={open} handleClose={handleClose} />
+      <WelcomeFormDialog
+        open={open}
+        handleClose={handleClose}
+        isAdmin={isAdmin}
+        gameId={!isAdmin ? gameId : null}
+      />
     </div>
   );
 };

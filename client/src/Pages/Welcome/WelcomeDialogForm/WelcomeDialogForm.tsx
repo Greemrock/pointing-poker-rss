@@ -8,32 +8,96 @@ import {
   Typography,
   FormControlLabel,
   IconButton,
-  Avatar,
 } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
-
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import * as yup from 'yup';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
+import { useFormik } from 'formik';
+import { FormAvatar } from '../FormAvatar/FormAvatar';
+import { postImage } from '../../../api/imgbbRequest';
+import { addPlayer } from '../../../api/playersRequests';
+import { PreloaderForForm } from '../../../components/PreloaderForForm';
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required('First name is required')
+    .test('alphabets', 'First name must only contain alphabets', (value) => {
+      return value ? /^[A-Za-z]+$/.test(value) : false;
+    }),
+  surname: yup
+    .string()
+    .required('Last name is required')
+    .test('alphabets', 'Last must only contain alphabets', (value) => {
+      return value ? /^[A-Za-z]+$/.test(value) : false;
+    }),
+  position: yup
+    .string()
+    .required('Job position is required')
+    .test(
+      'alphabets',
+      'Position must only contain alphabets and spaces',
+      (value) => {
+        return value ? /^[A-Za-z ]+$/.test(value) : false;
+      }
+    ),
+});
 
 type Props = {
   open: boolean;
   handleClose: () => void;
+  isAdmin: boolean;
+  gameId: string | null;
 };
 
-export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
-  const classes = useStyles();
+export const WelcomeFormDialog: FC<Props> = ({
+  open,
+  handleClose,
+  isAdmin,
+  gameId,
+}) => {
+  const welcomeDialogFormStyles = useStyles();
   const [file, setFile] = useState<File | null>();
-  const [avatarSrc, setAvatarSrc] = useState<string | null>();
+  const [image, setImage] = useState<string | null>();
+  const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      surname: '',
+      position: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      setIsLoading(true);
+      const payloadObject = {
+        ...values,
+        image: '',
+        observer: isObserver,
+        admin: isAdmin,
+      };
+      postImage(image).then((response) => {
+        if (response) {
+          payloadObject.image = response;
+          addPlayer(payloadObject).then(() => {
+            handleClose();
+            setIsLoading(false);
+          });
+        }
+      });
+    },
+  });
 
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarSrc(reader.result as string);
+        setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     } else {
-      setAvatarSrc(null);
+      setImage(null);
     }
   }, [file]);
 
@@ -47,84 +111,104 @@ export const WelcomeFormDialog: FC<Props> = ({ open, handleClose }) => {
       aria-labelledby="form-dialog-title"
     >
       <Typography
-        className={classes.welcomeDialogTitle}
+        className={welcomeDialogFormStyles.welcomeDialogTitle}
         component="h3"
         variant="h3"
       >
         Connect to lobby
       </Typography>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="fname"
-          label="First Name"
-          type="text"
-          variant="outlined"
-          fullWidth
-        />
-        <TextField
-          margin="dense"
-          id="lname"
-          label="Last Name"
-          type="text"
-          variant="outlined"
-          fullWidth
-        />
-        <TextField
-          margin="dense"
-          id="position"
-          label="Job position"
-          type="text"
-          variant="outlined"
-          fullWidth
-        />
-        <FormControlLabel
-          control={
-            <GreeenSwitch
-              checked={isObserver}
-              onChange={handleChange}
-              name="isObserver"
+      {isLoading ? (
+        <PreloaderForForm />
+      ) : (
+        <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="First name"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
-          }
-          label="Connect as Observer"
-        />
-        <input
-          accept="image/*"
-          className={classes.photoInput}
-          id="icon-button-file"
-          type="file"
-          onChange={(event) => {
-            if (event.target.files) {
-              const file = event.target.files[0];
-              if (file) setFile(file);
-              else setFile(null);
-            }
-          }}
-        />
-        <label htmlFor="icon-button-file">
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-          >
-            <PhotoCamera />
-          </IconButton>
-        </label>
-        {avatarSrc ? (
-          <Avatar className={classes.avatar} src={avatarSrc}></Avatar>
-        ) : (
-          <Avatar className={classes.avatar}>{'HH'}</Avatar>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="secondary" variant="contained">
-          Cancel
-        </Button>
-        <Button onClick={handleClose} color="primary" variant="contained">
-          Subscribe
-        </Button>
-      </DialogActions>
+            <TextField
+              margin="dense"
+              id="surname"
+              label="Last Name"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.surname}
+              onChange={formik.handleChange}
+              error={formik.touched.surname && Boolean(formik.errors.surname)}
+              helperText={formik.touched.surname && formik.errors.surname}
+            />
+            <TextField
+              margin="dense"
+              id="position"
+              label="Job position"
+              type="text"
+              variant="outlined"
+              fullWidth
+              value={formik.values.position}
+              onChange={formik.handleChange}
+              error={formik.touched.position && Boolean(formik.errors.position)}
+              helperText={formik.touched.position && formik.errors.position}
+            />
+            <FormControlLabel
+              control={
+                <GreeenSwitch
+                  checked={isObserver}
+                  onChange={handleChange}
+                  id="observer"
+                  name="observer"
+                />
+              }
+              label="Connect as Observer"
+            />
+            <input
+              accept="image/*"
+              className={welcomeDialogFormStyles.photoInput}
+              id="icon-button-file"
+              type="file"
+              onChange={(event) => {
+                if (event.target.files) {
+                  const file = event.target.files[0];
+                  if (file) setFile(file);
+                  else setFile(null);
+                }
+              }}
+            />
+            <label htmlFor="icon-button-file">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+            </label>
+            <FormAvatar
+              image={image}
+              avatarCSSClass={welcomeDialogFormStyles.avatar}
+              name={formik.values.name}
+              surname={formik.values.surname}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary" variant="contained">
+              Cancel
+            </Button>
+            <Button color="primary" variant="contained" type="submit">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </form>
+      )}
     </Dialog>
   );
 };
