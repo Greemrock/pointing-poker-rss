@@ -16,6 +16,14 @@ type requestPlayerType = {
   admin: boolean;
   obserever: boolean;
 };
+
 type payloadImage = {
   image: string | null | undefined;
+};
+
+type PlayerCard = {
+  id: number;
+  name: string;
+  surname: string;
+  job: string;
 };

@@ -5,12 +5,7 @@ import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.sty
 import { Place, SizeCard } from '../../Shared/enums';
 
 type Props = {
-  playersCards: {
-    id: number;
-    name: string;
-    surname: string;
-    job: string;
-  }[];
+  playersCards: PlayerCard[];
   view?: Place;
   playerId: number;
 };
@@ -22,7 +17,7 @@ export const PlayerContainer: React.FC<Props> = ({
 }) => {
   const classes = usePlayerContainerStyles();
   return (
-    <>
+    <div className={classes.root}>
       {!view ? (
         <Typography variant="h6" align="center" className={classes.title}>
           Members:
@@ -43,6 +38,6 @@ export const PlayerContainer: React.FC<Props> = ({
           );
         })}
       </Container>
-    </>
+    </div>
   );
 };
