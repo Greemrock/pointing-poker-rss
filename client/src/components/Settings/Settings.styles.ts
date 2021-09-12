@@ -3,6 +3,7 @@ import {
   SPACE_MD,
   SPACE_LG,
   SPACE_XS,
+  SPACE_XXS,
 } from './../../Shared/cssConstants';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { Theme } from '@material-ui/core/styles/createTheme';
@@ -46,9 +47,9 @@ export const AntSwitch = withStyles((theme: Theme) =>
   })
 )(Switch);
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   mainSettingsBlock: {
-    width: '75%',
+    width: '100%',
   },
   accordionInnerBlock: {
     width: '85%',
@@ -69,9 +70,22 @@ export const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '70%',
+    width: '80%',
+    marginBottom: SPACE_LG,
   },
   timerText: {
     marginRight: SPACE_XS,
+  },
+  minutesBlock: {
+    marginRight: SPACE_XXS,
+  },
+  cardsPreviewBlock: {
+    display: 'flex',
+    justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      '& div': {
+        marginRight: `-${SPACE_LG}`,
+      },
+    },
   },
 }));

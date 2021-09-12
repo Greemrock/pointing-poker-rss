@@ -13,17 +13,37 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useStyles, AntSwitch } from './Settings.styles';
+///
+// import { cardsArrays, Decks } from '../../Util/cardsArrays';
+// import { Card } from '../Card';
+///
 
 export const Settings: React.FC = () => {
   const [deck, setDeck] = useState<string>('fibonacci');
+  ///
+  // const [deck, setDeck] = useState<
+  //   Decks.fibonacci | Decks.modifiedFibonacci | Decks.tshirts | Decks.powers
+  // >(Decks.fibonacci);
+  ///
   const [isTimer, setIsTimer] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const classes = useStyles();
 
+  ///
+  // const cardsPreview = cardsArrays[deck]
+  //   .map((el: string) => <Card key={el} value={el} />)
+  //   .slice(0, 5);
+  ///
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setDeck(event.target.value as string);
   };
+  ///
+  // const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  //   const newDeck = event.target.value as Decks;
+  //   setDeck(newDeck);
+  // };
+  ///
   const handleSwitcherChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTimer(event.target.checked);
   };
@@ -56,19 +76,10 @@ export const Settings: React.FC = () => {
               value={deck}
               onChange={handleSelectChange}
             >
-              <MenuItem value="fibonacci">
-                Fibonacci - ( 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ?, Pass )
-              </MenuItem>
-              <MenuItem value="modified fibonacci">
-                Modif. Fibonacci - ( 0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100, ?,
-                Pass )
-              </MenuItem>
-              <MenuItem value="T-shirts">
-                T-shirts - ( xxs, xs, s, m, l, xl, xxl, ?, Pass )
-              </MenuItem>
-              <MenuItem value="Powers">
-                Powers of 2 - ( 0, 1, 2, 4, 8, 16, 32, 64, ?, Pass )
-              </MenuItem>
+              <MenuItem value="fibonacci">Fibonacci</MenuItem>
+              <MenuItem value="modifiedFibonacci">Modif. Fibonacci</MenuItem>
+              <MenuItem value="tshirts">T-shirts</MenuItem>
+              <MenuItem value="powers">Powers of 2</MenuItem>
             </Select>
           </FormControl>
           <FormControl className={classes.switcherLabel}>
@@ -83,7 +94,7 @@ export const Settings: React.FC = () => {
           {isTimer ? (
             <Box className={classes.boxTimer}>
               <Typography className={classes.timerText}>Timer: </Typography>
-              <FormControl variant="outlined">
+              <FormControl className={classes.minutesBlock} variant="outlined">
                 <InputLabel id="minutesInput">Min.</InputLabel>
                 <Select
                   labelId="minutesSelect"
@@ -124,6 +135,10 @@ export const Settings: React.FC = () => {
               </FormControl>
             </Box>
           ) : null}
+          <Container className={classes.cardsPreviewBlock}>
+            {/* {cardsPreview} */}
+            {''}
+          </Container>
         </AccordionDetails>
       </Accordion>
     </Container>
