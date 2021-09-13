@@ -1,5 +1,3 @@
-import { Priority } from './Shared/enums';
-
 type payloadType = {
   name: string;
   surname: string;
@@ -21,13 +19,4 @@ type requestPlayerType = {
 
 type payloadImage = {
   image: string | null | undefined;
-};
-
-type IssueType = {
-  id: number;
-  currentId: number;
-  isDone: boolean;
-  priority: Priority;
-  title: string;
-  linkCard: string;
 };

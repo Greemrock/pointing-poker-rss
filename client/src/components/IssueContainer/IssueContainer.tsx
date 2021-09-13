@@ -3,7 +3,7 @@ import { Container, Typography } from '@material-ui/core';
 import { Issue } from '../../Shared/enums';
 import { IssueCard } from '../IssueCard';
 import { useIssueContainerStyles } from './IssueContainer.styled';
-import { IssueType } from '../../types';
+import { IssueType } from '../../Shared/types';
 
 type Props = {
   issues: IssueType[];
