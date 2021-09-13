@@ -12,3 +12,9 @@ export enum Issue {
   delete = 'delete',
   create = 'create',
 }
+
+export enum Priority {
+  low = 'low',
+  middle = 'middle',
+  hight = 'hight',
+}

@@ -1,3 +1,5 @@
+import { Priority } from './Shared/enums';
+
 type payloadType = {
   name: string;
   surname: string;
@@ -25,7 +27,7 @@ type IssueType = {
   id: number;
   currentId: number;
   isDone: boolean;
-  priority: 'low' | 'middle' | 'hight';
+  priority: Priority;
   title: string;
   linkCard: string;
 };

@@ -17,9 +17,9 @@ export const useIssueCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    width: ({ view }: { view: Issue | undefined }) =>
+    width: ({ view }: { view?: Issue }) =>
       view === Issue.delete ? '250px' : '300px',
-    height: ({ view }: { view: Issue | undefined }) =>
+    height: ({ view }: { view?: Issue }) =>
       view === Issue.delete ? '62px' : '75px',
     padding: `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
     boxSizing: 'border-box',
@@ -31,7 +31,7 @@ export const useIssueCardStyles = makeStyles({
       isDone: boolean;
       id: number;
       currentId: number;
-      view: Issue | undefined;
+      view?: Issue;
     }) => (isDone || id === currentId ? GREEN_1 : ''),
   },
   wrapperText: {
