@@ -5,6 +5,7 @@ export const SPACE_XS = `${0.5 * SPACE_UNIT}px`; // 8px
 export const SPACE_SM = `${0.75 * SPACE_UNIT}px`; // 12px
 export const SPACE_MD = `${1.25 * SPACE_UNIT}px`; // 20px
 export const SPACE_LG = `${2 * SPACE_UNIT}px`; // 32px
+export const SPACE_L = `${2.5 * SPACE_UNIT}px`; // 40px
 export const SPACE_XL = `${3.25 * SPACE_UNIT}px`; // 52px
 export const SPACE_XXL = `${5.25 * SPACE_UNIT}px`; // 84px
 
@@ -21,3 +22,5 @@ export const RED = '#FF0000';
 export const GREEN_1 = '#60DABF75';
 export const GREEN_2 = '#60DABF';
 export const GREEN_3 = '#66999B';
+export const SAND = '#FFC482';
+export const WHITE = '#FFFFFF';
