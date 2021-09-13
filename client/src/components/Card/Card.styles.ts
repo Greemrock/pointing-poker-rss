@@ -1,13 +1,13 @@
-import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import {
   SPACE_XS,
   SPACE_SM,
   SIZE_LG,
   SIZE_XS,
+  BORDER,
 } from '../../Shared/cssConstants';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = makeStyles(() => ({
   cardBlock: {
     display: 'flex',
     flexDirection: 'column',
@@ -15,10 +15,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '95px',
     height: '150px',
     margin: SPACE_XS,
-    border: `1px solid ${theme.palette.text.primary}`,
+    border: BORDER,
     borderRadius: '10px',
     '&:hover': {
-      borderWidth: '3px',
+      borderWidth: '2px',
     },
   },
   topText: {
@@ -27,7 +27,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: SPACE_SM,
     fontSize: SIZE_XS,
     fontWeight: 700,
-    lineHeight: '15px',
   },
   bottomText: {
     width: '100%',
@@ -36,7 +35,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'right',
     fontSize: SIZE_XS,
     fontWeight: 700,
-    lineHeight: '15px',
   },
   centerBlock: {
     display: 'flex',

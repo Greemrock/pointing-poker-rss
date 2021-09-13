@@ -20,3 +20,6 @@ export const RED = '#FF0000';
 export const GREEN_1 = '#60DABF75';
 export const GREEN_2 = '#60DABF';
 export const GREEN_3 = '#66999B';
+export const GRAY = '#888888';
+
+export const BORDER = `1px solid ${GRAY}`;
