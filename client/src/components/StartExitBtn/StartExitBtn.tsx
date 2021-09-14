@@ -4,15 +4,15 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 
 type Props = {
-  admin: boolean;
+  isAdmin: boolean;
   link: string;
 };
 
-export const StartExitBtn: React.FC<Props> = ({ admin, link }) => {
-  const classes = useStartExitGameStyles({ admin });
+export const StartExitBtn: React.FC<Props> = ({ isAdmin, link }) => {
+  const classes = useStartExitGameStyles({ isAdmin });
   return (
-    <Container className={classes.root}>
-      {admin ? (
+    <Container className={classes.root} maxWidth="md">
+      {isAdmin ? (
         <Paper className={classes.link} component="div" elevation={2}>
           <TextField
             label="Link to lobby"
@@ -36,7 +36,7 @@ export const StartExitBtn: React.FC<Props> = ({ admin, link }) => {
         </Paper>
       ) : null}
       <div className={classes.container}>
-        {admin ? (
+        {isAdmin ? (
           <Button variant="contained" color="primary">
             Start
           </Button>

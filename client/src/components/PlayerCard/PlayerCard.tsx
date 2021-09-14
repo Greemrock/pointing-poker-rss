@@ -1,17 +1,24 @@
 import React from 'react';
-import { Avatar, IconButton, Paper, Typography } from '@material-ui/core';
-import { usePlayerCardStyles } from './PlayerCard.styled';
+import {
+  Avatar,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { getInitialLetters } from '../../Util/getInitialLetters';
+import { usePlayerCardStyles } from './PlayerCard.styled';
+import { SizeCard } from '../../Shared/enums';
 
 type Props = {
   id: number;
   playerId: number;
   name: string;
   surname: string;
-  position: string;
+  job: string;
   image?: string;
-  size?: 'small' | undefined;
+  size?: SizeCard;
 };
 
 export const PlayerCard: React.FC<Props> = ({
@@ -19,7 +26,7 @@ export const PlayerCard: React.FC<Props> = ({
   playerId,
   name,
   surname,
-  position,
+  job,
   image,
   size,
 }) => {
@@ -35,23 +42,27 @@ export const PlayerCard: React.FC<Props> = ({
           {getInitialLetters(name, surname)}
         </Avatar>
         <div className={classes.userInformation}>
-          {id === playerId ? (
-            <Typography className={classes.userPointer}>
-              {id === playerId ? "IT'S YOU" : ''}
-            </Typography>
-          ) : null}
-          <Typography className={classes.userName} variant="h5">
-            {name} {surname}
+          <Typography className={classes.userPointer}>
+            {id === playerId ? "IT'S YOU" : ''}
           </Typography>
-          {size !== 'small' ? (
-            <Typography className={classes.userJob}>{position}</Typography>
+          <Tooltip title={`${name} ${surname}`} placement="bottom-start">
+            <Typography className={classes.userName} variant="h5">
+              {`${name} ${surname}`}
+            </Typography>
+          </Tooltip>
+          {!size ? (
+            <Tooltip title={job} placement="bottom-start">
+              <Typography className={classes.userJob}>{job}</Typography>
+            </Tooltip>
           ) : null}
         </div>
       </div>
       {id !== playerId ? (
-        <IconButton aria-label="kick player" className={classes.svg}>
-          <HighlightOffIcon />
-        </IconButton>
+        <Tooltip title="kick player" placement="bottom-start">
+          <IconButton aria-label="kick player" className={classes.svg}>
+            <HighlightOffIcon />
+          </IconButton>
+        </Tooltip>
       ) : null}
     </Paper>
   );
