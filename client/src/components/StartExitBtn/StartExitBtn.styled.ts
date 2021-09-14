@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStartExitGameStyles = makeStyles({
   root: {
-    margin: `${SPACE_MD} 0`,
+    marginTop: SPACE_MD,
+    marginBottom: SPACE_MD,
   },
   link: {
     display: 'flex',
@@ -15,8 +16,8 @@ export const useStartExitGameStyles = makeStyles({
   },
   container: {
     display: 'flex',
-    justifyContent: ({ admin }: { admin: boolean }) =>
-      admin ? 'space-between' : 'flex-end',
+    justifyContent: ({ isAdmin }: { isAdmin: boolean }) =>
+      isAdmin ? 'space-between' : 'flex-end',
     marginTop: SPACE_LG,
   },
 });
