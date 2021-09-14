@@ -5,6 +5,7 @@ export enum Place {
 
 export enum SizeCard {
   small = 'small',
+}
 
 export enum Issue {
   update = 'update',
