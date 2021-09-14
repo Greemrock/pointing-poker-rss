@@ -14,7 +14,7 @@ export enum Issue {
 }
 
 export enum Priority {
-  low = 'Low',
-  middle = 'Middle',
-  hight = 'Hight',
+  low = 'low',
+  middle = 'middle',
+  hight = 'hight',
 }
