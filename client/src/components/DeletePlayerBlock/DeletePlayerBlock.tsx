@@ -51,12 +51,12 @@ export const DeletePlayerBlock: React.FC<Props> = ({ snitch, rogue }) => {
         </Typography>
       </Container>
       <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="contained">
-            No
-          </Button>
+        <DialogActions className={classes.buttonsBlock}>
           <Button color="primary" variant="contained" type="submit">
             Yes
+          </Button>
+          <Button onClick={handleClose} color="secondary" variant="contained">
+            No
           </Button>
         </DialogActions>
       </form>

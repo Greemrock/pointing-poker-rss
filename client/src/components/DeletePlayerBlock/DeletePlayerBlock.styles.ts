@@ -20,4 +20,7 @@ export const useStyles = makeStyles({
     color: GREEN_3,
     fontWeight: 700,
   },
+  buttonsBlock: {
+    margin: SPACE_MD,
+  },
 });
