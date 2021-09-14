@@ -23,7 +23,7 @@ export const Settings: React.FC = () => {
     Decks.fibonacci | Decks.modifiedFibonacci | Decks.tshirts | Decks.powers
   >(Decks.fibonacci);
   const [isTimer, setIsTimer] = useState(false);
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
   const classes = useStyles();
 
