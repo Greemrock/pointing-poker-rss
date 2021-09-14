@@ -7,17 +7,20 @@ import {
   SIZE_XXS,
   SPACE_SM,
   SPACE_XS,
-  SPACE_XXS,
+  SPACE_XXXS,
 } from '../../Shared/cssConstants';
+import { Issue } from '../../Shared/enums';
 
 export const useIssueCardStyles = makeStyles({
   field: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: SPACE_XXS,
-    width: '300px',
-    height: '75px',
+    margin: SPACE_XXXS,
+    width: ({ view }: { view?: Issue }) =>
+      view === Issue.delete ? '250px' : '300px',
+    height: ({ view }: { view?: Issue }) =>
+      view === Issue.delete ? '62px' : '75px',
     padding: `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
     boxSizing: 'border-box',
     background: ({
@@ -28,6 +31,7 @@ export const useIssueCardStyles = makeStyles({
       isDone: boolean;
       id: number;
       currentId: number;
+      view?: Issue;
     }) => (isDone || id === currentId ? GREEN_1 : ''),
   },
   wrapperText: {
@@ -55,6 +59,7 @@ export const useIssueCardStyles = makeStyles({
     lineHeight: '32px',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
   delete: {
     width: '42px',

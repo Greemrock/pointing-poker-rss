@@ -1,5 +1,11 @@
 import React from 'react';
-import { Paper, Typography, IconButton, Tooltip } from '@material-ui/core';
+import {
+  Paper,
+  Typography,
+  IconButton,
+  Tooltip,
+  Link,
+} from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
@@ -8,7 +14,8 @@ import { Issue, Priority } from '../../Shared/enums';
 
 type Props = {
   id: number;
-  title?: string | undefined;
+  title?: string;
+  linkCard: string;
   priority?: Priority;
   view?: Issue;
   isDone: boolean;
@@ -18,12 +25,13 @@ type Props = {
 export const IssueCard: React.FC<Props> = ({
   id,
   title,
+  linkCard,
   priority,
   view,
   isDone,
   currentId,
 }) => {
-  const classes = useIssueCardStyles({ isDone, id, currentId });
+  const classes = useIssueCardStyles({ view, isDone, id, currentId });
   return (
     <Paper elevation={3} className={classes.field}>
       {view === Issue.create ? (
@@ -43,7 +51,9 @@ export const IssueCard: React.FC<Props> = ({
             {id === currentId ? 'current' : ''}
           </Typography>
           <Tooltip title={`${title}`} placement="bottom-start">
-            <Typography className={classes.title}>{title}</Typography>
+            <Link href={linkCard} color="inherit" target="_blank">
+              <Typography className={classes.title}>{title}</Typography>
+            </Link>
           </Tooltip>
           <Typography className={classes.priority}>{priority}</Typography>
         </div>

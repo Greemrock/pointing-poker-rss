@@ -14,7 +14,14 @@ export enum Issue {
 }
 
 export enum Priority {
-  low = 'Low',
-  middle = 'Middle',
-  hight = 'Hight',
+  low = 'low',
+  middle = 'middle',
+  hight = 'hight',
+}
+
+export enum Decks {
+  fibonacci = 'fibonacci',
+  modifiedFibonacci = 'modifiedFibonacci',
+  tshirts = 'tshirts',
+  powers = 'powers',
 }
