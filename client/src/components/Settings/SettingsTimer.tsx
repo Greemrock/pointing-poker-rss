@@ -1,10 +1,11 @@
+import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import { minutesArray, secondsArray } from '../../Shared/settingsArrays';
 type Props = {
   minutes: number;
   seconds: number;
@@ -22,8 +23,7 @@ type Props = {
     }>
   ) => void;
 };
-const minutesArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const secondsArray = [0, 10, 20, 30, 40, 50];
+
 export const SettingsTimer: React.FC<Props> = ({
   minutes,
   seconds,

@@ -18,3 +18,10 @@ export enum Priority {
   middle = 'middle',
   hight = 'hight',
 }
+
+export enum Decks {
+  fibonacci = 'fibonacci',
+  modifiedFibonacci = 'modifiedFibonacci',
+  tshirts = 'tshirts',
+  powers = 'powers',
+}

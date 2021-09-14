@@ -13,16 +13,15 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useStyles, AntSwitch } from './Settings.styles';
 import { SettingsTimer } from './SettingsTimer';
-
-const decksArray = [
-  { val: 'fibonacci', name: 'Fibonacci' },
-  { val: 'modifiedFibonacci', name: 'Modif. Fibonacci' },
-  { val: 'tshirts', name: 'T-shirts' },
-  { val: 'powers', name: 'Powers of 2' },
-];
+import { cardsArrays } from '../../Shared/settingsArrays';
+import { Decks } from '../../Shared/enums';
+import { Card } from '../Card';
+import { decksArray } from '../../Shared/settingsArrays';
 
 export const Settings: React.FC = () => {
-  const [deck, setDeck] = useState<string>('fibonacci');
+  const [deck, setDeck] = useState<
+    Decks.fibonacci | Decks.modifiedFibonacci | Decks.tshirts | Decks.powers
+  >(Decks.fibonacci);
   const [isTimer, setIsTimer] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -33,8 +32,13 @@ export const Settings: React.FC = () => {
       {el.name}
     </MenuItem>
   ));
+  const cardsPreview = cardsArrays[deck]
+    .map((el: string) => <Card key={el} value={el} />)
+    .slice(0, 5);
+
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setDeck(event.target.value as string);
+    const newDeck = event.target.value as Decks;
+    setDeck(newDeck);
   };
   const handleSwitcherChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTimer(event.target.checked);
@@ -91,7 +95,9 @@ export const Settings: React.FC = () => {
               handleSecondsChange={handleSecondsChange}
             />
           ) : null}
-          <Container className={classes.cardsPreviewBlock}>{''}</Container>
+          <Container className={classes.cardsPreviewBlock}>
+            {cardsPreview}
+          </Container>
         </AccordionDetails>
       </Accordion>
     </Container>
