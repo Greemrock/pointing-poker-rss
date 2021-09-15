@@ -4,7 +4,7 @@ import { SPACE_XL } from '../../../Shared/cssConstants';
 export const useStyles = makeStyles(() => ({
   welcomeMainContainer: {
     width: '75%',
-    marginTop: SPACE_XL,
+    paddingTop: SPACE_XL,
   },
   welcomePageImage: {
     height: '85%',

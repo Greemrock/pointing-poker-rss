@@ -9,9 +9,9 @@ import {
 
 export const useFooterStyles = makeStyles({
   topBlock: {
-    backgroundColor: DARK_BLUE,
     width: '100%',
-    height: '80px',
+    height: '56px',
+    backgroundColor: DARK_BLUE,
   },
   container: {
     height: '100%',
@@ -23,7 +23,7 @@ export const useFooterStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: SPACE_MD,
+    margin: `0 ${SPACE_MD}`,
     color: WHITE,
     cursor: 'pointer',
     '&': {
