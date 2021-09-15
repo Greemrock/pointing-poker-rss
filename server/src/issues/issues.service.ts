@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Issue } from './issue.model';
-import { CreateIssueDto } from './dto/create-issue.dto';
+import { CreateIssueDto, UpdateIssueDto } from './dto/create-issue.dto';
 
 @Injectable()
 export class IssuesService {
@@ -17,11 +17,19 @@ export class IssuesService {
     return issues;
   }
 
+  async updateIssue(id: string, dto: UpdateIssueDto) {
+    await this.issueRepository.update(dto, {
+      where: { id: id },
+    });
+    const issue = await this.issueRepository.findByPk(id);
+    return issue;
+  }
+
   async removeIssue(id: string) {
     await this.issueRepository.destroy({
       where: { id: id },
     });
-    const settings = await this.issueRepository.findAll();
-    return settings;
+    const issues = await this.issueRepository.findAll();
+    return issues;
   }
 }

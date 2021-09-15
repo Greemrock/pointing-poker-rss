@@ -11,6 +11,7 @@ import { IssuesModule } from './issues/issues.module';
 import { Issue } from './issues/issue.model';
 import { SettingsModule } from './settings/settings.module';
 import { Sets } from './settings/sets.model';
+import { EventsModule } from './events/events.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { Sets } from './settings/sets.model';
     RoomsModule,
     IssuesModule,
     SettingsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

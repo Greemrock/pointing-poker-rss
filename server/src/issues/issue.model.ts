@@ -34,6 +34,18 @@ export class Issue extends Model<Issue, IssueCreationAttributes> {
     allowNull: true,
   })
   priority: string;
+  @Column({
+    type: DataType.BOOLEAN,
+    unique: false,
+    allowNull: false,
+  })
+  isDone: false;
+  @Column({
+    type: DataType.INTEGER,
+    unique: false,
+    allowNull: true,
+  })
+  currentId: number;
 
   @ForeignKey(() => Room)
   @Column

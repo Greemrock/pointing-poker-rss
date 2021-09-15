@@ -4,7 +4,7 @@ import { Room } from './room.model';
 import { User } from '../users/user.model';
 import { Issue } from '../issues/issue.model';
 import { Sets } from '../settings/sets.model';
-import { CreateRoomDto } from './dto/create-room.dto';
+import { CreateRoomDto, UpdateRoomDto } from './dto/create-room.dto';
 
 @Injectable()
 export class RoomsService {
@@ -22,11 +22,19 @@ export class RoomsService {
     return rooms;
   }
 
+  async updateRoom(id: number, dto: UpdateRoomDto) {
+    await this.roomRepository.update(dto, {
+      where: { id: id },
+    });
+    const room = await this.roomRepository.findByPk(id);
+    return room;
+  }
+
   async removeRoom(id: string) {
     await this.roomRepository.destroy({
       where: { id: id },
     });
-    const settings = await this.roomRepository.findAll();
-    return settings;
+    const rooms = await this.roomRepository.findAll();
+    return rooms;
   }
 }
