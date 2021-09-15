@@ -1,4 +1,4 @@
-import { SPACE_MD } from './../../Shared/cssConstants';
+import { SPACE_MD } from '../../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
 
 export const useIssueDialogFormStyles = makeStyles({

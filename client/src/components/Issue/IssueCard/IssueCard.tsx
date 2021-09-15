@@ -10,16 +10,18 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import { useIssueCardStyles } from './IssueCard.styled';
-import { Issue, Priority } from '../../Shared/enums';
+import { Issue, Priority, SizeCard } from '../../../Shared/enums';
 
 type Props = {
   id: number;
+  currentId: number;
   title?: string;
-  linkCard: string;
+  linkCard?: string;
   priority?: Priority;
   view?: Issue;
   isDone: boolean;
-  currentId: number;
+  size?: SizeCard.small;
+  handleClickOpen: (isEdit: boolean) => void;
 };
 
 export const IssueCard: React.FC<Props> = ({
@@ -30,8 +32,16 @@ export const IssueCard: React.FC<Props> = ({
   view,
   isDone,
   currentId,
+  size,
+  handleClickOpen,
 }) => {
-  const classes = useIssueCardStyles({ view, isDone, id, currentId });
+  const classes = useIssueCardStyles({
+    view,
+    isDone,
+    id,
+    currentId,
+    size,
+  });
   return (
     <Paper elevation={3} className={classes.field}>
       {view === Issue.create ? (
@@ -39,7 +49,11 @@ export const IssueCard: React.FC<Props> = ({
           <Typography className={classes.title}>Create new Issue</Typography>
           <div className={classes.adminWView}>
             <Tooltip title="Add issue" placement="bottom-start">
-              <IconButton className={classes.add} aria-label="add issue">
+              <IconButton
+                className={classes.add}
+                aria-label="add issue"
+                onClick={() => handleClickOpen(false)}
+              >
                 <AddIcon />
               </IconButton>
             </Tooltip>
@@ -61,7 +75,11 @@ export const IssueCard: React.FC<Props> = ({
       {view === Issue.update ? (
         <div className={classes.adminWView}>
           <Tooltip title="Edit issue" placement="bottom-start">
-            <IconButton className={classes.edit} aria-label="edit issue">
+            <IconButton
+              className={classes.edit}
+              aria-label="edit issue"
+              onClick={() => handleClickOpen(true)}
+            >
               <CreateOutlinedIcon />
             </IconButton>
           </Tooltip>

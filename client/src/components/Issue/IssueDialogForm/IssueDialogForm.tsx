@@ -12,19 +12,24 @@ import {
   FormControl,
   Container,
 } from '@material-ui/core';
-import { PreloaderForForm } from '../PreloaderForForm';
+import { PreloaderForForm } from '../../PreloaderForForm';
 import { useFormik } from 'formik';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
-import { Priority } from '../../Shared/enums';
+import { Priority } from '../../../Shared/enums';
 
-export const IssueDialogForm: React.FC = () => {
+type Props = {
+  open: boolean;
+  isEditForm: boolean;
+  handleClose: () => void;
+};
+
+export const IssueDialogForm: React.FC<Props> = ({
+  open,
+  handleClose,
+  isEditForm,
+}) => {
   const classes = useIssueDialogFormStyles();
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +54,7 @@ export const IssueDialogForm: React.FC = () => {
           variant="h3"
           align="center"
         >
-          Create Issue
+          {isEditForm ? 'Edit Issue' : 'Create Issue'}
         </Typography>
         {isLoading ? (
           <PreloaderForForm />
@@ -96,7 +101,7 @@ export const IssueDialogForm: React.FC = () => {
             </DialogContent>
             <DialogActions>
               <Button color="primary" variant="contained" type="submit">
-                Create
+                {isEditForm ? 'Edit' : 'Create'}
               </Button>
               <Button
                 onClick={handleClose}
