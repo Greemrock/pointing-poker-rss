@@ -8,12 +8,13 @@ import {
 } from 'sequelize-typescript';
 import { Room } from '../rooms/room.model';
 
-interface UserCreationAttributes {
-  name: string;
+interface IssueCreationAttributes {
+  link: string;
+  priority: string;
 }
 
-@Table({ tableName: 'users' })
-export class User extends Model<User, UserCreationAttributes> {
+@Table({ tableName: 'issues' })
+export class Issue extends Model<Issue, IssueCreationAttributes> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -23,40 +24,28 @@ export class User extends Model<User, UserCreationAttributes> {
   id: number;
   @Column({
     type: DataType.STRING,
+    unique: true,
+    allowNull: false,
+  })
+  link: string;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  priority: string;
+  @Column({
+    type: DataType.BOOLEAN,
     unique: false,
     allowNull: false,
   })
-  name: string;
+  isDone: false;
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     unique: false,
     allowNull: true,
   })
-  surname: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: true,
-  })
-  job: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: true,
-  })
-  image: string;
-  @Column({
-    type: DataType.BOOLEAN,
-    unique: false,
-    defaultValue: false,
-  })
-  isAdmin: boolean;
-  @Column({
-    type: DataType.BOOLEAN,
-    unique: false,
-    defaultValue: false,
-  })
-  observer: boolean;
+  currentId: number;
 
   @ForeignKey(() => Room)
   @Column
