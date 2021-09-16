@@ -46,7 +46,7 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
             handleClickOpen={handleClickOpen}
           />
         ))}
-        {view ? (
+        {view && (
           <IssueCard
             id={Issue.create}
             currentId={'0'}
@@ -55,7 +55,7 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
             size={view === Issue.delete ? SizeCard.small : undefined}
             handleClickOpen={handleClickOpen}
           />
-        ) : null}
+        )}
       </Container>
       <IssueDialogForm
         open={open}

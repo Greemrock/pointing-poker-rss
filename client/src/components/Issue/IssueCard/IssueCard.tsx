@@ -72,7 +72,7 @@ export const IssueCard: React.FC<Props> = ({
           <Typography className={classes.priority}>{priority}</Typography>
         </div>
       )}
-      {view === Issue.update ? (
+      {view === Issue.update && (
         <div className={classes.adminWView}>
           <Tooltip title="Edit issue" placement="bottom-start">
             <IconButton
@@ -89,8 +89,8 @@ export const IssueCard: React.FC<Props> = ({
             </IconButton>
           </Tooltip>
         </div>
-      ) : null}
-      {view === Issue.delete ? (
+      )}
+      {view === Issue.delete && (
         <div className={classes.adminWView}>
           <Tooltip title="Delete issue" placement="bottom-start">
             <IconButton className={classes.delete} aria-label="delete issue">
@@ -98,7 +98,7 @@ export const IssueCard: React.FC<Props> = ({
             </IconButton>
           </Tooltip>
         </div>
-      ) : null}
+      )}
     </Paper>
   );
 };
