@@ -29,8 +29,8 @@ export const useIssueCardStyles = makeStyles({
       currentId,
     }: {
       isDone: boolean;
-      id: number;
-      currentId: number;
+      id: string;
+      currentId: string;
       view?: Issue;
       size?: SizeCard;
     }) => (isDone || id === currentId ? GREEN_1 : ''),

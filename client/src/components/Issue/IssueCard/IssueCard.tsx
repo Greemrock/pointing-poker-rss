@@ -13,21 +13,21 @@ import { useIssueCardStyles } from './IssueCard.styled';
 import { Issue, Priority, SizeCard } from '../../../Shared/enums';
 
 type Props = {
-  id: number;
-  currentId: number;
+  id: string;
+  currentId: string;
   title?: string;
-  linkCard?: string;
+  link?: string;
   priority?: Priority;
   view?: Issue;
   isDone: boolean;
   size?: SizeCard.small;
-  handleClickOpen: (isEdit: boolean) => void;
+  handleClickOpen: (isEdit: boolean, id: string) => void;
 };
 
 export const IssueCard: React.FC<Props> = ({
   id,
   title,
-  linkCard,
+  link,
   priority,
   view,
   isDone,
@@ -52,7 +52,7 @@ export const IssueCard: React.FC<Props> = ({
               <IconButton
                 className={classes.add}
                 aria-label="add issue"
-                onClick={() => handleClickOpen(false)}
+                onClick={() => handleClickOpen(false, id)}
               >
                 <AddIcon />
               </IconButton>
@@ -65,7 +65,7 @@ export const IssueCard: React.FC<Props> = ({
             {id === currentId ? 'current' : ''}
           </Typography>
           <Tooltip title={`${title}`} placement="bottom-start">
-            <Link href={linkCard} color="inherit" target="_blank">
+            <Link href={link} color="inherit" target="_blank">
               <Typography className={classes.title}>{title}</Typography>
             </Link>
           </Tooltip>
@@ -78,7 +78,7 @@ export const IssueCard: React.FC<Props> = ({
             <IconButton
               className={classes.edit}
               aria-label="edit issue"
-              onClick={() => handleClickOpen(true)}
+              onClick={() => handleClickOpen(true, id)}
             >
               <CreateOutlinedIcon />
             </IconButton>

@@ -13,11 +13,13 @@ import {
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
-import { checkLink, Priority } from '../../../Shared';
+import { checkLink, IssueType, Priority } from '../../../Shared';
 
 type Props = {
   open: boolean;
   isEditForm: boolean;
+  issues: IssueType[];
+  idEditIssue: string;
   handleClose: () => void;
 };
 
@@ -25,9 +27,10 @@ export const IssueDialogForm: React.FC<Props> = ({
   open,
   handleClose,
   isEditForm,
+  issues,
+  idEditIssue,
 }) => {
   const classes = useIssueDialogFormStyles();
-
   const priorityOption = (
     Object.keys(Priority) as (keyof typeof Priority)[]
   ).map((p, index) => (
@@ -35,6 +38,15 @@ export const IssueDialogForm: React.FC<Props> = ({
       {p}
     </MenuItem>
   ));
+
+  const index = issues.findIndex((elem) => elem.id === idEditIssue);
+
+  const defaultValue = {
+    title: index === -1 ? '' : issues[index].title,
+    link: index === -1 ? '' : issues[index].link,
+    priority: Priority.low,
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <Container className={classes.container}>
@@ -47,11 +59,7 @@ export const IssueDialogForm: React.FC<Props> = ({
           {isEditForm ? 'Edit Issue' : 'Create Issue'}
         </Typography>
         <Formik
-          initialValues={{
-            title: '',
-            link: '',
-            priority: 'low',
-          }}
+          initialValues={defaultValue}
           validate={(values) => {
             const errors: Partial<FormikValues> = {};
             if (!values.title) {

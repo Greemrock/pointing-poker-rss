@@ -15,8 +15,10 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
   const classes = useIssueContainerStyles();
   const [open, setOpen] = useState(false);
   const [isEditForm, setIsEditForm] = useState(false);
+  const [idEditIssue, setIdEditIssue] = useState('');
 
-  const handleClickOpen = (isEdit: boolean) => {
+  const handleClickOpen = (isEdit: boolean, id: string) => {
+    setIdEditIssue(id);
     setOpen(true);
     setIsEditForm(isEdit);
   };
@@ -31,11 +33,11 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
         Issue:
       </Typography>
       <Container className={classes.container} maxWidth="md">
-        {issues.map(({ id, currentId, linkCard, isDone, priority, title }) => (
+        {issues.map(({ id, currentId, link, isDone, priority, title }) => (
           <IssueCard
             key={id}
             id={id}
-            linkCard={linkCard}
+            link={link}
             currentId={currentId}
             isDone={isDone}
             priority={priority}
@@ -46,8 +48,8 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
         ))}
         {view ? (
           <IssueCard
-            id={-1}
-            currentId={0}
+            id={Issue.create}
+            currentId={'0'}
             view={Issue.create}
             isDone={false}
             size={view === Issue.delete ? SizeCard.small : undefined}
@@ -59,6 +61,8 @@ export const IssueContainer: React.FC<Props> = ({ issues, view }) => {
         open={open}
         handleClose={handleClose}
         isEditForm={isEditForm}
+        issues={issues}
+        idEditIssue={idEditIssue}
       />
     </>
   );
