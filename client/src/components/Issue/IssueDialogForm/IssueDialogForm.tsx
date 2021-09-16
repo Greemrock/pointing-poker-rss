@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   Typography,
-  DialogContent,
-  TextField,
   DialogActions,
   Button,
   InputLabel,
-  Select,
   MenuItem,
   FormControl,
   Container,
+  LinearProgress,
 } from '@material-ui/core';
-import { PreloaderForForm } from '../../PreloaderForForm';
-import { useFormik } from 'formik';
+import { Field, Form, Formik, FormikValues } from 'formik';
+import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
-import { Priority } from '../../../Shared/enums';
+import { checkLink, Priority } from '../../../Shared';
 
 type Props = {
   open: boolean;
@@ -29,22 +27,14 @@ export const IssueDialogForm: React.FC<Props> = ({
   isEditForm,
 }) => {
   const classes = useIssueDialogFormStyles();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const formik = useFormik({
-    initialValues: {
-      title: '',
-      link: '',
-      position: 'low',
-    },
-    onSubmit: (values) => {
-      setIsLoading(true);
-      const payloadObject = {
-        ...values,
-      };
-    },
-  });
-
+  const priorityOption = (
+    Object.keys(Priority) as (keyof typeof Priority)[]
+  ).map((p, index) => (
+    <MenuItem key={index} value={p}>
+      {p}
+    </MenuItem>
+  ));
   return (
     <Dialog open={open} onClose={handleClose}>
       <Container className={classes.container}>
@@ -56,63 +46,96 @@ export const IssueDialogForm: React.FC<Props> = ({
         >
           {isEditForm ? 'Edit Issue' : 'Create Issue'}
         </Typography>
-        {isLoading ? (
-          <PreloaderForForm />
-        ) : (
-          <form autoComplete="off" onSubmit={formik.handleSubmit}>
-            <DialogContent>
-              <TextField
+        <Formik
+          initialValues={{
+            title: '',
+            link: '',
+            priority: 'low',
+          }}
+          validate={(values) => {
+            const errors: Partial<FormikValues> = {};
+            if (!values.title) {
+              errors.title = 'Required';
+            }
+            if (!values.link) {
+              errors.link = 'Required';
+            } else if (!checkLink.test(values.link)) {
+              errors.link = 'Invalid link address';
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            setSubmitting(false);
+            const payloadObject = {
+              ...values,
+            };
+            console.log(payloadObject);
+          }}
+        >
+          {({ isSubmitting, touched, errors }) => (
+            <Form>
+              <Field
                 autoFocus
-                margin="dense"
-                id="title"
+                fullWidth
+                component={TextField}
+                type="text"
                 label="Title"
-                type="text"
-                variant="outlined"
-                fullWidth
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
-              />
-              <TextField
+                name="title"
                 margin="dense"
-                id="link"
-                label="Link"
-                type="text"
                 variant="outlined"
+                disabled={isSubmitting}
+                error={touched.title && Boolean(errors.title)}
+                helperText="Please Enter title"
+              />
+              <Field
                 fullWidth
-                value={formik.values.link}
-                onChange={formik.handleChange}
-                error={formik.touched.link && Boolean(formik.errors.link)}
-                helperText={formik.touched.link && formik.errors.link}
+                component={TextField}
+                type="text"
+                label="Link"
+                name="link"
+                margin="dense"
+                variant="outlined"
+                disabled={isSubmitting}
+                error={touched.link && Boolean(errors.link)}
+                helperText="Please Enter link"
               />
               <FormControl margin="normal" fullWidth>
-                <InputLabel id="priority-label">Priority</InputLabel>
-                <Select
-                  labelId="priority-label"
+                <InputLabel htmlFor="priority-label">Priority</InputLabel>
+                <Field
+                  component={Select}
+                  name="priority"
+                  inputProps={{
+                    name: 'priority',
+                    id: 'priority-label',
+                  }}
+                  disabled={isSubmitting}
                   defaultValue={Priority.low}
-                  id="priority"
                 >
-                  <MenuItem value={Priority.low}>{Priority.low}</MenuItem>
-                  <MenuItem value={Priority.middle}>{Priority.middle}</MenuItem>
-                  <MenuItem value={Priority.hight}>{Priority.hight}</MenuItem>
-                </Select>
+                  {priorityOption}
+                </Field>
               </FormControl>
-            </DialogContent>
-            <DialogActions>
-              <Button color="primary" variant="contained" type="submit">
-                {isEditForm ? 'Edit' : 'Create'}
-              </Button>
-              <Button
-                onClick={handleClose}
-                color="secondary"
-                variant="contained"
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </form>
-        )}
+              {isSubmitting && <LinearProgress />}
+              <DialogActions>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isEditForm ? 'Edit' : 'Create'}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="button"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </Form>
+          )}
+        </Formik>
       </Container>
     </Dialog>
   );
