@@ -19,6 +19,7 @@ type Props = {
   job: string;
   image?: string;
   size?: SizeCard;
+  removeUser: () => void;
 };
 
 export const PlayerCard: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const PlayerCard: React.FC<Props> = ({
   job,
   image,
   size,
+  removeUser,
 }) => {
   const classes = usePlayerCardStyles({ size });
   return (
@@ -59,7 +61,11 @@ export const PlayerCard: React.FC<Props> = ({
       </div>
       {id !== playerId ? (
         <Tooltip title="kick player" placement="bottom-start">
-          <IconButton aria-label="kick player" className={classes.svg}>
+          <IconButton
+            aria-label="kick player"
+            className={classes.svg}
+            onClick={removeUser}
+          >
             <HighlightOffIcon />
           </IconButton>
         </Tooltip>

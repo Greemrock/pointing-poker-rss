@@ -1,16 +1,16 @@
-import React from 'react';
-import { Container, Paper, Typography } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
+import { AppContext } from '../../App';
 
 type Props = {
   link: string;
   isAdmin: boolean;
   playerId: number;
   view?: Place;
-  playersCards: PlayerCard[];
 };
 
 export const LobbyPage: React.FC<Props> = ({
@@ -18,9 +18,9 @@ export const LobbyPage: React.FC<Props> = ({
   isAdmin,
   playerId,
   view,
-  playersCards,
 }) => {
   const classes = useLobbyPageStyles();
+  const { appState, dispatch } = useContext(AppContext);
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.nameGame}>
@@ -32,7 +32,8 @@ export const LobbyPage: React.FC<Props> = ({
       <PlayerContainer
         playerId={playerId}
         view={view}
-        playersCards={playersCards}
+        playersCards={appState.players}
+        dispatch={dispatch}
       />
     </Container>
   );

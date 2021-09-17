@@ -1,37 +1,45 @@
-import { mergeClasses } from '@material-ui/styles';
-import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import React, { useReducer } from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import { useAppStyles } from './App.styled';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { LobbyPage } from './Pages/Lobby';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
+import { AppState, initialState, usersReducer } from './reducers/usersReducer';
+import { UsersActions } from './reducers/usersReducerInterfaces';
 
-const store: PlayerCard[] = [
-  { id: 0, name: 'Andrei', surname: 'A', job: 'developer' },
-  { id: 1, name: 'Sergey', surname: 'S', job: 'developer' },
-  { id: 2, name: 'Arnem', surname: 'A', job: 'developer' },
-];
+export const AppContext = React.createContext<{
+  appState: AppState;
+  dispatch: React.Dispatch<UsersActions>;
+}>({
+  appState: initialState,
+  dispatch: () => null,
+});
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
+  const [appState, dispatch] = useReducer(usersReducer, initialState);
   return (
-    <Router>
-      <Header />
-      <div className={classes.container}>
-        <Switch>
-          <Route exact path="/" component={WelcomeBlock} />
-          <Route exact path="/lobby">
-            <LobbyPage
-              link="./link"
-              isAdmin={true}
-              playerId={0}
-              playersCards={store}
-            />
-          </Route>
-        </Switch>
-      </div>
-      <Footer />
-    </Router>
+    <AppContext.Provider value={{ appState, dispatch }}>
+      <Router>
+        <Header />
+        <div className={classes.container}>
+          <Switch>
+            <Route exact path="/">
+              {appState.isAuth ? <Redirect to="/lobby" /> : <WelcomeBlock />}
+            </Route>
+            <Route exact path="/lobby">
+              <LobbyPage link="./link" isAdmin={true} playerId={0} />
+            </Route>
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
+    </AppContext.Provider>
   );
 };

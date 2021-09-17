@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import {
   Button,
   TextField,
@@ -17,7 +17,11 @@ import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
 import { addPlayer } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
-import { useHistory } from 'react-router';
+import { AppContext } from '../../../App';
+import {
+  AddUserActionCreator,
+  AuthActionCreator,
+} from '../../../reducers/usersActionCreators';
 
 const validationSchema = yup.object({
   name: yup
@@ -62,7 +66,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const history = useHistory();
+  const { dispatch } = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -78,17 +82,20 @@ export const WelcomeFormDialog: FC<Props> = ({
         image: '',
         observer: isObserver,
         admin: isAdmin,
+        job: values.position,
+        id: 100,
       };
       postImage(image).then((response) => {
         if (response) {
           payloadObject.image = response;
           addPlayer(payloadObject).then(() => {
+            dispatch(AuthActionCreator());
+            dispatch(AddUserActionCreator(payloadObject));
             handleClose();
             setIsLoading(false);
           });
         }
       });
-      history.push('./lobby');
     },
   });
 
