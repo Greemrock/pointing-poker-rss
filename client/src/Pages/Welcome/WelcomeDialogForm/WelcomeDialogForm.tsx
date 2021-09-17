@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import * as yup from 'yup';
+import { io } from 'socket.io-client';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
@@ -82,10 +83,10 @@ export const WelcomeFormDialog: FC<Props> = ({
       postImage(image).then((response) => {
         if (response) {
           payloadObject.image = response;
-          addPlayer(payloadObject).then(() => {
-            handleClose();
-            setIsLoading(false);
-          });
+          socket.emit('hostGame', payloadObject);
+
+          handleClose();
+          setIsLoading(false);
         }
       });
       history.push('./lobby');
@@ -103,6 +104,20 @@ export const WelcomeFormDialog: FC<Props> = ({
       setImage(null);
     }
   }, [file]);
+
+  const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
+    transports: ['websocket'],
+    upgrade: false,
+  });
+
+  // const handleSubmit = () => {
+  //   socket.emit('hostGame', User);
+  // };
+
+  socket.on('roomInfo', (roomInfo) => {
+    console.log(roomInfo);
+    socket.emit('joinRoom', 'roomInfo.id');
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsObserver(event.target.checked);

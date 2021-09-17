@@ -24,25 +24,30 @@ export interface DataPlayer {
 export const playerApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/' }),
   endpoints: (build) => ({
-    postPlayer: build.query<DataPlayer, Channel>({
+    postPlayer: build.mutation<DataPlayer, Channel>({
       query: () => '',
       async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved }) {
-        const ws = io('ws://safe-lowlands-48809.herokuapp.com', {
+        const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
           transports: ['websocket'],
           upgrade: false,
         });
         try {
           await cacheDataLoaded;
-          ws.emit('create_room');
-          ws.emit('new_player', User);
+
+          socket.emit('hostGame', User);
+
+          socket.on('roomInfo', (roomInfo) => {
+            console.log(roomInfo);
+            socket.emit('joinRoom', 'roomInfo.id');
+          });
         } catch {
           console.log('Something went wrong');
         }
         await cacheEntryRemoved;
-        ws.close();
+        socket.close();
       },
     }),
   }),
 });
 
-export const { usePostPlayerQuery } = playerApi;
+export const { usePostPlayerMutation } = playerApi;

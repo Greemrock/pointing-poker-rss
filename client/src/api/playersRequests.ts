@@ -10,5 +10,5 @@ export const getAllPlayers = async (): Promise<requestPlayerType> => {
 };
 
 export const addPlayer = async (payload: payloadType): Promise<void> => {
-  const result = await axiosInstance.post('users', payload);
+  await axiosInstance.post('users', payload);
 };
