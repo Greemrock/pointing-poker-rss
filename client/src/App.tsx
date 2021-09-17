@@ -1,4 +1,3 @@
-import { mergeClasses } from '@material-ui/styles';
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useAppStyles } from './App.styled';
