@@ -1,4 +1,5 @@
 export class CreateIssueDto {
+  readonly title: string;
   readonly link: string;
   readonly priority: string;
 }

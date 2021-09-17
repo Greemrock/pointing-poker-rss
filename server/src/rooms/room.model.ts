@@ -10,12 +10,13 @@ interface RoomCreationAttributes {
 @Table({ tableName: 'rooms' })
 export class Room extends Model<Room, RoomCreationAttributes> {
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     unique: true,
-    autoIncrement: true,
     primaryKey: true,
   })
-  id: number;
+  id: string;
 
   @Column({
     type: DataType.STRING,

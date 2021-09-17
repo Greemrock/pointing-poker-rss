@@ -3,6 +3,7 @@ export class CreateSetsDto {
   readonly cardValue: string;
   readonly scoreType: string;
   readonly isTimerNeeded: boolean;
+  readonly roomId: string;
 }
 
 export class UpdateSetsDto {
@@ -10,4 +11,5 @@ export class UpdateSetsDto {
   readonly cardValue: string;
   readonly scoreType: string;
   readonly isTimerNeeded: boolean;
+  readonly roomId: string;
 }

@@ -22,6 +22,13 @@ export class RoomsService {
     return rooms;
   }
 
+  async getOneRoom(id: string) {
+    const room = await this.roomRepository.findByPk(id, {
+      include: [User, Issue, Sets],
+    });
+    return room;
+  }
+
   async updateRoom(id: number, dto: UpdateRoomDto) {
     await this.roomRepository.update(dto, {
       where: { id: id },

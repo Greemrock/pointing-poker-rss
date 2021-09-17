@@ -15,12 +15,13 @@ interface UserCreationAttributes {
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttributes> {
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     unique: true,
-    autoIncrement: true,
     primaryKey: true,
   })
-  id: number;
+  id: string;
   @Column({
     type: DataType.STRING,
     unique: false,
@@ -59,8 +60,10 @@ export class User extends Model<User, UserCreationAttributes> {
   observer: boolean;
 
   @ForeignKey(() => Room)
-  @Column
-  roomId: number;
+  @Column({
+    type: DataType.UUID,
+  })
+  roomId: string;
 
   @BelongsTo(() => Room)
   room: Room;

@@ -1,5 +1,11 @@
 export class CreateUserDto {
   readonly name: string;
+  readonly surname: string;
+  readonly job: string;
+  readonly image: string;
+  readonly isAdmin: boolean;
+  readonly observer: boolean;
+  readonly roomId: string;
 }
 
 export class UpdateUserDto {
