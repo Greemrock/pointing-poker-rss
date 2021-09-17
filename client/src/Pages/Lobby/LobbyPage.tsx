@@ -22,13 +22,7 @@ export const LobbyPage: React.FC<Props> = ({
 }) => {
   const classes = useLobbyPageStyles();
   return (
-    <Container
-      component={Paper}
-      variant="outlined"
-      square
-      maxWidth="lg"
-      className={classes.container}
-    >
+    <Container maxWidth="lg" className={classes.container}>
       <div className={classes.nameGame}>
         <Typography variant="h6" align="center">
           Meeting room

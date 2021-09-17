@@ -17,6 +17,7 @@ import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
 import { addPlayer } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
+import { useHistory } from 'react-router';
 
 const validationSchema = yup.object({
   name: yup
@@ -61,6 +62,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -86,6 +88,7 @@ export const WelcomeFormDialog: FC<Props> = ({
           });
         }
       });
+      history.push('./lobby');
     },
   });
 
@@ -200,11 +203,11 @@ export const WelcomeFormDialog: FC<Props> = ({
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="secondary" variant="contained">
-              Cancel
-            </Button>
             <Button color="primary" variant="contained" type="submit">
               Subscribe
+            </Button>
+            <Button onClick={handleClose} color="secondary" variant="contained">
+              Cancel
             </Button>
           </DialogActions>
         </form>

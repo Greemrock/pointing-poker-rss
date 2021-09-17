@@ -6,7 +6,7 @@ import { useFooterStyles } from './Footer.styles';
 export const Footer: React.FC = () => {
   const classes = useFooterStyles();
   return (
-    <div className={classes.topBlock}>
+    <footer className={classes.topBlock}>
       <Container className={classes.container}>
         <Link
           href="https://github.com/RockStar666by"
@@ -33,6 +33,6 @@ export const Footer: React.FC = () => {
           <Typography>Greemrock</Typography>
         </Link>
       </Container>
-    </div>
+    </footer>
   );
 };
