@@ -12,12 +12,12 @@ import { usePlayerCardStyles } from './PlayerCard.styled';
 import { SizeCard } from '../../Shared/enums';
 
 type Props = {
-  id: number;
-  playerId: number;
+  id: string;
+  playerId: string;
   name: string;
   surname: string;
   job: string;
-  image?: string;
+  image?: string | null;
   size?: SizeCard;
   removeUser: () => void;
 };
@@ -36,13 +36,18 @@ export const PlayerCard: React.FC<Props> = ({
   return (
     <Paper elevation={3} className={classes.field}>
       <div className={classes.container}>
-        <Avatar
-          className={classes.avatar}
-          alt={`${name} ${surname}`}
-          src={image}
-        >
-          {getInitialLetters(name, surname)}
-        </Avatar>
+        {image ? (
+          <Avatar
+            className={classes.avatar}
+            alt={`${name} ${surname}`}
+            src={image}
+          ></Avatar>
+        ) : (
+          <Avatar className={classes.avatar} alt={`${name} ${surname}`}>
+            {getInitialLetters(name, surname)}
+          </Avatar>
+        )}
+
         <div className={classes.userInformation}>
           <Typography className={classes.userPointer}>
             {id === playerId ? "IT'S YOU" : ''}

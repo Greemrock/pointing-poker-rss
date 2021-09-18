@@ -9,7 +9,7 @@ import { AppContext } from '../../App';
 type Props = {
   link: string;
   isAdmin: boolean;
-  playerId: number;
+  playerId: string;
   view?: Place;
 };
 

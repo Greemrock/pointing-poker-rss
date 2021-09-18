@@ -15,13 +15,14 @@ import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
-import { addPlayer } from '../../../api/playersRequests';
+import { handleSubmit, socket } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
 import { AppContext } from '../../../App';
 import {
   AddUserActionCreator,
   AuthActionCreator,
 } from '../../../reducers/usersActionCreators';
+import { UsersActions } from '../../../reducers/usersReducerInterfaces';
 
 const validationSchema = yup.object({
   name: yup
@@ -36,7 +37,7 @@ const validationSchema = yup.object({
     .test('alphabets', 'Last must only contain alphabets', (value) => {
       return value ? /^[A-Za-z]+$/.test(value) : false;
     }),
-  position: yup
+  job: yup
     .string()
     .required('Job position is required')
     .test(
@@ -68,11 +69,28 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [isObserver, setIsObserver] = useState(false);
   const { dispatch } = useContext(AppContext);
 
+  const sendUserDataWithWS = (
+    dispatch: React.Dispatch<UsersActions>,
+    handleClose: () => void,
+    setIsLoading: (value: React.SetStateAction<boolean>) => void,
+    payloadObject: payloadType
+  ) => {
+    handleSubmit(payloadObject);
+    socket.on('roomInfo', (roomInfo) => {
+      socket.emit('joinRoom', roomInfo.id);
+      console.log(roomInfo);
+      dispatch(AuthActionCreator());
+      dispatch(AddUserActionCreator(roomInfo));
+      handleClose();
+      setIsLoading(false);
+    });
+  };
+
   const formik = useFormik({
     initialValues: {
       name: '',
       surname: '',
-      position: '',
+      job: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -81,21 +99,23 @@ export const WelcomeFormDialog: FC<Props> = ({
         ...values,
         image: '',
         observer: isObserver,
-        admin: isAdmin,
-        job: values.position,
-        id: 100,
+        isAdmin,
       };
-      postImage(image).then((response) => {
-        if (response) {
-          payloadObject.image = response;
-          addPlayer(payloadObject).then(() => {
-            dispatch(AuthActionCreator());
-            dispatch(AddUserActionCreator(payloadObject));
-            handleClose();
-            setIsLoading(false);
-          });
-        }
-      });
+      if (image) {
+        postImage(image).then((response) => {
+          if (response) {
+            payloadObject.image = response;
+            sendUserDataWithWS(
+              dispatch,
+              handleClose,
+              setIsLoading,
+              payloadObject
+            );
+          }
+        });
+      } else {
+        sendUserDataWithWS(dispatch, handleClose, setIsLoading, payloadObject);
+      }
     },
   });
 
@@ -159,15 +179,15 @@ export const WelcomeFormDialog: FC<Props> = ({
             />
             <TextField
               margin="dense"
-              id="position"
+              id="job"
               label="Job position"
               type="text"
               variant="outlined"
               fullWidth
-              value={formik.values.position}
+              value={formik.values.job}
               onChange={formik.handleChange}
-              error={formik.touched.position && Boolean(formik.errors.position)}
-              helperText={formik.touched.position && formik.errors.position}
+              error={formik.touched.job && Boolean(formik.errors.job)}
+              helperText={formik.touched.job && formik.errors.job}
             />
             <FormControlLabel
               control={

@@ -4,14 +4,13 @@ export enum UsersActionsTypes {
   AUTH = 'AUTH',
 }
 export type Player = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   job: string;
   image: string;
   observer: boolean;
-  admin: boolean;
-  position: string;
+  isAdmin: boolean;
 };
 
 export interface AddUserAction {
@@ -23,7 +22,7 @@ export interface AuthUserAction {
 }
 export interface RemoveUserAction {
   type: UsersActionsTypes.REMOVE_USER;
-  payload: number;
+  payload: string;
 }
 
 export type UsersActions = AddUserAction | AuthUserAction | RemoveUserAction;

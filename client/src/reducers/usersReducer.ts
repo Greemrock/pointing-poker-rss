@@ -1,10 +1,12 @@
 import { UsersActions, UsersActionsTypes } from './usersReducerInterfaces';
 
 type Player = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   job: string;
+  isAdmin: boolean;
+  image: string | null;
 };
 export type AppState = {
   isAuth: boolean;
@@ -14,9 +16,30 @@ export type AppState = {
 export const initialState: AppState = {
   isAuth: false,
   players: [
-    { id: 0, name: 'Andrei', surname: 'A', job: 'developer' },
-    { id: 1, name: 'Sergey', surname: 'S', job: 'developer' },
-    { id: 2, name: 'Artem', surname: 'A', job: 'developer' },
+    {
+      id: 'qweqwee',
+      name: 'Andrei',
+      surname: 'A',
+      job: 'developer',
+      isAdmin: false,
+      image: null,
+    },
+    {
+      id: 'qwewqeqeweqw',
+      name: 'Sergey',
+      surname: 'S',
+      job: 'developer',
+      isAdmin: false,
+      image: null,
+    },
+    {
+      id: 'qweqweqwewqe',
+      name: 'Artem',
+      surname: 'A',
+      job: 'developer',
+      isAdmin: false,
+      image: null,
+    },
   ],
 };
 export const usersReducer = (

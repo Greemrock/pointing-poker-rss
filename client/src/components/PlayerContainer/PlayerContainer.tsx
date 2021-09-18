@@ -9,7 +9,7 @@ import { RemoveUserActionCreator } from '../../reducers/usersActionCreators';
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
-  playerId: number;
+  playerId: string;
   dispatch: React.Dispatch<UsersActions>;
 };
 
@@ -21,7 +21,7 @@ export const PlayerContainer: React.FC<Props> = ({
 }) => {
   const classes = usePlayerContainerStyles();
 
-  const removeUserHandler = (id: number) => {
+  const removeUserHandler = (id: string) => {
     dispatch(RemoveUserActionCreator(id));
   };
   return (
@@ -32,7 +32,7 @@ export const PlayerContainer: React.FC<Props> = ({
         </Typography>
       ) : null}
       <Container className={classes.container} maxWidth="md">
-        {playersCards.map(({ id, job, name, surname }) => {
+        {playersCards.map(({ id, job, name, surname, image }) => {
           return (
             <PlayerCard
               key={id}
@@ -40,10 +40,11 @@ export const PlayerContainer: React.FC<Props> = ({
               job={job}
               name={name}
               surname={surname}
+              image={image}
               playerId={playerId}
               size={view === Place.game ? SizeCard.small : undefined}
               removeUser={() => {
-                removeUserHandler(playerId);
+                removeUserHandler(id);
               }}
             />
           );

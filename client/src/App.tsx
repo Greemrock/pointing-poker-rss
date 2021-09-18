@@ -34,7 +34,11 @@ export const App: React.FC = () => {
               {appState.isAuth ? <Redirect to="/lobby" /> : <WelcomeBlock />}
             </Route>
             <Route exact path="/lobby">
-              <LobbyPage link="./link" isAdmin={true} playerId={0} />
+              <LobbyPage
+                link="./link"
+                isAdmin={appState.players[0].isAdmin}
+                playerId={appState.players[0].id}
+              />
             </Route>
           </Switch>
         </div>

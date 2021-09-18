@@ -15,7 +15,7 @@ export const AddUserActionCreator = (payload: Player): AddUserAction => ({
   payload,
 });
 
-export const RemoveUserActionCreator = (payload: number): RemoveUserAction => ({
+export const RemoveUserActionCreator = (payload: string): RemoveUserAction => ({
   type: UsersActionsTypes.REMOVE_USER,
   payload,
 });
