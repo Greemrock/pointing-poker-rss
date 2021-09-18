@@ -12,6 +12,7 @@ import { IssuesService } from 'src/issues/issues.service';
 import { RoomsService } from 'src/rooms/rooms.service';
 import { SettingsService } from 'src/settings/settings.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UsersModule } from 'src/users/users.module';
 import { UsersService } from 'src/users/users.service';
 
 @WebSocketGateway()
@@ -33,13 +34,8 @@ export class PokerGateway
   handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
-  async handleConnection(client: Socket, ...args: any[]) {
+  handleConnection(client: Socket, ...args: any[]) {
     this.logger.log(`Client connected: ${client.id}`);
-    // this.logger.log(await this.IssuesService.getAllIssues());
-    // this.logger.log(await this.SettingsService.getAllSettings());
-    // this.logger.log(await this.UsersService.getAllUsers());
-    // this.logger.log(await this.RoomsService.getAllRooms());
-    // this.logger.log(await this.RoomsService.getOneRoom(14));
   }
 
   @WebSocketServer() wss: Server;
@@ -56,15 +52,26 @@ export class PokerGateway
 
   @SubscribeMessage('hostGame')
   async handleHostGame(client: Socket, user: CreateUserDto) {
-    const roomInfo = await this.RoomsService.createRoom({
+    const roomData = await this.RoomsService.createRoom({
       roomName: 'New Game',
     });
     const userUpdated: CreateUserDto = {
       ...user,
-      roomId: roomInfo.id,
+      roomId: roomData.id,
+      isAdmin: true,
     };
-    await this.UsersService.createUser(userUpdated);
-    client.emit('roomInfo', await this.RoomsService.getOneRoom(roomInfo.id));
+    const userInfo = await this.UsersService.createUser(userUpdated);
+    const roomInfo = await this.RoomsService.getOneRoom(roomData.id);
+    client.emit('roomInfo', userInfo, roomInfo);
+    client.join(roomData.id);
+  }
+
+  @SubscribeMessage('joinGame')
+  async handleJoinGame(client: Socket, user: CreateUserDto) {
+    const userInfo = await this.UsersService.createUser(user);
+    const roomInfo = await this.RoomsService.getOneRoom(user.roomId);
+    client.emit('roomInfo', userInfo, roomInfo);
+    client.join(user.roomId);
   }
 
   @SubscribeMessage('joinRoom')
