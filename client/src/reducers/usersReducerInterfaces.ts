@@ -9,9 +9,10 @@ export type Player = {
   name: string;
   surname: string;
   job: string;
-  image: string;
+  image: string | null;
   observer: boolean;
   isAdmin: boolean;
+  roomId: string;
 };
 
 export interface AddUserAction {

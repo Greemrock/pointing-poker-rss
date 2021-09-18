@@ -1,13 +1,7 @@
 import { UsersActions, UsersActionsTypes } from './usersReducerInterfaces';
 
-type Player = {
-  id: string;
-  name: string;
-  surname: string;
-  job: string;
-  isAdmin: boolean;
-  image: string | null;
-};
+import { Player } from './usersReducerInterfaces';
+
 export type AppState = {
   isAuth: boolean;
   players: Player[];
@@ -24,6 +18,8 @@ export const initialState: AppState = {
       job: 'developer',
       isAdmin: false,
       image: null,
+      observer: false,
+      roomId: '',
     },
     {
       id: 'qwewqeqeweqw',
@@ -32,6 +28,8 @@ export const initialState: AppState = {
       job: 'developer',
       isAdmin: false,
       image: null,
+      observer: false,
+      roomId: '',
     },
     {
       id: 'qweqweqwewqe',
@@ -40,6 +38,8 @@ export const initialState: AppState = {
       job: 'developer',
       isAdmin: false,
       image: null,
+      observer: false,
+      roomId: '',
     },
   ],
   currentPlayer: null,

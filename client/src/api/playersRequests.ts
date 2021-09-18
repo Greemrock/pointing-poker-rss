@@ -25,7 +25,3 @@ export const handleAdminSubmit = (payload: payloadType) => {
 export const handleUserSubmit = (payload: payloadType) => {
   socket.emit('joinGame', payload);
 };
-
-// socket.on('roomInfo', (roomInfo) => {
-//   socket.emit('joinRoom', roomInfo.id);
-// });

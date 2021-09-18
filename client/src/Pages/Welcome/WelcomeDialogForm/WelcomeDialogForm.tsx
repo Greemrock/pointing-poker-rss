@@ -246,7 +246,7 @@ export const WelcomeFormDialog: FC<Props> = ({
           </DialogContent>
           <DialogActions>
             <Button color="primary" variant="contained" type="submit">
-              Subscribe
+              Confirm
             </Button>
             <Button onClick={handleClose} color="secondary" variant="contained">
               Cancel
