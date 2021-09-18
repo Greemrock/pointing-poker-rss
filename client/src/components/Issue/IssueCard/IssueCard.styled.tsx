@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import {
   DARK_BLUE,
   GREEN_1,
+  GREEN_2,
   RED,
   SIZE_MD,
   SIZE_XXS,
@@ -33,7 +34,7 @@ export const useIssueCardStyles = makeStyles({
       currentId: string;
       view?: Issue;
       size?: SizeCard;
-    }) => (isDone || id === currentId ? GREEN_1 : ''),
+    }) => (isDone ? GREEN_1 : id === currentId ? GREEN_2 : ''),
   },
   wrapperText: {
     display: 'flex',
