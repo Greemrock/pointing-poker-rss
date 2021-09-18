@@ -1,5 +1,6 @@
 export enum UsersActionsTypes {
   ADD_USER = 'ADD-USER',
+  RELOAD_USERS = 'RELOAD-USERS',
   REMOVE_USER = 'REMOVE-USER',
   AUTH = 'AUTH',
 }
@@ -17,6 +18,10 @@ export interface AddUserAction {
   type: UsersActionsTypes.ADD_USER;
   payload: Player;
 }
+export interface ReloadUsersAction {
+  type: UsersActionsTypes.RELOAD_USERS;
+  payload: Player[];
+}
 export interface AuthUserAction {
   type: UsersActionsTypes.AUTH;
 }
@@ -25,4 +30,8 @@ export interface RemoveUserAction {
   payload: string;
 }
 
-export type UsersActions = AddUserAction | AuthUserAction | RemoveUserAction;
+export type UsersActions =
+  | AddUserAction
+  | AuthUserAction
+  | RemoveUserAction
+  | ReloadUsersAction;

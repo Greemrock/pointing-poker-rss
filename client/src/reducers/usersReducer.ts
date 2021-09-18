@@ -11,6 +11,7 @@ type Player = {
 export type AppState = {
   isAuth: boolean;
   players: Player[];
+  currentPlayer: null | Player;
 };
 
 export const initialState: AppState = {
@@ -41,6 +42,7 @@ export const initialState: AppState = {
       image: null,
     },
   ],
+  currentPlayer: null,
 };
 export const usersReducer = (
   state: AppState = initialState,
@@ -55,7 +57,12 @@ export const usersReducer = (
     case UsersActionsTypes.ADD_USER:
       return {
         ...state,
-        players: [...state.players, action.payload],
+        currentPlayer: action.payload,
+      };
+    case UsersActionsTypes.RELOAD_USERS:
+      return {
+        ...state,
+        players: action.payload,
       };
     case UsersActionsTypes.REMOVE_USER:
       return {

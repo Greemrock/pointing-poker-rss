@@ -21,6 +21,7 @@ export const LobbyPage: React.FC<Props> = ({
 }) => {
   const classes = useLobbyPageStyles();
   const { appState, dispatch } = useContext(AppContext);
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.nameGame}>

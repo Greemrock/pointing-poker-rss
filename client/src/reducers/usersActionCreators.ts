@@ -4,6 +4,7 @@ import {
   RemoveUserAction,
   Player,
   UsersActionsTypes,
+  ReloadUsersAction,
 } from './usersReducerInterfaces';
 
 export const AuthActionCreator = (): AuthUserAction => ({
@@ -12,6 +13,13 @@ export const AuthActionCreator = (): AuthUserAction => ({
 
 export const AddUserActionCreator = (payload: Player): AddUserAction => ({
   type: UsersActionsTypes.ADD_USER,
+  payload,
+});
+
+export const ReloadUsersActionCreator = (
+  payload: Player[]
+): ReloadUsersAction => ({
+  type: UsersActionsTypes.RELOAD_USERS,
   payload,
 });
 

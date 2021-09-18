@@ -25,6 +25,7 @@ import { AppContext } from '../../../App';
 import {
   AddUserActionCreator,
   AuthActionCreator,
+  ReloadUsersActionCreator,
 } from '../../../reducers/usersActionCreators';
 import { UsersActions } from '../../../reducers/usersReducerInterfaces';
 
@@ -71,7 +72,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const { dispatch } = useContext(AppContext);
+  const { appState, dispatch } = useContext(AppContext);
 
   const sendPalyerDataWithWS = (
     dispatch: React.Dispatch<UsersActions>,
@@ -85,10 +86,10 @@ export const WelcomeFormDialog: FC<Props> = ({
       payloadObject.roomId = gameId;
       handleUserSubmit(payloadObject);
     }
-    socket.on('roomInfo', (roomInfo) => {
-      console.log(roomInfo);
+    socket.on('roomInfo', (userInfo, roomInfo) => {
       dispatch(AuthActionCreator());
-      dispatch(AddUserActionCreator(roomInfo));
+      dispatch(AddUserActionCreator(userInfo));
+      dispatch(ReloadUsersActionCreator(roomInfo.users));
       handleClose();
       setIsLoading(false);
     });
