@@ -2,14 +2,15 @@ import { makeStyles } from '@material-ui/core';
 import {
   DARK_BLUE,
   GREEN_1,
+  GREEN_2,
   RED,
   SIZE_MD,
   SIZE_XXS,
   SPACE_SM,
   SPACE_XS,
   SPACE_XXXS,
-} from '../../Shared/cssConstants';
-import { Issue } from '../../Shared/enums';
+} from '../../../Shared/cssConstants';
+import { Issue, SizeCard } from '../../../Shared/enums';
 
 export const useIssueCardStyles = makeStyles({
   field: {
@@ -17,10 +18,10 @@ export const useIssueCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    width: ({ view }: { view?: Issue }) =>
-      view === Issue.delete ? '250px' : '300px',
-    height: ({ view }: { view?: Issue }) =>
-      view === Issue.delete ? '62px' : '75px',
+    width: ({ view, size }: { view?: Issue; size?: SizeCard }) =>
+      view === Issue.delete || size ? '250px' : '300px',
+    height: ({ view, size }: { view?: Issue; size?: SizeCard }) =>
+      view === Issue.delete || size ? '62px' : '75px',
     padding: `${SPACE_XS} ${SPACE_XS} ${SPACE_XS} ${SPACE_SM}`,
     boxSizing: 'border-box',
     background: ({
@@ -29,10 +30,11 @@ export const useIssueCardStyles = makeStyles({
       currentId,
     }: {
       isDone: boolean;
-      id: number;
-      currentId: number;
+      id: string;
+      currentId: string;
       view?: Issue;
-    }) => (isDone || id === currentId ? GREEN_1 : ''),
+      size?: SizeCard;
+    }) => (isDone ? GREEN_1 : id === currentId ? GREEN_2 : ''),
   },
   wrapperText: {
     display: 'flex',

@@ -1,10 +1,10 @@
 import { Priority } from './enums';
 
 export type IssueType = {
-  id: number;
-  currentId: number;
+  id: string;
+  currentId: string;
   isDone: boolean;
   priority: Priority;
   title: string;
-  linkCard: string;
+  link: string;
 };

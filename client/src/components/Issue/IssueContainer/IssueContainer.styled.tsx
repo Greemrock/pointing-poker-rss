@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { SPACE_SM } from './../../Shared/cssConstants';
+import { SPACE_SM } from '../../../Shared/cssConstants';
 
 export const useIssueContainerStyles = makeStyles({
   title: {
