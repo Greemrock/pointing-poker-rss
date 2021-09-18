@@ -1,11 +1,22 @@
 import { Container, Typography } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 import cardsImage from '../../../assets/img/CardsWelcome.png';
 import { WelcomeStartBlock } from '../WelocomeStartBlock/WelcomeStartBlock';
 import { useStyles } from './WelcomeBlock.styles';
 
 export const WelcomeBlock: FC = () => {
   const classes = useStyles();
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    console.log('1');
+    const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
+      transports: ['websocket'],
+      upgrade: false,
+    });
+    setSocket(socket);
+  }, []);
   return (
     <Container className={classes.welcomeMainContainer} maxWidth="lg">
       <Container className={classes.welocmeHeadingWithImageBlock}>
@@ -35,8 +46,8 @@ export const WelcomeBlock: FC = () => {
           </Typography>
         </Container>
       </Container>
-      <WelcomeStartBlock isConnect={false} />
-      <WelcomeStartBlock isConnect={true} />
+      <WelcomeStartBlock isConnect={false} socket={socket} />
+      <WelcomeStartBlock isConnect={true} socket={socket} />
     </Container>
   );
 };

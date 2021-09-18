@@ -5,7 +5,7 @@ export const postImage = async (
   if (image) {
     const imageContent = image.split(',')[1];
     const body = new FormData();
-    body.set('key', process.env.REACT_APP_IMGBB || '');
+    body.set('key', '1df4cb38923edba9f813994063d84816');
     body.append('image', imageContent);
     const result = await axios({
       method: 'post',

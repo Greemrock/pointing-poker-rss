@@ -11,14 +11,13 @@ import {
 } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import * as yup from 'yup';
-import { io } from 'socket.io-client';
 import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
-import { addPlayer } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
 import { useHistory } from 'react-router';
+import { Socket } from 'socket.io-client';
 
 const validationSchema = yup.object({
   name: yup
@@ -50,6 +49,7 @@ type Props = {
   handleClose: () => void;
   isAdmin: boolean;
   gameId: string | null;
+  socket: Socket | null;
 };
 
 export const WelcomeFormDialog: FC<Props> = ({
@@ -57,10 +57,11 @@ export const WelcomeFormDialog: FC<Props> = ({
   handleClose,
   isAdmin,
   gameId,
+  socket,
 }) => {
   const welcomeDialogFormStyles = useStyles();
   const [file, setFile] = useState<File | null>();
-  const [image, setImage] = useState<string | null>();
+  const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
   const history = useHistory();
@@ -80,16 +81,14 @@ export const WelcomeFormDialog: FC<Props> = ({
         observer: isObserver,
         admin: isAdmin,
       };
-      postImage(image).then((response) => {
-        if (response) {
-          payloadObject.image = response;
-          socket.emit('hostGame', payloadObject);
-
-          handleClose();
-          setIsLoading(false);
-        }
-      });
-      history.push('./lobby');
+      image
+        ? postImage(image).then((response) => {
+            if (response) {
+              payloadObject.image = response;
+              handleSubmit(payloadObject);
+            }
+          })
+        : handleSubmit(payloadObject);
     },
   });
 
@@ -105,19 +104,23 @@ export const WelcomeFormDialog: FC<Props> = ({
     }
   }, [file]);
 
-  const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
-    transports: ['websocket'],
-    upgrade: false,
-  });
-
-  // const handleSubmit = () => {
-  //   socket.emit('hostGame', User);
-  // };
-
-  socket.on('roomInfo', (roomInfo) => {
-    console.log(roomInfo);
-    socket.emit('joinRoom', 'roomInfo.id');
-  });
+  const handleSubmit = (data: {
+    image: string;
+    observer: boolean;
+    admin: boolean;
+    name: string;
+    surname: string;
+    position: string;
+  }) => {
+    handleClose();
+    if (!socket) return;
+    socket.emit('hostGame', data);
+    socket.on('roomInfo', (roomInfo) => {
+      socket.emit('joinRoom', roomInfo);
+    });
+    setIsLoading(false);
+    history.push('./lobby');
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsObserver(event.target.checked);

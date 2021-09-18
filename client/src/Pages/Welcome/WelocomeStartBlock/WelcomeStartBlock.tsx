@@ -7,14 +7,16 @@ import {
   useStyles,
   CustomizedBorderTextField,
 } from './WelocmeStartBlock.styles';
+import { Socket } from 'socket.io-client';
 
 const validationSchema = yup.object({
   id: yup.string().required('Id is required'),
 });
 
-export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
-  isConnect,
-}) => {
+export const WelcomeStartBlock: FC<{
+  isConnect: boolean;
+  socket: Socket | null;
+}> = ({ isConnect, socket }) => {
   const [open, setOpen] = useState(false);
   const [gameId, setGameId] = useState<string>('test');
   const [isAdmin, setISAdmin] = useState<boolean>(false);
@@ -106,6 +108,7 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
         handleClose={handleClose}
         isAdmin={isAdmin}
         gameId={!isAdmin ? gameId : null}
+        socket={socket}
       />
     </div>
   );
