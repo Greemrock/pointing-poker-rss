@@ -19,8 +19,11 @@ export const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
   upgrade: false,
 });
 
-export const handleSubmit = (payload: payloadType) => {
+export const handleAdminSubmit = (payload: payloadType) => {
   socket.emit('hostGame', payload);
+};
+export const handleUserSubmit = (payload: payloadType) => {
+  socket.emit('joinGame', payload);
 };
 
 // socket.on('roomInfo', (roomInfo) => {

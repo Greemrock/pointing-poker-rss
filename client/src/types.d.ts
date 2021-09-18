@@ -4,6 +4,7 @@ type payloadType = {
   job: string;
   image: string | null | undefined;
   observer: boolean;
+  roomId: string | null;
 };
 
 type requestPlayerType = {

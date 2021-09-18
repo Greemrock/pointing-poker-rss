@@ -15,7 +15,11 @@ import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
-import { handleSubmit, socket } from '../../../api/playersRequests';
+import {
+  handleAdminSubmit,
+  handleUserSubmit,
+  socket,
+} from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
 import { AppContext } from '../../../App';
 import {
@@ -69,15 +73,19 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [isObserver, setIsObserver] = useState(false);
   const { dispatch } = useContext(AppContext);
 
-  const sendUserDataWithWS = (
+  const sendPalyerDataWithWS = (
     dispatch: React.Dispatch<UsersActions>,
     handleClose: () => void,
     setIsLoading: (value: React.SetStateAction<boolean>) => void,
     payloadObject: payloadType
   ) => {
-    handleSubmit(payloadObject);
+    if (isAdmin) {
+      handleAdminSubmit(payloadObject);
+    } else {
+      payloadObject.roomId = gameId;
+      handleUserSubmit(payloadObject);
+    }
     socket.on('roomInfo', (roomInfo) => {
-      socket.emit('joinRoom', roomInfo.id);
       console.log(roomInfo);
       dispatch(AuthActionCreator());
       dispatch(AddUserActionCreator(roomInfo));
@@ -100,12 +108,13 @@ export const WelcomeFormDialog: FC<Props> = ({
         image: '',
         observer: isObserver,
         isAdmin,
+        roomId: null,
       };
       if (image) {
         postImage(image).then((response) => {
           if (response) {
             payloadObject.image = response;
-            sendUserDataWithWS(
+            sendPalyerDataWithWS(
               dispatch,
               handleClose,
               setIsLoading,
@@ -114,7 +123,12 @@ export const WelcomeFormDialog: FC<Props> = ({
           }
         });
       } else {
-        sendUserDataWithWS(dispatch, handleClose, setIsLoading, payloadObject);
+        sendPalyerDataWithWS(
+          dispatch,
+          handleClose,
+          setIsLoading,
+          payloadObject
+        );
       }
     },
   });
