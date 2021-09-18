@@ -18,12 +18,13 @@ interface SetsCreationAttributes {
 @Table({ tableName: 'settings' })
 export class Sets extends Model<Sets, SetsCreationAttributes> {
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     unique: true,
-    autoIncrement: true,
     primaryKey: true,
   })
-  id: number;
+  id: string;
   @Column({
     type: DataType.STRING,
     unique: false,
@@ -50,8 +51,10 @@ export class Sets extends Model<Sets, SetsCreationAttributes> {
   isTimerNeeded: boolean;
 
   @ForeignKey(() => Room)
-  @Column
-  roomId: number;
+  @Column({
+    type: DataType.UUID,
+  })
+  roomId: string;
 
   @BelongsTo(() => Room)
   room: Room;

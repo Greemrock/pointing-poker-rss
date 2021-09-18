@@ -9,6 +9,7 @@ import {
 import { Room } from '../rooms/room.model';
 
 interface IssueCreationAttributes {
+  title: string;
   link: string;
   priority: string;
 }
@@ -16,15 +17,22 @@ interface IssueCreationAttributes {
 @Table({ tableName: 'issues' })
 export class Issue extends Model<Issue, IssueCreationAttributes> {
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     unique: true,
-    autoIncrement: true,
     primaryKey: true,
   })
-  id: number;
+  id: string;
   @Column({
     type: DataType.STRING,
-    unique: true,
+    unique: false,
+    allowNull: false,
+  })
+  title: string;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
     allowNull: false,
   })
   link: string;
@@ -48,8 +56,10 @@ export class Issue extends Model<Issue, IssueCreationAttributes> {
   currentId: number;
 
   @ForeignKey(() => Room)
-  @Column
-  roomId: number;
+  @Column({
+    type: DataType.UUID,
+  })
+  roomId: string;
 
   @BelongsTo(() => Room)
   room: Room;
