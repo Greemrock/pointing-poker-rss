@@ -10,7 +10,6 @@ export const WelcomeBlock: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    console.log('1');
     const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
       transports: ['websocket'],
       upgrade: false,

@@ -1,19 +1,14 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { playerApi } from '../api/playerApi';
+import { configureStore } from '@reduxjs/toolkit';
+import playersSlice from '../reducers/playersSlice';
 
 export const store = configureStore({
   reducer: {
-    [playerApi.reducerPath]: playerApi.reducer,
+    players: playersSlice,
   },
-  middleware: (getDefaultMiddlware) =>
-    getDefaultMiddlware().concat(playerApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
-export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;

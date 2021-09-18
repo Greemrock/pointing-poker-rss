@@ -18,6 +18,8 @@ import { postImage } from '../../../api/imgbbRequest';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
 import { useHistory } from 'react-router';
 import { Socket } from 'socket.io-client';
+import { useAppDispatch } from '../../../redux/app/hooks';
+import { changePlayers } from '../../../redux/reducers/playersSlice';
 
 const validationSchema = yup.object({
   name: yup
@@ -64,7 +66,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -104,6 +106,8 @@ export const WelcomeFormDialog: FC<Props> = ({
     }
   }, [file]);
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (data: {
     image: string;
     observer: boolean;
@@ -116,10 +120,12 @@ export const WelcomeFormDialog: FC<Props> = ({
     if (!socket) return;
     socket.emit('hostGame', data);
     socket.on('roomInfo', (roomInfo) => {
-      socket.emit('joinRoom', roomInfo);
+      dispatch(changePlayers(roomInfo.users));
+      // socket.emit('joinRoom', roomInfo);
     });
     setIsLoading(false);
-    history.push('./lobby');
+
+    // history.push('./lobby');
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

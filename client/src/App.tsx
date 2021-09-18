@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 // import { io, Socket } from 'socket.io-client';
 import { useAppStyles } from './App.styled';
@@ -18,12 +19,13 @@ export const App: React.FC = () => {
   // const [socket, setSocket] = useState<Socket | null>(null);
 
   // useEffect(() => {
-  //   const socketIo = io('ws://safe-lowlands-48809.herokuapp.com', {
-  //     transports: ['websocket'],
-  //     upgrade: false,
-  //   });
+  // const socketIo = io('ws://safe-lowlands-48809.herokuapp.com', {
+  //   transports: ['websocket'],
+  //   upgrade: false,
+  // });
   //   setSocket(socketIo);
   // }, []);
+
   return (
     <Router>
       <Header />
