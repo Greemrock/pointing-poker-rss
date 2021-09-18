@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
-import { CreateSetsDto } from './dto/create-sets.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Delete,
+  Put,
+} from '@nestjs/common';
+import { CreateSetsDto, UpdateSetsDto } from './dto/create-sets.dto';
 import { SettingsService } from './settings.service';
 
 @Controller('settings')
@@ -14,6 +22,11 @@ export class SettingsController {
   @Get()
   getAll() {
     return this.settingsService.getAllSettings();
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateSetsDto: UpdateSetsDto) {
+    return this.settingsService.updateSets(id, updateSetsDto);
   }
 
   @Delete(':id')

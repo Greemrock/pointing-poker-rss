@@ -1,3 +1,7 @@
 export class CreateRoomDto {
-  readonly idRoom: string;
+  readonly roomName: string;
+}
+
+export class UpdateRoomDto {
+  readonly roomName: string;
 }
