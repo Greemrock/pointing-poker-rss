@@ -14,7 +14,7 @@ export const addPlayer = async (payload: payloadType): Promise<void> => {
   const result = await axiosInstance.post('users', payload);
 };
 
-export const socket = io('ws://safe-lowlands-48809.herokuapp.com', {
+export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
   transports: ['websocket'],
   upgrade: false,
 });
