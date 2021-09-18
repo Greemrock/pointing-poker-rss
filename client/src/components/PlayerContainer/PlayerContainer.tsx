@@ -7,7 +7,7 @@ import { Place, SizeCard } from '../../Shared/enums';
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
-  playerId: number;
+  playerId: string;
 };
 
 export const PlayerContainer: React.FC<Props> = ({

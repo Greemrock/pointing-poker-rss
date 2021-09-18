@@ -8,7 +8,7 @@ import { useLobbyPageStyles } from './LobbyPage.styled';
 type Props = {
   link: string;
   isAdmin: boolean;
-  playerId: number;
+  playerId: string;
   view?: Place;
   playersCards: PlayerCard[];
 };

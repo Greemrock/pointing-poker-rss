@@ -12,8 +12,8 @@ import { usePlayerCardStyles } from './PlayerCard.styled';
 import { SizeCard } from '../../Shared/enums';
 
 type Props = {
-  id: number;
-  playerId: number;
+  id: string;
+  playerId: string;
   name: string;
   surname: string;
   job: string;

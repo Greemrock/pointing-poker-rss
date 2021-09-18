@@ -22,7 +22,7 @@ type payloadImage = {
 };
 
 type PlayerCard = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   job: string;
