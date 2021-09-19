@@ -1,7 +1,6 @@
 import {
   AddUserAction,
   AuthUserAction,
-  RemoveUserAction,
   Player,
   UsersActionsTypes,
   ReloadUsersAction,
@@ -20,10 +19,5 @@ export const ReloadUsersActionCreator = (
   payload: Player[]
 ): ReloadUsersAction => ({
   type: UsersActionsTypes.RELOAD_USERS,
-  payload,
-});
-
-export const RemoveUserActionCreator = (payload: string): RemoveUserAction => ({
-  type: UsersActionsTypes.REMOVE_USER,
   payload,
 });

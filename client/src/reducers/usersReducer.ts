@@ -10,38 +10,7 @@ export type AppState = {
 
 export const initialState: AppState = {
   isAuth: false,
-  players: [
-    {
-      id: 'qweqwee',
-      name: 'Andrei',
-      surname: 'A',
-      job: 'developer',
-      isAdmin: false,
-      image: null,
-      observer: false,
-      roomId: '',
-    },
-    {
-      id: 'qwewqeqeweqw',
-      name: 'Sergey',
-      surname: 'S',
-      job: 'developer',
-      isAdmin: false,
-      image: null,
-      observer: false,
-      roomId: '',
-    },
-    {
-      id: 'qweqweqwewqe',
-      name: 'Artem',
-      surname: 'A',
-      job: 'developer',
-      isAdmin: false,
-      image: null,
-      observer: false,
-      roomId: '',
-    },
-  ],
+  players: [],
   currentPlayer: null,
 };
 export const usersReducer = (
@@ -63,11 +32,6 @@ export const usersReducer = (
       return {
         ...state,
         players: action.payload,
-      };
-    case UsersActionsTypes.REMOVE_USER:
-      return {
-        ...state,
-        players: state.players.filter((el: Player) => el.id !== action.payload),
       };
     default:
       return state;

@@ -4,7 +4,6 @@ import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
 import { UsersActions } from '../../reducers/usersReducerInterfaces';
-import { RemoveUserActionCreator } from '../../reducers/usersActionCreators';
 
 type Props = {
   playersCards: PlayerCard[];
@@ -23,9 +22,6 @@ export const PlayerContainer: React.FC<Props> = ({
 }) => {
   const classes = usePlayerContainerStyles();
 
-  const removeUserHandler = (id: string) => {
-    dispatch(RemoveUserActionCreator(id));
-  };
   return (
     <div className={classes.root}>
       {!view ? (
@@ -46,7 +42,7 @@ export const PlayerContainer: React.FC<Props> = ({
               playerId={playerId}
               size={view === Place.game ? SizeCard.small : undefined}
               removeUser={() => {
-                if (isAdmin) removeUserHandler(id);
+                if (isAdmin) () => isAdmin;
               }}
             />
           );
