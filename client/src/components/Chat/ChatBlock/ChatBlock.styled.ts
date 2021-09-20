@@ -11,6 +11,8 @@ export const useChatBlockStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: ({ isOpenChat }: { isOpenChat: boolean }) => (isOpenChat ? 1 : 0),
+    transition: 'opacity 0.5s',
     position: 'absolute',
     right: 0,
     top: '30px',

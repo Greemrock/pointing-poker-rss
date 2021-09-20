@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useAppStyles } from './App.styled';
 import { ChatBlock } from './components/Chat';
@@ -15,9 +15,10 @@ const store: PlayerCard[] = [
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
+  const [isOpenChat, setIsOpenChat] = useState(false);
   return (
     <Router>
-      <Header />
+      <Header isOpenChat={isOpenChat} setIsOpenChat={setIsOpenChat} />
       <div className={classes.container}>
         <Switch>
           <Route exact path="/" component={WelcomeBlock} />
@@ -30,7 +31,7 @@ export const App: React.FC = () => {
             />
           </Route>
         </Switch>
-        <ChatBlock />
+        <ChatBlock isOpenChat={isOpenChat} />
       </div>
       <Footer />
     </Router>

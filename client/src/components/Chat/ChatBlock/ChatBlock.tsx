@@ -3,42 +3,31 @@ import { Container, Paper } from '@material-ui/core';
 import { useChatBlockStyles } from './ChatBlock.styled';
 import { TextInput } from '../TextInput/';
 import { MessageLeft, MessageRight } from '../Message';
+import { getDate } from '../../../Util/getDate';
 
-export const ChatBlock: React.FC = () => {
-  const classes = useChatBlockStyles();
+type Props = {
+  isOpenChat: boolean;
+};
+
+export const ChatBlock: React.FC<Props> = ({ isOpenChat }) => {
+  const classes = useChatBlockStyles({ isOpenChat });
   return (
     <Container className={classes.container}>
       <Paper className={classes.paper} elevation={3}>
-        <Paper className={classes.messagesBody}>
+        <Paper component="ul" className={classes.messagesBody}>
           <MessageLeft
-            message="Hi"
-            timestamp="00:00"
-            photoURL=""
-            displayName="Bonny"
-          />
-          <MessageLeft
+            name={'andrey'}
+            surname={'f'}
             message="Hi! How are you?"
-            timestamp="00:00"
+            timestamp={getDate}
             photoURL=""
-            displayName="Andrey"
           />
           <MessageRight
+            name={'andrey'}
+            surname={'f'}
             message="Fine)"
-            timestamp="00:00"
+            timestamp={getDate}
             photoURL=""
-            displayName="Blane"
-          />
-          <MessageRight
-            message="^_^"
-            timestamp="00:00"
-            photoURL=""
-            displayName="Blane"
-          />
-          <MessageRight
-            message="^_^"
-            timestamp="00:00"
-            photoURL=""
-            displayName="Blane"
           />
         </Paper>
         <TextInput />

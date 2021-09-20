@@ -2,35 +2,38 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { useMessageStyles } from './Message.styled';
 import { Container, Paper, Typography } from '@material-ui/core';
+import { getInitialLetters } from '../../../Util/getInitialLetters';
 
 type Props = {
+  name: string;
+  surname: string;
   message: string;
-  timestamp: string;
   photoURL: string;
-  displayName: string;
+  timestamp: () => string;
 };
 
 export const MessageLeft: React.FC<Props> = ({
+  name,
+  surname,
   message,
-  timestamp,
   photoURL,
-  displayName,
+  timestamp,
 }) => {
   const classes = useMessageStyles();
   return (
-    <Container className={classes.messageRow}>
-      <Avatar
-        alt={displayName}
-        className={classes.avatar}
-        src={photoURL}
-      ></Avatar>
+    <Container component="li" className={classes.messageRow}>
+      <Avatar alt={name} className={classes.avatar} src={photoURL}>
+        {getInitialLetters(name, surname)}
+      </Avatar>
       <div>
-        <Typography className={classes.displayName}>{displayName}</Typography>
+        <Typography
+          className={classes.displayName}
+        >{`${name} ${surname}`}</Typography>
         <Paper elevation={0} className={classes.messageLeft}>
           <Typography variant="body2" className={classes.messageContent}>
             {message}
           </Typography>
-          <Typography variant="caption">{timestamp}</Typography>
+          <Typography variant="caption">{timestamp()}</Typography>
         </Paper>
       </div>
     </Container>
@@ -38,30 +41,29 @@ export const MessageLeft: React.FC<Props> = ({
 };
 
 export const MessageRight: React.FC<Props> = ({
+  name,
+  surname,
   message,
   timestamp,
-  displayName,
   photoURL,
 }) => {
   const classes = useMessageStyles();
   return (
-    <Container className={classes.messageRowRight}>
+    <Container component="li" className={classes.messageRowRight}>
       <div>
         <Typography className={classes.displayNameRight}>
-          {displayName}
+          {`${name} ${surname}`}
         </Typography>
         <Paper elevation={0} className={classes.messageRight}>
           <Typography variant="body2" className={classes.messageContent}>
             {message}
           </Typography>
-          <Typography variant="caption">{timestamp}</Typography>
+          <Typography variant="caption">{timestamp()}</Typography>
         </Paper>
       </div>
-      <Avatar
-        alt={displayName}
-        className={classes.avatar}
-        src={photoURL}
-      ></Avatar>
+      <Avatar alt={name} className={classes.avatar} src={photoURL}>
+        {getInitialLetters(name, surname)}
+      </Avatar>
     </Container>
   );
 };

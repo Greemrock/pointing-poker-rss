@@ -9,8 +9,14 @@ import {
 import ChatIcon from '@material-ui/icons/Chat';
 import { useStyles } from './Header.styles';
 
-export const Header: React.FC = () => {
+type Props = {
+  isOpenChat: boolean;
+  setIsOpenChat: (open: boolean) => void;
+};
+
+export const Header: React.FC<Props> = ({ isOpenChat, setIsOpenChat }) => {
   const classes = useStyles();
+  const handleClick = () => setIsOpenChat(!isOpenChat);
   return (
     <AppBar position="relative">
       <div className={classes.topBlock}>
@@ -18,7 +24,7 @@ export const Header: React.FC = () => {
           <Typography className={classes.firstLetter}>p</Typography>
           <Typography className={classes.secondLetter}>p</Typography>
         </Paper>
-        <Tooltip title="Chat" aria-label="chat">
+        <Tooltip onClick={handleClick} title="Chat" aria-label="chat">
           <IconButton className={classes.chat}>
             <ChatIcon />
           </IconButton>
