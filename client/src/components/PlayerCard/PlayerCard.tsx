@@ -19,6 +19,7 @@ type Props = {
   job: string;
   image?: string | null;
   size?: SizeCard;
+  isAdmin: boolean;
   removeUser: () => void;
 };
 
@@ -30,6 +31,7 @@ export const PlayerCard: React.FC<Props> = ({
   job,
   image,
   size,
+  isAdmin,
   removeUser,
 }) => {
   const classes = usePlayerCardStyles({ size });
@@ -64,7 +66,7 @@ export const PlayerCard: React.FC<Props> = ({
           ) : null}
         </div>
       </div>
-      {id !== playerId ? (
+      {id !== playerId && !isAdmin ? (
         <Tooltip title="kick player" placement="bottom-start">
           <IconButton
             aria-label="kick player"

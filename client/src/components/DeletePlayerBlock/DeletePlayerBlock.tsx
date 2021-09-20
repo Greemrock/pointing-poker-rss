@@ -10,24 +10,27 @@ import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
 
 type Props = {
-  isAdmin: boolean;
+  isAdmin: boolean | undefined;
+  isVoting: boolean | undefined;
   snitch: string | null;
-  rogue: string;
+  rogue?: string;
   isOpen: boolean;
+  closeMenu: () => void;
+  startVoting: () => void;
 };
 
 export const DeletePlayerBlock: React.FC<Props> = ({
   isAdmin,
+  isVoting,
   rogue,
   snitch,
+  isOpen,
+  closeMenu,
+  startVoting,
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState<boolean>(true);
   const [isKick, setIsKick] = useState<boolean>(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
   const formik = useFormik({
     initialValues: {
       isKick: false,
@@ -37,43 +40,40 @@ export const DeletePlayerBlock: React.FC<Props> = ({
       const payloadObject = {
         isKick,
       };
-      handleClose();
+      closeMenu();
+      startVoting();
     },
   });
   return (
     <Dialog
-      open={open}
-      onClose={handleClose}
+      open={isOpen}
+      onClose={closeMenu}
       aria-labelledby="form-dialog-title"
     >
       <Container className={classes.boxBlock}>
         <Typography className={classes.heding} component="h4" variant="h4">
           Kick
         </Typography>
-        {isAdmin ? (
+        {!isVoting ? (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             Are you really want to remove player{' '}
-            <span className={classes.nameSpan}>{rogue}</span>from game session?
+            <span className={classes.nameSpan}> {rogue} </span>from game
+            session?
           </Typography>
         ) : (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             <span className={classes.nameSpan}> {snitch} </span> want to kick
-            member <span className={classes.nameSpan}>{rogue}</span>. Do you
+            member <span className={classes.nameSpan}> {rogue}</span>. Do you
             agree with it?
           </Typography>
         )}
-        <Typography className={classes.textBlock} component="h6" variant="h6">
-          <span className={classes.nameSpan}> {snitch} </span> want to kick
-          member <span className={classes.nameSpan}>{rogue}</span>. Do you agree
-          with it?
-        </Typography>
       </Container>
       <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
         <DialogActions className={classes.buttonsBlock}>
           <Button color="primary" variant="contained" type="submit">
             Yes
           </Button>
-          <Button onClick={handleClose} color="secondary" variant="contained">
+          <Button onClick={closeMenu} color="secondary" variant="contained">
             No
           </Button>
         </DialogActions>

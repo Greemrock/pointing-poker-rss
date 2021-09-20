@@ -10,8 +10,48 @@ export type AppState = {
 
 export const initialState: AppState = {
   isAuth: false,
-  players: [],
-  currentPlayer: null,
+  players: [
+    {
+      id: 'qweqwee',
+      name: 'Andrei',
+      surname: 'A',
+      job: 'developer',
+      isAdmin: true,
+      image: null,
+      observer: false,
+      roomId: 'Team S',
+    },
+    {
+      id: 'qwewqeqeweqw',
+      name: 'Sergey',
+      surname: 'S',
+      job: 'developer',
+      isAdmin: false,
+      image: null,
+      observer: false,
+      roomId: '',
+    },
+    {
+      id: 'qweqweqwewqe',
+      name: 'Artem',
+      surname: 'A',
+      job: 'developer',
+      isAdmin: false,
+      image: null,
+      observer: false,
+      roomId: '',
+    },
+  ],
+  currentPlayer: {
+    id: 'qwewqeqeweqw',
+    name: 'Sergey',
+    surname: 'S',
+    job: 'developer',
+    isAdmin: false,
+    image: null,
+    observer: false,
+    roomId: '',
+  },
 };
 export const usersReducer = (
   state: AppState = initialState,

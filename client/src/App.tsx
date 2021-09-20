@@ -35,8 +35,8 @@ export const App: React.FC = () => {
             </Route>
             <Route exact path="/lobby">
               <LobbyPage
-                link={appState.players[0].roomId}
-                isAdmin={appState.players[0].isAdmin}
+                link={appState.players[0]?.roomId || ''}
+                isAdmin={appState.players[0]?.isAdmin || false}
               />
             </Route>
           </Switch>
