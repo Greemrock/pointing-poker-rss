@@ -1,26 +1,25 @@
-import React from 'react';
-import { Container, Paper, Typography } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
+import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
+import { AppContext } from '../../App';
 
 type Props = {
   link: string;
   isAdmin: boolean;
+<<<<<<< HEAD
   playerId: string;
+=======
+>>>>>>> 08c01c26fb598bd09226f9c1389c72c372315b69
   view?: Place;
-  playersCards: PlayerCard[];
 };
 
-export const LobbyPage: React.FC<Props> = ({
-  link,
-  isAdmin,
-  playerId,
-  view,
-  playersCards,
-}) => {
+export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
   const classes = useLobbyPageStyles();
+  const { appState, dispatch } = useContext(AppContext);
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.nameGame}>
@@ -30,9 +29,11 @@ export const LobbyPage: React.FC<Props> = ({
       </div>
       <StartExitBtn link={link} isAdmin={isAdmin} />
       <PlayerContainer
-        playerId={playerId}
+        playerId={appState.currentPlayer?.id}
         view={view}
-        playersCards={playersCards}
+        playersCards={appState.players}
+        isAdmin={isAdmin}
+        dispatch={dispatch}
       />
     </Container>
   );

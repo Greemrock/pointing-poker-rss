@@ -1,19 +1,19 @@
 type payloadType = {
   name: string;
   surname: string;
-  position: string;
+  job: string;
   image: string | null | undefined;
   observer: boolean;
-  admin: boolean;
+  roomId: string | null;
 };
 
 type requestPlayerType = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
-  position: string;
+  job: string;
   image: string | null;
-  admin: boolean;
+  isAdmin: boolean;
   obserever: boolean;
 };
 
@@ -26,4 +26,6 @@ type PlayerCard = {
   name: string;
   surname: string;
   job: string;
+  isAdmin: boolean;
+  image: string | null;
 };

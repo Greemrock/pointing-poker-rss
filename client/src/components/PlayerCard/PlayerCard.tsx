@@ -13,12 +13,17 @@ import { SizeCard } from '../../Shared/enums';
 
 type Props = {
   id: string;
+<<<<<<< HEAD
   playerId: string;
+=======
+  playerId: string | undefined;
+>>>>>>> 08c01c26fb598bd09226f9c1389c72c372315b69
   name: string;
   surname: string;
   job: string;
-  image?: string;
+  image?: string | null;
   size?: SizeCard;
+  removeUser: () => void;
 };
 
 export const PlayerCard: React.FC<Props> = ({
@@ -29,18 +34,24 @@ export const PlayerCard: React.FC<Props> = ({
   job,
   image,
   size,
+  removeUser,
 }) => {
   const classes = usePlayerCardStyles({ size });
   return (
     <Paper elevation={3} className={classes.field}>
       <div className={classes.container}>
-        <Avatar
-          className={classes.avatar}
-          alt={`${name} ${surname}`}
-          src={image}
-        >
-          {getInitialLetters(name, surname)}
-        </Avatar>
+        {image ? (
+          <Avatar
+            className={classes.avatar}
+            alt={`${name} ${surname}`}
+            src={image}
+          ></Avatar>
+        ) : (
+          <Avatar className={classes.avatar} alt={`${name} ${surname}`}>
+            {getInitialLetters(name, surname)}
+          </Avatar>
+        )}
+
         <div className={classes.userInformation}>
           <Typography className={classes.userPointer}>
             {id === playerId ? "IT'S YOU" : ''}
@@ -59,7 +70,11 @@ export const PlayerCard: React.FC<Props> = ({
       </div>
       {id !== playerId ? (
         <Tooltip title="kick player" placement="bottom-start">
-          <IconButton aria-label="kick player" className={classes.svg}>
+          <IconButton
+            aria-label="kick player"
+            className={classes.svg}
+            onClick={removeUser}
+          >
             <HighlightOffIcon />
           </IconButton>
         </Tooltip>
