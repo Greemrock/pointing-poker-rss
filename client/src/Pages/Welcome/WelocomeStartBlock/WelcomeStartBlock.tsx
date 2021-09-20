@@ -22,7 +22,7 @@ export const WelcomeStartBlock: FC<{ isConnect: boolean }> = ({
 
   const formik = useFormik({
     initialValues: {
-      id: 'test',
+      id: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {

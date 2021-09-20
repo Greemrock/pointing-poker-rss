@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import {
   Button,
   TextField,
@@ -15,9 +15,19 @@ import { useStyles, GreeenSwitch } from './WelcomeDialogForm.styles';
 import { useFormik } from 'formik';
 import { FormAvatar } from '../FormAvatar/FormAvatar';
 import { postImage } from '../../../api/imgbbRequest';
-import { addPlayer } from '../../../api/playersRequests';
+import {
+  handleAdminSubmit,
+  handleUserSubmit,
+  socket,
+} from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
-import { useHistory } from 'react-router';
+import { AppContext } from '../../../App';
+import {
+  AddUserActionCreator,
+  AuthActionCreator,
+  ReloadUsersActionCreator,
+} from '../../../reducers/usersActionCreators';
+import { UsersActions } from '../../../reducers/usersReducerInterfaces';
 
 const validationSchema = yup.object({
   name: yup
@@ -32,7 +42,7 @@ const validationSchema = yup.object({
     .test('alphabets', 'Last must only contain alphabets', (value) => {
       return value ? /^[A-Za-z]+$/.test(value) : false;
     }),
-  position: yup
+  job: yup
     .string()
     .required('Job position is required')
     .test(
@@ -62,13 +72,34 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const history = useHistory();
+  const { appState, dispatch } = useContext(AppContext);
+
+  const sendPalyerDataWithWS = (
+    dispatch: React.Dispatch<UsersActions>,
+    handleClose: () => void,
+    setIsLoading: (value: React.SetStateAction<boolean>) => void,
+    payloadObject: payloadType
+  ) => {
+    if (isAdmin) {
+      handleAdminSubmit(payloadObject);
+    } else {
+      payloadObject.roomId = gameId;
+      handleUserSubmit(payloadObject);
+    }
+    socket.on('roomInfo', (userInfo, roomInfo) => {
+      dispatch(AuthActionCreator());
+      dispatch(AddUserActionCreator(userInfo));
+      dispatch(ReloadUsersActionCreator(roomInfo.users));
+      handleClose();
+      setIsLoading(false);
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
       name: '',
       surname: '',
-      position: '',
+      job: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -77,18 +108,29 @@ export const WelcomeFormDialog: FC<Props> = ({
         ...values,
         image: '',
         observer: isObserver,
-        admin: isAdmin,
+        isAdmin,
+        roomId: null,
       };
-      postImage(image).then((response) => {
-        if (response) {
-          payloadObject.image = response;
-          addPlayer(payloadObject).then(() => {
-            handleClose();
-            setIsLoading(false);
-          });
-        }
-      });
-      history.push('./lobby');
+      if (image) {
+        postImage(image).then((response) => {
+          if (response) {
+            payloadObject.image = response;
+            sendPalyerDataWithWS(
+              dispatch,
+              handleClose,
+              setIsLoading,
+              payloadObject
+            );
+          }
+        });
+      } else {
+        sendPalyerDataWithWS(
+          dispatch,
+          handleClose,
+          setIsLoading,
+          payloadObject
+        );
+      }
     },
   });
 
@@ -152,15 +194,15 @@ export const WelcomeFormDialog: FC<Props> = ({
             />
             <TextField
               margin="dense"
-              id="position"
+              id="job"
               label="Job position"
               type="text"
               variant="outlined"
               fullWidth
-              value={formik.values.position}
+              value={formik.values.job}
               onChange={formik.handleChange}
-              error={formik.touched.position && Boolean(formik.errors.position)}
-              helperText={formik.touched.position && formik.errors.position}
+              error={formik.touched.job && Boolean(formik.errors.job)}
+              helperText={formik.touched.job && formik.errors.job}
             />
             <FormControlLabel
               control={
@@ -204,7 +246,7 @@ export const WelcomeFormDialog: FC<Props> = ({
           </DialogContent>
           <DialogActions>
             <Button color="primary" variant="contained" type="submit">
-              Subscribe
+              Confirm
             </Button>
             <Button onClick={handleClose} color="secondary" variant="contained">
               Cancel
