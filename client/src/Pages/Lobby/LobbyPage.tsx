@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
@@ -6,15 +6,13 @@ import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
-import { IssueContext } from '../../reducers/issue/issue.context';
 
 type Props = {
   link: string;
-  isAdmin: boolean;
   view?: Place;
 };
 
-export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
+export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
   const { appState, dispatch } = useContext(AppContext);
   return (
@@ -24,12 +22,11 @@ export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
           Meeting room
         </Typography>
       </div>
-      <StartExitBtn link={link} isAdmin={isAdmin} />
+      <StartExitBtn link={link} isAdmin={appState.currentPlayer.isAdmin} />
       <PlayerContainer
-        playerId={appState.currentPlayer?.id}
         view={view}
         playersCards={appState.players}
-        isAdmin={isAdmin}
+        currentPlayer={appState.currentPlayer}
         dispatch={dispatch}
       />
       {appState.currentPlayer?.isAdmin && (

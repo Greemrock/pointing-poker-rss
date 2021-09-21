@@ -14,6 +14,7 @@ import { SizeCard } from '../../Shared/enums';
 type Props = {
   id: string;
   playerId: string | undefined;
+  isAdmin: boolean;
   name: string;
   surname: string;
   job: string;
@@ -30,6 +31,7 @@ export const PlayerCard: React.FC<Props> = ({
   job,
   image,
   size,
+  isAdmin,
   removeUser,
 }) => {
   const classes = usePlayerCardStyles({ size });
@@ -64,7 +66,7 @@ export const PlayerCard: React.FC<Props> = ({
           ) : null}
         </div>
       </div>
-      {id !== playerId ? (
+      {id !== playerId && !isAdmin ? (
         <Tooltip title="kick player" placement="bottom-start">
           <IconButton
             aria-label="kick player"
