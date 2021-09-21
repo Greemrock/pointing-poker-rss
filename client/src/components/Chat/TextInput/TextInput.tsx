@@ -56,7 +56,6 @@ export const TextInput: React.FC = () => {
             variant="contained"
             color="primary"
             disabled={isSubmitting}
-            className={classes.button}
           >
             <SendIcon />
           </Button>
