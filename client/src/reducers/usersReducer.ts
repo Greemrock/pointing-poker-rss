@@ -5,51 +5,20 @@ import { Player } from './usersReducerInterfaces';
 export type AppState = {
   isAuth: boolean;
   players: Player[];
-  currentPlayer: null | Player;
+  currentPlayer: Player;
 };
 
 export const initialState: AppState = {
   isAuth: false,
-  players: [
-    {
-      id: 'qweqwee',
-      name: 'Andrei',
-      surname: 'A',
-      job: 'developer',
-      isAdmin: true,
-      image: null,
-      observer: false,
-      roomId: 'Team S',
-    },
-    {
-      id: 'qwewqeqeweqw',
-      name: 'Sergey',
-      surname: 'S',
-      job: 'developer',
-      isAdmin: false,
-      image: null,
-      observer: false,
-      roomId: '',
-    },
-    {
-      id: 'qweqweqwewqe',
-      name: 'Artem',
-      surname: 'A',
-      job: 'developer',
-      isAdmin: false,
-      image: null,
-      observer: false,
-      roomId: '',
-    },
-  ],
+  players: [],
   currentPlayer: {
-    id: 'qwewqeqeweqw',
-    name: 'Sergey',
-    surname: 'S',
-    job: 'developer',
-    isAdmin: false,
+    id: '',
+    name: '',
+    surname: '',
+    job: '',
     image: null,
     observer: false,
+    isAdmin: false,
     roomId: '',
   },
 };

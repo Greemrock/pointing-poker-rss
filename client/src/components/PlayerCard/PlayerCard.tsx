@@ -14,6 +14,7 @@ import { SizeCard } from '../../Shared/enums';
 type Props = {
   id: string;
   playerId: string | undefined;
+  isAdmin: boolean;
   name: string;
   surname: string;
   job: string;
