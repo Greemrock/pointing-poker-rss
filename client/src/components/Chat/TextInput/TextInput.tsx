@@ -3,11 +3,12 @@ import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useTextInputStyles } from './TextInput.styled';
 import { Field, Form, Formik } from 'formik';
-import { handleMessageSubmit, socket } from '../../../api/playersRequests';
 import { AppContext, MessageContext } from '../../../App';
 import { TextField } from 'formik-material-ui';
 import { AddMessageActionCreator } from '../../../reducers/message/msg.create-action';
 import { getDate } from '../../../Util/getDate';
+import { handleMessageSubmit } from '../../../api/message';
+import { socket } from '../../../api/playersRequests';
 
 export const TextInput: React.FC = () => {
   const {
