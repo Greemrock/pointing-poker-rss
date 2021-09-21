@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Dialog,
   Typography,
@@ -13,12 +13,16 @@ import {
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
-import { checkLink, IssueType, Priority } from '../../../Shared';
+import { checkLink, Priority } from '../../../Shared';
+import { IssueContext } from '../../../reducers/issue/issue.context';
+import { AddIssueActionCreator } from '../../../reducers/issue/issue.create-action';
+import { socket } from '../../../api/playersRequests';
+import { AppContext } from '../../../App';
+import { handleIssueSubmit } from '../../../api/issue/issue.request';
 
 type Props = {
   open: boolean;
   isEditForm: boolean;
-  issues: IssueType[];
   idEditIssue: string;
   handleClose: () => void;
 };
@@ -27,10 +31,20 @@ export const IssueDialogForm: React.FC<Props> = ({
   open,
   handleClose,
   isEditForm,
-  issues,
   idEditIssue,
 }) => {
   const classes = useIssueDialogFormStyles();
+  const { issueState, issueDispatch } = useContext(IssueContext);
+  const { appState, dispatch } = useContext(AppContext);
+
+  const index = issueState.issue.findIndex((elem) => elem.id === idEditIssue);
+
+  const defaultValue = {
+    title: index === -1 ? '' : issueState.issue[index].title,
+    link: index === -1 ? '' : issueState.issue[index].link,
+    priority: Priority.low,
+  };
+
   const priorityOption = (
     Object.keys(Priority) as (keyof typeof Priority)[]
   ).map((p, index) => (
@@ -38,14 +52,6 @@ export const IssueDialogForm: React.FC<Props> = ({
       {p}
     </MenuItem>
   ));
-
-  const index = issues.findIndex((elem) => elem.id === idEditIssue);
-
-  const defaultValue = {
-    title: index === -1 ? '' : issues[index].title,
-    link: index === -1 ? '' : issues[index].link,
-    priority: Priority.low,
-  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -76,8 +82,13 @@ export const IssueDialogForm: React.FC<Props> = ({
             setSubmitting(false);
             const payloadObject = {
               ...values,
+              isDone: false,
+              roomId: appState.currentPlayer.roomId,
             };
-            console.log(payloadObject);
+            handleIssueSubmit(payloadObject);
+            socket.once('addUser', (data) => {
+              issueDispatch(AddIssueActionCreator(data));
+            });
           }}
         >
           {({ isSubmitting, touched, errors }) => (

@@ -14,7 +14,6 @@ import { Issue, Priority, SizeCard } from '../../../Shared/enums';
 
 type Props = {
   id: string;
-  currentId: string;
   title?: string;
   link?: string;
   priority?: Priority;
@@ -31,10 +30,12 @@ export const IssueCard: React.FC<Props> = ({
   priority,
   view,
   isDone,
-  currentId,
   size,
   handleClickOpen,
 }) => {
+  //
+  const currentId = '0';
+
   const classes = useIssueCardStyles({
     view,
     isDone,
