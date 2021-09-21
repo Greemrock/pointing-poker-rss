@@ -20,7 +20,6 @@ type Props = {
   job: string;
   image?: string | null;
   size?: SizeCard;
-  isAdmin: boolean;
   removeUser: () => void;
 };
 
