@@ -23,7 +23,8 @@ export const useMessageStyles = makeStyles((theme: Theme) =>
       marginBottom: SPACE_XS,
       padding: `${SPACE_XXS} ${SPACE_SM} ${SPACE_XXS}`,
       backgroundColor: BLUE,
-      width: '100%',
+      maxWidth: '280px',
+      wordWrap: 'break-word',
       textAlign: 'left',
       borderRadius: SPACE_XS,
       '&:after': {
@@ -43,6 +44,8 @@ export const useMessageStyles = makeStyles((theme: Theme) =>
       marginBottom: SPACE_XS,
       padding: `${SPACE_XXS} ${SPACE_SM} ${SPACE_XXS}`,
       backgroundColor: GREEN_4,
+      maxWidth: '280px',
+      wordWrap: 'break-word',
       width: '100%',
       textAlign: 'left',
       borderRadius: SPACE_XS,

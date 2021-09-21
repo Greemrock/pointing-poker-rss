@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
@@ -9,16 +9,12 @@ import { AppContext } from '../../App';
 type Props = {
   link: string;
   isAdmin: boolean;
-<<<<<<< HEAD
-  playerId: string;
-=======
->>>>>>> 08c01c26fb598bd09226f9c1389c72c372315b69
   view?: Place;
 };
 
 export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
   const classes = useLobbyPageStyles();
-  const { appState, dispatch } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -33,7 +29,6 @@ export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
         view={view}
         playersCards={appState.players}
         isAdmin={isAdmin}
-        dispatch={dispatch}
       />
     </Container>
   );

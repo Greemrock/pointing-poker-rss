@@ -11,11 +11,17 @@ export const useChatBlockStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    visibility: ({ isOpenChat }: { isOpenChat: boolean }) =>
+      isOpenChat ? 'visible' : 'hidden',
     opacity: ({ isOpenChat }: { isOpenChat: boolean }) => (isOpenChat ? 1 : 0),
-    transition: 'opacity 0.5s',
+    transition: '.55s opacity, .55s visibility',
     position: 'absolute',
     right: 0,
     top: '30px',
+  },
+  wrapper: {
+    height: '100%',
+    overflowY: 'scroll',
   },
   paper: {
     width: '80vw',
@@ -29,10 +35,6 @@ export const useChatBlockStyles = makeStyles({
   messagesBody: {
     width: `calc(100% - ${SPACE_MD})`,
     height: `calc(100% - ${SPACE_XXL})`,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
     margin: SPACE_XXS,
-    overflowY: 'scroll',
   },
 });

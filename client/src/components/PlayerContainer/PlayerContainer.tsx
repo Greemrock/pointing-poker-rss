@@ -3,18 +3,12 @@ import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
-import { UsersActions } from '../../reducers/usersReducerInterfaces';
 
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
-<<<<<<< HEAD
-  playerId: string;
-=======
   playerId: string | undefined;
   isAdmin: boolean;
-  dispatch: React.Dispatch<UsersActions>;
->>>>>>> 08c01c26fb598bd09226f9c1389c72c372315b69
 };
 
 export const PlayerContainer: React.FC<Props> = ({
@@ -22,7 +16,6 @@ export const PlayerContainer: React.FC<Props> = ({
   playersCards,
   playerId,
   isAdmin,
-  dispatch,
 }) => {
   const classes = usePlayerContainerStyles();
 

@@ -13,11 +13,7 @@ import { SizeCard } from '../../Shared/enums';
 
 type Props = {
   id: string;
-<<<<<<< HEAD
-  playerId: string;
-=======
   playerId: string | undefined;
->>>>>>> 08c01c26fb598bd09226f9c1389c72c372315b69
   name: string;
   surname: string;
   job: string;

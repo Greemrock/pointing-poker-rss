@@ -8,8 +8,8 @@ type Props = {
   name: string;
   surname: string;
   message: string;
-  photoURL: string;
-  timestamp: () => string;
+  photoURL: string | '';
+  timestamp: string;
 };
 
 export const MessageLeft: React.FC<Props> = ({
@@ -33,7 +33,7 @@ export const MessageLeft: React.FC<Props> = ({
           <Typography variant="body2" className={classes.messageContent}>
             {message}
           </Typography>
-          <Typography variant="caption">{timestamp()}</Typography>
+          <Typography variant="caption">{timestamp}</Typography>
         </Paper>
       </div>
     </Container>
@@ -58,7 +58,7 @@ export const MessageRight: React.FC<Props> = ({
           <Typography variant="body2" className={classes.messageContent}>
             {message}
           </Typography>
-          <Typography variant="caption">{timestamp()}</Typography>
+          <Typography variant="caption">{timestamp}</Typography>
         </Paper>
       </div>
       <Avatar alt={name} className={classes.avatar} src={photoURL}>
