@@ -81,6 +81,7 @@ export const PlayerContainer: React.FC<Props> = ({
                   openKickMenu({ id, name: `${name} ${surname}` });
                 }
               }}
+              isDisabled={vouteState.voutingStarted}
             />
           );
         })}
