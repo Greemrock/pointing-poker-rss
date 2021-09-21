@@ -42,6 +42,9 @@ export const PlayerContainer: React.FC<Props> = ({
   };
   useEffect(() => {
     setSnitch(`${currentPlayer.name}${currentPlayer.surname}`);
+    socket.on('roomInfo', (roomInfo) => {
+      dispatch(ReloadUsersActionCreator(roomInfo.users));
+    });
   }, [currentPlayer.name, currentPlayer.surname]);
   const closeKickMenu = () => {
     setIsOpenKickMenu(false);
@@ -50,9 +53,6 @@ export const PlayerContainer: React.FC<Props> = ({
     setRogue(rogue);
     setIsOpenKickMenu(true);
   };
-  socket.on('roomInfo', (roomInfo) => {
-    dispatch(ReloadUsersActionCreator(roomInfo.users));
-  });
 
   return (
     <div className={classes.root}>
