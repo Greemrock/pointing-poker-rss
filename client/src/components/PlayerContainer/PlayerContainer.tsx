@@ -3,24 +3,28 @@ import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
-import { UsersActions } from '../../reducers/usersReducerInterfaces';
+import { Player, UsersActions } from '../../reducers/usersReducerInterfaces';
+import { socket } from '../../api/playersRequests';
+import { ReloadUsersActionCreator } from '../../reducers/usersActionCreators';
 
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
-  playerId: string | undefined;
-  isAdmin: boolean;
+  currentPlayer: Player;
   dispatch: React.Dispatch<UsersActions>;
 };
 
 export const PlayerContainer: React.FC<Props> = ({
   view,
   playersCards,
-  playerId,
-  isAdmin,
+  currentPlayer,
   dispatch,
 }) => {
   const classes = usePlayerContainerStyles();
+
+  socket.on('roomInfo', (roomInfo) => {
+    dispatch(ReloadUsersActionCreator(roomInfo.users));
+  });
 
   return (
     <div className={classes.root}>
@@ -30,7 +34,7 @@ export const PlayerContainer: React.FC<Props> = ({
         </Typography>
       ) : null}
       <Container className={classes.container} maxWidth="md">
-        {playersCards.map(({ id, job, name, surname, image }) => {
+        {playersCards.map(({ id, job, name, surname, image, isAdmin }) => {
           return (
             <PlayerCard
               key={id}
@@ -39,10 +43,11 @@ export const PlayerContainer: React.FC<Props> = ({
               name={name}
               surname={surname}
               image={image}
-              playerId={playerId}
+              playerId={currentPlayer.id}
+              isAdmin={isAdmin}
               size={view === Place.game ? SizeCard.small : undefined}
               removeUser={() => {
-                if (isAdmin) () => isAdmin;
+                if (currentPlayer.isAdmin) () => isAdmin;
               }}
             />
           );
