@@ -7,12 +7,13 @@ import { Player, UsersActions } from '../../reducers/usersReducerInterfaces';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
 import { initialState, VoutingReducer } from '../../reducers/voutingReducer';
 import { StartVoutingActionCreator } from '../../reducers/voutingActionCreators';
+import { CandidateOrNominated } from '../../reducers/voutingReducerInterfaces';
 
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
   playerId: string | undefined;
-  you: Player | null;
+  you: Player;
   dispatch: React.Dispatch<UsersActions>;
 };
 
@@ -25,23 +26,27 @@ export const PlayerContainer: React.FC<Props> = ({
 }) => {
   const [isOpenKickMenu, setIsOpenKickMenu] = useState(false);
   const [snitch, setSnitch] = useState<string | null>(null);
-  const [rogue, setRogue] = useState<string | undefined>();
+  const [rogue, setRogue] = useState<CandidateOrNominated | undefined>();
   const [vouteState, dispatchVouting] = useReducer(
     VoutingReducer,
     initialState
   );
   const classes = usePlayerContainerStyles();
 
-  const startVoting = () => {
+  const startVoting = (
+    candidate: CandidateOrNominated | null,
+    nominated: CandidateOrNominated | null
+  ) => {
+    console.log('to back', candidate, nominated);
     dispatchVouting(StartVoutingActionCreator());
   };
   useEffect(() => {
-    setSnitch(`${you?.name}${you?.surname}`);
-  }, [you?.name, you?.surname]);
+    setSnitch(`${you.name}${you.surname}`);
+  }, [you.name, you.surname]);
   const closeKickMenu = () => {
     setIsOpenKickMenu(false);
   };
-  const openKickMenu = (rogue?: string) => {
+  const openKickMenu = (rogue?: CandidateOrNominated) => {
     setRogue(rogue);
     setIsOpenKickMenu(true);
   };
@@ -70,7 +75,7 @@ export const PlayerContainer: React.FC<Props> = ({
                 if (isAdmin) {
                   openKickMenu();
                 } else {
-                  openKickMenu(`${name} ${surname}`);
+                  openKickMenu({ id, name: `${name} ${surname}` });
                 }
               }}
             />
@@ -80,13 +85,20 @@ export const PlayerContainer: React.FC<Props> = ({
       <DeletePlayerBlock
         isAdmin={you?.isAdmin}
         isVoting={
-          vouteState.nominated.id !== you?.id && vouteState.voutingStarted
+          vouteState.nominated.id !== you.id && vouteState.voutingStarted
         }
         rogue={rogue}
         snitch={snitch}
         isOpen={isOpenKickMenu}
         closeMenu={closeKickMenu}
-        startVoting={startVoting}
+        startVoting={() => {
+          if (rogue) {
+            startVoting(
+              { id: you?.id, name: `${you.name} ${you?.surname}` },
+              { id: rogue.id, name: rogue.name }
+            );
+          }
+        }}
       />
     </div>
   );

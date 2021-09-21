@@ -28,7 +28,7 @@ export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
         playerId={appState.currentPlayer?.id}
         view={view}
         playersCards={appState.players}
-        you={appState.currentPlayer}
+        you={appState.currentPlayer!}
         dispatch={dispatch}
       />
     </Container>

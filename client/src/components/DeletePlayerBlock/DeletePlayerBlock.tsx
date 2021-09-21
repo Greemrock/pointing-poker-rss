@@ -8,12 +8,13 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
+import { CandidateOrNominated } from '../../reducers/voutingReducerInterfaces';
 
 type Props = {
   isAdmin: boolean | undefined;
   isVoting: boolean | undefined;
   snitch: string | null;
-  rogue?: string;
+  rogue?: CandidateOrNominated;
   isOpen: boolean;
   closeMenu: () => void;
   startVoting: () => void;
@@ -57,14 +58,14 @@ export const DeletePlayerBlock: React.FC<Props> = ({
         {!isVoting ? (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             Are you really want to remove player{' '}
-            <span className={classes.nameSpan}> {rogue} </span>from game
+            <span className={classes.nameSpan}> {rogue?.name} </span>from game
             session?
           </Typography>
         ) : (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             <span className={classes.nameSpan}> {snitch} </span> want to kick
-            member <span className={classes.nameSpan}> {rogue}</span>. Do you
-            agree with it?
+            member <span className={classes.nameSpan}> {rogue?.name}</span>. Do
+            you agree with it?
           </Typography>
         )}
       </Container>
