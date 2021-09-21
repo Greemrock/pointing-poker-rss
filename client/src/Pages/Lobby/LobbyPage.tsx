@@ -8,13 +8,12 @@ import { AppContext } from '../../App';
 
 type Props = {
   link: string;
-  isAdmin: boolean;
   view?: Place;
 };
 
-export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
+export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
-  const { appState } = useContext(AppContext);
+  const { appState, dispatch } = useContext(AppContext);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -23,12 +22,12 @@ export const LobbyPage: React.FC<Props> = ({ link, isAdmin, view }) => {
           Meeting room
         </Typography>
       </div>
-      <StartExitBtn link={link} isAdmin={isAdmin} />
+      <StartExitBtn link={link} isAdmin={appState.currentPlayer.isAdmin} />
       <PlayerContainer
-        playerId={appState.currentPlayer?.id}
         view={view}
         playersCards={appState.players}
-        isAdmin={isAdmin}
+        currentPlayer={appState.currentPlayer}
+        dispatch={dispatch}
       />
     </Container>
   );

@@ -86,10 +86,9 @@ export const WelcomeFormDialog: FC<Props> = ({
       payloadObject.roomId = gameId;
       handleUserSubmit(payloadObject);
     }
-    socket.on('roomInfo', (userInfo, roomInfo) => {
+    socket.on('personalData', (userInfo) => {
       dispatch(AuthActionCreator());
       dispatch(AddUserActionCreator(userInfo));
-      dispatch(ReloadUsersActionCreator(roomInfo.users));
       handleClose();
       setIsLoading(false);
     });

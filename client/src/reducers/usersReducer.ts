@@ -5,13 +5,22 @@ import { Player } from './usersReducerInterfaces';
 export type AppState = {
   isAuth: boolean;
   players: Player[];
-  currentPlayer: null | Player;
+  currentPlayer: Player;
 };
 
 export const initialState: AppState = {
   isAuth: false,
   players: [],
-  currentPlayer: null,
+  currentPlayer: {
+    id: '',
+    name: '',
+    surname: '',
+    job: '',
+    image: null,
+    observer: false,
+    isAdmin: false,
+    roomId: '',
+  },
 };
 export const usersReducer = (
   state: AppState = initialState,
