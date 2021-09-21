@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useTextInputStyles } from './TextInput.styled';
@@ -16,32 +16,29 @@ export const TextInput: React.FC = () => {
   } = useContext(AppContext);
   const classes = useTextInputStyles();
   const { messageDispatch } = useContext(MessageContext);
+
+  useEffect(() => {
+    socket.on('msgToClient', (data) => {
+      messageDispatch(
+        AddMessageActionCreator({ ...data, timestamp: getDate() })
+      );
+    });
+  });
   return (
     <Formik
       initialValues={{ message: '' }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        if (currentPlayer) {
-          const payloadObject = {
-            ...values,
-            id: currentPlayer.id,
-            name: currentPlayer.name,
-            surname: currentPlayer.surname,
-            image: currentPlayer.image,
-            roomId: currentPlayer.roomId,
-          };
-          if (values.message.length) {
-            handleMessageSubmit(payloadObject);
-            socket.once('msgToClient', (data) => {
-              messageDispatch(
-                AddMessageActionCreator({ ...data, timestamp: getDate() })
-              );
-              setSubmitting(false);
-              resetForm();
-            });
-          } else {
-            setSubmitting(false);
-          }
-        }
+        const payloadObject = {
+          ...values,
+          id: currentPlayer.id,
+          name: currentPlayer.name,
+          surname: currentPlayer.surname,
+          image: currentPlayer.image,
+          roomId: currentPlayer.roomId,
+        };
+        values.message.length && handleMessageSubmit(payloadObject);
+        setSubmitting(false);
+        resetForm();
       }}
     >
       {({ isSubmitting }) => (
