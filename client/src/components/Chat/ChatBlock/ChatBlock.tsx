@@ -4,7 +4,7 @@ import { useChatBlockStyles } from './ChatBlock.styled';
 import { TextInput } from '../TextInput/';
 import { MessageLeft, MessageRight } from '../Message';
 import { AppContext } from '../../../App';
-import { MessageContext } from '../../../reducers/message';
+import { MessageContext } from '../../../context';
 
 type Props = {
   isOpenChat: boolean;

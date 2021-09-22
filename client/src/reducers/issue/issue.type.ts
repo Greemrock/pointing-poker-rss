@@ -26,11 +26,16 @@ export type AddEditIssueAction = {
   payload: IssueType;
 };
 
-export type IsEditIssueAction = {
-  type: IssueActionType.IS_EDIT_ISSUE;
+export type EditIssueTrueAction = {
+  type: IssueActionType.EDIT_ISSUE_TRUE;
+};
+
+export type EditIssueFalseAction = {
+  type: IssueActionType.EDIT_ISSUE_FALSE;
 };
 
 export type IssueActions =
   | AddEditIssueAction
-  | IsEditIssueAction
-  | UpdateIssueAction;
+  | EditIssueTrueAction
+  | UpdateIssueAction
+  | EditIssueFalseAction;

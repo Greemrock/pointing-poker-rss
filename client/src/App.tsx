@@ -9,18 +9,11 @@ import { useAppStyles } from './App.styled';
 import { ChatBlock } from './components/Chat';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { MessageContext, IssueContext } from './context';
 import { LobbyPage } from './Pages/Lobby';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
-import {
-  initialIssueState,
-  issueReducer,
-  IssueContext,
-} from './reducers/issue';
-import {
-  initialMessageState,
-  msgReducer,
-  MessageContext,
-} from './reducers/message';
+import { initialIssueState, issueReducer } from './reducers/issue';
+import { initialMessageState, msgReducer } from './reducers/message';
 import { AppState, initialState, usersReducer } from './reducers/usersReducer';
 import { UsersActions } from './reducers/usersReducerInterfaces';
 

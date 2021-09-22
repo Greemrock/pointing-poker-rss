@@ -8,10 +8,8 @@ import { AppContext } from '../../../App';
 import { getDate } from '../../../Util/getDate';
 import { handleMessageSubmit } from '../../../api/message';
 import { socket } from '../../../api/playersRequests';
-import {
-  MessageContext,
-  AddMessageActionCreator,
-} from '../../../reducers/message';
+import { AddMessageActionCreator } from '../../../reducers/message';
+import { MessageContext } from '../../../context';
 
 export const TextInput: React.FC = () => {
   const {

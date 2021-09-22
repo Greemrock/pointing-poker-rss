@@ -3,7 +3,8 @@ import {
   UpdateIssueAction,
   IssueType,
   AddEditIssueAction,
-  IsEditIssueAction,
+  EditIssueTrueAction,
+  EditIssueFalseAction,
 } from './issue.type';
 
 export const UpdateIssueActionCreator = (
@@ -20,6 +21,10 @@ export const AddEditIssueActionCreator = (
   payload,
 });
 
-export const IsEditIssueActionCreator = (): IsEditIssueAction => ({
-  type: IssueActionType.IS_EDIT_ISSUE,
+export const EditIssueTrueActionCreator = (): EditIssueTrueAction => ({
+  type: IssueActionType.EDIT_ISSUE_TRUE,
+});
+
+export const EditIssueFalseActionCreator = (): EditIssueFalseAction => ({
+  type: IssueActionType.EDIT_ISSUE_FALSE,
 });

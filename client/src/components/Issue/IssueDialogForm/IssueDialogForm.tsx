@@ -20,11 +20,8 @@ import {
   handleAddIssueSubmit,
   handleUpdateIssueSubmit,
 } from '../../../api/issue';
-import {
-  IssueContext,
-  IsEditIssueActionCreator,
-  UpdateIssueActionCreator,
-} from '../../../reducers/issue';
+import { UpdateIssueActionCreator } from '../../../reducers/issue';
+import { IssueContext } from '../../../context';
 
 type Props = {
   open: boolean;
@@ -57,7 +54,6 @@ export const IssueDialogForm: React.FC<Props> = ({ open, handleClose }) => {
 
     if (isEdit) {
       handleUpdateIssueSubmit({ ...baseIssue, id: editIssue.id });
-      issueDispatch(IsEditIssueActionCreator());
     } else {
       handleAddIssueSubmit(baseIssue);
     }

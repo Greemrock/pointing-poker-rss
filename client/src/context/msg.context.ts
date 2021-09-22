@@ -1,6 +1,6 @@
 import React from 'react';
-import { initialMessageState } from '.';
-import { MessageActions, MessageStateType } from './msg.type';
+import { initialMessageState } from '../reducers/message';
+import { MessageActions, MessageStateType } from '../reducers/message/msg.type';
 
 export const MessageContext = React.createContext<{
   messageState: MessageStateType;

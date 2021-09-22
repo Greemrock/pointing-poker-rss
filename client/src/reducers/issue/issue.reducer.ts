@@ -30,10 +30,15 @@ export const issueReducer = (
         ...state,
         editIssue: action.payload,
       };
-    case IssueActionType.IS_EDIT_ISSUE:
+    case IssueActionType.EDIT_ISSUE_TRUE:
       return {
         ...state,
-        isEdit: !state.isEdit,
+        isEdit: true,
+      };
+    case IssueActionType.EDIT_ISSUE_FALSE:
+      return {
+        ...state,
+        isEdit: false,
       };
     default:
       return state;

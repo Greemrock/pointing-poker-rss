@@ -13,9 +13,11 @@ import { useIssueCardStyles } from './IssueCard.styled';
 import { Issue, Priority, SizeCard } from '../../../Shared/enums';
 import {
   AddEditIssueActionCreator,
-  IsEditIssueActionCreator,
-  IssueContext,
+  EditIssueFalseActionCreator,
+  EditIssueTrueActionCreator,
 } from '../../../reducers/issue';
+import { handleDeleteIssueSubmit } from '../../../api/issue';
+import { IssueContext } from '../../../context';
 
 type Props = {
   id: string;
@@ -40,8 +42,22 @@ export const IssueCard: React.FC<Props> = ({
   size,
   handleOpen,
 }) => {
-  //
+  const deleteIssueData = {
+    id: id,
+    roomId: roomId as string,
+  };
+  const editIssueData = {
+    id: id,
+    title: title as string,
+    link: link as string,
+    priority: priority as Priority,
+    isDone: isDone,
+    roomId: roomId as string,
+  };
+
+  // plug
   const currentId = '0';
+  //
 
   const classes = useIssueCardStyles({
     view,
@@ -52,22 +68,17 @@ export const IssueCard: React.FC<Props> = ({
   });
   const { issueDispatch } = useContext(IssueContext);
 
-  const handleUpdate = () => {
-    if (title && link && priority && roomId) {
-      const editIssue = {
-        id: id,
-        title: title,
-        link: link,
-        priority: priority,
-        isDone: isDone,
-        roomId: roomId,
-      };
-      console.log(editIssue);
-      issueDispatch(AddEditIssueActionCreator(editIssue));
-      issueDispatch(IsEditIssueActionCreator());
-    }
+  const handleCreate = () => {
+    issueDispatch(EditIssueFalseActionCreator());
     handleOpen();
   };
+
+  const handleUpdate = () => {
+    issueDispatch(AddEditIssueActionCreator(editIssueData));
+    issueDispatch(EditIssueTrueActionCreator());
+    handleOpen();
+  };
+
   return (
     <Paper elevation={3} className={classes.field}>
       {view === Issue.create ? (
@@ -78,7 +89,7 @@ export const IssueCard: React.FC<Props> = ({
               <IconButton
                 className={classes.add}
                 aria-label="add issue"
-                onClick={handleOpen}
+                onClick={handleCreate}
               >
                 <AddIcon />
               </IconButton>
@@ -110,7 +121,11 @@ export const IssueCard: React.FC<Props> = ({
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete issue" placement="bottom-start">
-            <IconButton className={classes.delete} aria-label="delete issue">
+            <IconButton
+              className={classes.delete}
+              aria-label="delete issue"
+              onClick={() => handleDeleteIssueSubmit(deleteIssueData)}
+            >
               <DeleteOutlineIcon />
             </IconButton>
           </Tooltip>
@@ -119,7 +134,11 @@ export const IssueCard: React.FC<Props> = ({
       {view === Issue.delete && (
         <div className={classes.adminWView}>
           <Tooltip title="Delete issue" placement="bottom-start">
-            <IconButton className={classes.delete} aria-label="delete issue">
+            <IconButton
+              className={classes.delete}
+              aria-label="delete issue"
+              onClick={() => handleDeleteIssueSubmit(deleteIssueData)}
+            >
               <DeleteOutlineIcon />
             </IconButton>
           </Tooltip>

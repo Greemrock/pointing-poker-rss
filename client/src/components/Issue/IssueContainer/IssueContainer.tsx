@@ -4,7 +4,7 @@ import { Issue, SizeCard } from '../../../Shared/enums';
 import { IssueCard } from '../IssueCard';
 import { useIssueContainerStyles } from './IssueContainer.styled';
 import { IssueDialogForm } from '../IssueDialogForm';
-import { IssueContext } from '../../../reducers/issue/issue.context';
+import { IssueContext } from '../../../context/issue.context';
 
 type Props = {
   view?: Issue;
