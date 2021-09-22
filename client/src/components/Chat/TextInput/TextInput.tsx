@@ -21,6 +21,7 @@ export const TextInput: React.FC = () => {
   const { messageDispatch } = useContext(MessageContext);
 
   useEffect(() => {
+    socket.off('msgToClient');
     socket.on('msgToClient', (data) => {
       messageDispatch(
         AddMessageActionCreator({ ...data, timestamp: getDate() })
