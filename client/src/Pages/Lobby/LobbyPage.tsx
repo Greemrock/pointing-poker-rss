@@ -5,6 +5,7 @@ import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
+import { GameTimer } from '../../components/GameTimer';
 
 type Props = {
   link: string;
@@ -29,6 +30,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         currentPlayer={appState.currentPlayer}
         dispatch={dispatch}
       />
+      <GameTimer time={280} />
     </Container>
   );
 };
