@@ -12,17 +12,17 @@ import { Header } from './components/Header';
 import { LobbyPage } from './Pages/Lobby';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
 import {
-  initialMessageState,
-  msgReducer,
-} from './reducers/message/msg.reducer';
-import { MessageActions, MessageStateType } from './reducers/message/msg.type';
-import { AppState, initialState, usersReducer } from './reducers/usersReducer';
-import { UsersActions } from './reducers/usersReducerInterfaces';
-import { IssueContext } from './reducers/issue/issue.context';
-import {
   initialIssueState,
   issueReducer,
-} from './reducers/issue/issue.reducer';
+  IssueContext,
+} from './reducers/issue';
+import {
+  initialMessageState,
+  msgReducer,
+  MessageContext,
+} from './reducers/message';
+import { AppState, initialState, usersReducer } from './reducers/usersReducer';
+import { UsersActions } from './reducers/usersReducerInterfaces';
 
 export const AppContext = React.createContext<{
   appState: AppState;
@@ -32,18 +32,10 @@ export const AppContext = React.createContext<{
   dispatch: () => null,
 });
 
-export const MessageContext = React.createContext<{
-  messageState: MessageStateType;
-  messageDispatch: React.Dispatch<MessageActions>;
-}>({
-  messageState: initialMessageState,
-  messageDispatch: () => null,
-});
-
 export const App: React.FC = () => {
   const classes = useAppStyles();
+  const [isOpenChat, setIsOpenChat] = useState(false);
   const [appState, dispatch] = useReducer(usersReducer, initialState);
-
   const [issueState, issueDispatch] = useReducer(
     issueReducer,
     initialIssueState
@@ -52,7 +44,6 @@ export const App: React.FC = () => {
     msgReducer,
     initialMessageState
   );
-  const [isOpenChat, setIsOpenChat] = useState(false);
   return (
     <AppContext.Provider value={{ appState, dispatch }}>
       <MessageContext.Provider value={{ messageState, messageDispatch }}>

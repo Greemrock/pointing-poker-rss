@@ -14,11 +14,10 @@ import { Field, Form, Formik, FormikValues } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
 import { checkLink, Priority } from '../../../Shared';
-import { IssueContext } from '../../../reducers/issue/issue.context';
-import { AddIssueActionCreator } from '../../../reducers/issue/issue.create-action';
 import { socket } from '../../../api/playersRequests';
 import { AppContext } from '../../../App';
 import { handleIssueSubmit } from '../../../api/issue';
+import { AddIssueActionCreator, IssueContext } from '../../../reducers/issue';
 
 type Props = {
   open: boolean;
