@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Paper,
   Typography,
@@ -11,6 +11,11 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import { useIssueCardStyles } from './IssueCard.styled';
 import { Issue, Priority, SizeCard } from '../../../Shared/enums';
+import { handleUpdateIssueSubmit } from '../../../api/issue';
+import {
+  AddIdEditIssueActionCreator,
+  IssueContext,
+} from '../../../reducers/issue';
 
 type Props = {
   id: string;
@@ -20,7 +25,7 @@ type Props = {
   view?: Issue;
   isDone: boolean;
   size?: SizeCard.small;
-  handleClickOpen: (isEdit: boolean, id: string) => void;
+  handleOpen: () => void;
 };
 
 export const IssueCard: React.FC<Props> = ({
@@ -31,7 +36,7 @@ export const IssueCard: React.FC<Props> = ({
   view,
   isDone,
   size,
-  handleClickOpen,
+  handleOpen,
 }) => {
   //
   const currentId = '0';
@@ -43,6 +48,16 @@ export const IssueCard: React.FC<Props> = ({
     currentId,
     size,
   });
+  const { issueState, issueDispatch } = useContext(IssueContext);
+
+  const handleUpdate = () => {
+    const data = {
+      id: id,
+      isEdit: true,
+    };
+    issueDispatch(AddIdEditIssueActionCreator(data));
+    handleOpen();
+  };
   return (
     <Paper elevation={3} className={classes.field}>
       {view === Issue.create ? (
@@ -53,7 +68,7 @@ export const IssueCard: React.FC<Props> = ({
               <IconButton
                 className={classes.add}
                 aria-label="add issue"
-                onClick={() => handleClickOpen(false, id)}
+                onClick={handleOpen}
               >
                 <AddIcon />
               </IconButton>
@@ -79,7 +94,7 @@ export const IssueCard: React.FC<Props> = ({
             <IconButton
               className={classes.edit}
               aria-label="edit issue"
-              onClick={() => handleClickOpen(true, id)}
+              onClick={handleUpdate}
             >
               <CreateOutlinedIcon />
             </IconButton>

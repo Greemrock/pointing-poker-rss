@@ -1,6 +1,8 @@
-import { payloadMessage } from './message.request';
-import { socket } from '../playersRequests';
-
-export const handleMessageSubmit = (payload: payloadMessage): void => {
-  socket.emit('msgToServer', payload);
+export type payloadMessage = {
+  id: string;
+  name: string;
+  surname: string;
+  image: string | null;
+  roomId: string;
+  message: string;
 };

@@ -1,7 +1,27 @@
 import { IssueActionType } from './issue.action';
-import { AddIssueAction, IssueType } from './issue.type';
+import {
+  UpdateIssueAction,
+  IssueType,
+  AddIdEditIssueAction,
+  EditIssueType,
+  RemoveIdEditIssueAction,
+} from './issue.type';
 
-export const AddIssueActionCreator = (payload: IssueType): AddIssueAction => ({
-  type: IssueActionType.ADD_ISSUE,
+export const UpdateIssueActionCreator = (
+  payload: IssueType[]
+): UpdateIssueAction => ({
+  type: IssueActionType.UPDATE_ISSUE,
   payload,
+});
+
+export const AddIdEditIssueActionCreator = (
+  payload: EditIssueType
+): AddIdEditIssueAction => ({
+  type: IssueActionType.ADD_ID_EDIT_ISSUE,
+  payload,
+});
+
+export const RemoveIdEditIssueActionCreator = (): RemoveIdEditIssueAction => ({
+  type: IssueActionType.REMOVE_ID_EDIT_ISSUE,
+  payload: { id: '', isEdit: false },
 });

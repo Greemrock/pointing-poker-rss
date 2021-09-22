@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Dialog,
   Typography,
@@ -9,6 +9,7 @@ import {
   FormControl,
   Container,
   LinearProgress,
+  Modal,
 } from '@material-ui/core';
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
@@ -16,13 +17,16 @@ import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
 import { checkLink, Priority } from '../../../Shared';
 import { socket } from '../../../api/playersRequests';
 import { AppContext } from '../../../App';
-import { handleIssueSubmit } from '../../../api/issue';
-import { AddIssueActionCreator, IssueContext } from '../../../reducers/issue';
+import { handleAddIssueSubmit } from '../../../api/issue';
+import {
+  IssueContext,
+  RemoveIdEditIssueActionCreator,
+  UpdateIssueActionCreator,
+} from '../../../reducers/issue';
 
 type Props = {
   open: boolean;
   isEditForm: boolean;
-  idEditIssue: string;
   handleClose: () => void;
 };
 
@@ -30,13 +34,14 @@ export const IssueDialogForm: React.FC<Props> = ({
   open,
   handleClose,
   isEditForm,
-  idEditIssue,
 }) => {
   const classes = useIssueDialogFormStyles();
   const { issueState, issueDispatch } = useContext(IssueContext);
   const { appState, dispatch } = useContext(AppContext);
 
-  const index = issueState.issue.findIndex((elem) => elem.id === idEditIssue);
+  const index = issueState.issue.findIndex(
+    (elem) => elem.id === issueState.editIssue.id
+  );
 
   const defaultValue = {
     title: index === -1 ? '' : issueState.issue[index].title,
@@ -51,6 +56,13 @@ export const IssueDialogForm: React.FC<Props> = ({
       {p}
     </MenuItem>
   ));
+
+  useEffect(() => {
+    socket.off('allIssues');
+    socket.on('allIssues', (data) => {
+      issueDispatch(UpdateIssueActionCreator(data));
+    });
+  });
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -78,16 +90,15 @@ export const IssueDialogForm: React.FC<Props> = ({
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(false);
             const payloadObject = {
               ...values,
               isDone: false,
               roomId: appState.currentPlayer.roomId,
             };
-            handleIssueSubmit(payloadObject);
-            socket.once('addUser', (data) => {
-              issueDispatch(AddIssueActionCreator(data));
-            });
+            handleAddIssueSubmit(payloadObject);
+            handleClose();
+            issueDispatch(RemoveIdEditIssueActionCreator());
+            setSubmitting(false);
           }}
         >
           {({ isSubmitting, touched, errors }) => (

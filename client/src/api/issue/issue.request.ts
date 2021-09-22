@@ -1,6 +1,10 @@
-import { payloadIssue } from './issue.type';
+import { payloadBaseIssue, payloadIssue } from './issue.type';
 import { socket } from '../playersRequests';
 
-export const handleIssueSubmit = (payload: payloadIssue): void => {
+export const handleAddIssueSubmit = (payload: payloadBaseIssue): void => {
   socket.emit('addIssue', payload);
+};
+
+export const handleUpdateIssueSubmit = (payload: payloadIssue): void => {
+  socket.emit('updateIssue', payload);
 };

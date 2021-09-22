@@ -12,11 +12,30 @@ export type IssueType = {
 
 export type IssueStateType = {
   issue: IssueType[];
+  editIssue: EditIssueType;
 };
 
-export type AddIssueAction = {
-  type: IssueActionType.ADD_ISSUE;
-  payload: IssueType;
+export type EditIssueType = {
+  id: string;
+  isEdit: boolean;
 };
 
-export type IssueActions = AddIssueAction;
+export type UpdateIssueAction = {
+  type: IssueActionType.UPDATE_ISSUE;
+  payload: IssueType[];
+};
+
+export type AddIdEditIssueAction = {
+  type: IssueActionType.ADD_ID_EDIT_ISSUE;
+  payload: EditIssueType;
+};
+
+export type RemoveIdEditIssueAction = {
+  type: IssueActionType.REMOVE_ID_EDIT_ISSUE;
+  payload: EditIssueType;
+};
+
+export type IssueActions =
+  | AddIdEditIssueAction
+  | RemoveIdEditIssueAction
+  | UpdateIssueAction;
