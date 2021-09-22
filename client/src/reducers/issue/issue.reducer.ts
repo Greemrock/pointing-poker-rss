@@ -1,11 +1,17 @@
+import { Priority } from '../../Shared';
 import { IssueActionType } from './issue.action';
 import { IssueActions, IssueStateType } from './issue.type';
 
 export const initialIssueState: IssueStateType = {
-  issue: [],
+  issues: [],
+  isEdit: false,
   editIssue: {
     id: '',
-    isEdit: false,
+    link: '',
+    priority: Priority.low,
+    title: '',
+    isDone: false,
+    roomId: '',
   },
 };
 
@@ -17,17 +23,17 @@ export const issueReducer = (
     case IssueActionType.UPDATE_ISSUE:
       return {
         ...state,
-        issue: action.payload,
+        issues: action.payload,
       };
-    case IssueActionType.ADD_ID_EDIT_ISSUE:
+    case IssueActionType.ADD_EDIT_ISSUE:
       return {
         ...state,
         editIssue: action.payload,
       };
-    case IssueActionType.REMOVE_ID_EDIT_ISSUE:
+    case IssueActionType.IS_EDIT_ISSUE:
       return {
         ...state,
-        editIssue: action.payload,
+        isEdit: !state.isEdit,
       };
     default:
       return state;

@@ -11,13 +11,9 @@ export type IssueType = {
 };
 
 export type IssueStateType = {
-  issue: IssueType[];
-  editIssue: EditIssueType;
-};
-
-export type EditIssueType = {
-  id: string;
+  issues: IssueType[];
   isEdit: boolean;
+  editIssue: IssueType;
 };
 
 export type UpdateIssueAction = {
@@ -25,17 +21,16 @@ export type UpdateIssueAction = {
   payload: IssueType[];
 };
 
-export type AddIdEditIssueAction = {
-  type: IssueActionType.ADD_ID_EDIT_ISSUE;
-  payload: EditIssueType;
+export type AddEditIssueAction = {
+  type: IssueActionType.ADD_EDIT_ISSUE;
+  payload: IssueType;
 };
 
-export type RemoveIdEditIssueAction = {
-  type: IssueActionType.REMOVE_ID_EDIT_ISSUE;
-  payload: EditIssueType;
+export type IsEditIssueAction = {
+  type: IssueActionType.IS_EDIT_ISSUE;
 };
 
 export type IssueActions =
-  | AddIdEditIssueAction
-  | RemoveIdEditIssueAction
+  | AddEditIssueAction
+  | IsEditIssueAction
   | UpdateIssueAction;

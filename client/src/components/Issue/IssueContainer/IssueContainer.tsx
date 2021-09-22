@@ -13,8 +13,7 @@ type Props = {
 export const IssueContainer: React.FC<Props> = ({ view }) => {
   const classes = useIssueContainerStyles();
   const [open, setOpen] = useState(false);
-  const [isEditForm, setIsEditForm] = useState(false);
-  const { issueState, issueDispatch } = useContext(IssueContext);
+  const { issueState } = useContext(IssueContext);
 
   const handleOpen = () => {
     setOpen(true);
@@ -30,9 +29,8 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
         Issue:
       </Typography>
       <Container className={classes.container} maxWidth="md">
-        {issueState.issue.map(
+        {issueState.issues.map(
           ({ id, link, isDone, priority, title, roomId }) => {
-            console.log(issueState.issue);
             return (
               <IssueCard
                 key={id}
@@ -41,6 +39,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
                 isDone={isDone}
                 priority={priority}
                 title={title}
+                roomId={roomId}
                 view={view}
                 handleOpen={handleOpen}
               />
@@ -57,11 +56,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
           />
         )}
       </Container>
-      <IssueDialogForm
-        open={open}
-        handleClose={handleClose}
-        isEditForm={isEditForm}
-      />
+      <IssueDialogForm open={open} handleClose={handleClose} />
     </>
   );
 };

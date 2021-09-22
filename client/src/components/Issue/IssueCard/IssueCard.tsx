@@ -11,9 +11,9 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import { useIssueCardStyles } from './IssueCard.styled';
 import { Issue, Priority, SizeCard } from '../../../Shared/enums';
-import { handleUpdateIssueSubmit } from '../../../api/issue';
 import {
-  AddIdEditIssueActionCreator,
+  AddEditIssueActionCreator,
+  IsEditIssueActionCreator,
   IssueContext,
 } from '../../../reducers/issue';
 
@@ -22,8 +22,9 @@ type Props = {
   title?: string;
   link?: string;
   priority?: Priority;
-  view?: Issue;
   isDone: boolean;
+  roomId?: string;
+  view?: Issue;
   size?: SizeCard.small;
   handleOpen: () => void;
 };
@@ -33,8 +34,9 @@ export const IssueCard: React.FC<Props> = ({
   title,
   link,
   priority,
-  view,
   isDone,
+  roomId,
+  view,
   size,
   handleOpen,
 }) => {
@@ -48,14 +50,22 @@ export const IssueCard: React.FC<Props> = ({
     currentId,
     size,
   });
-  const { issueState, issueDispatch } = useContext(IssueContext);
+  const { issueDispatch } = useContext(IssueContext);
 
   const handleUpdate = () => {
-    const data = {
-      id: id,
-      isEdit: true,
-    };
-    issueDispatch(AddIdEditIssueActionCreator(data));
+    if (title && link && priority && roomId) {
+      const editIssue = {
+        id: id,
+        title: title,
+        link: link,
+        priority: priority,
+        isDone: isDone,
+        roomId: roomId,
+      };
+      console.log(editIssue);
+      issueDispatch(AddEditIssueActionCreator(editIssue));
+      issueDispatch(IsEditIssueActionCreator());
+    }
     handleOpen();
   };
   return (
