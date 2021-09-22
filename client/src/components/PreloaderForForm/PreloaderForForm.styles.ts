@@ -5,7 +5,7 @@ import {
   SPACE_MD,
   SPACE_XL,
 } from '../../Shared/cssConstants';
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   preloaderBlock: {
     display: 'flex',
     flexDirection: 'column',
