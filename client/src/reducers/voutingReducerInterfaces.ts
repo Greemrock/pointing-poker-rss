@@ -1,3 +1,5 @@
+import { Player } from './usersReducerInterfaces';
+
 export enum VoutingActionsTypes {
   START_VOTING = 'START-VOTING',
   FINISH_VOTING = 'RELOAD-USERS',
@@ -5,11 +7,6 @@ export enum VoutingActionsTypes {
   SET_NOMINATED = 'SET-NOMINATED',
   ADD_VOUTED_VOUTER = 'ADD-VOUTED-VOUTER',
   SET_PARTICIPANTS = 'SET-PARTICIPANTS',
-}
-
-export interface CandidateOrNominated {
-  id: string;
-  name: string;
 }
 
 export interface SetParticipants {
@@ -31,12 +28,12 @@ export interface AddVouted {
 
 export interface SetCandidateUser {
   type: VoutingActionsTypes.SET_CANDIDATE;
-  payload: CandidateOrNominated;
+  payload: Player;
 }
 
 export interface SetNominatedUser {
   type: VoutingActionsTypes.SET_NOMINATED;
-  payload: CandidateOrNominated;
+  payload: Player;
 }
 
 export type VoutingActions =

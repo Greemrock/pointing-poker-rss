@@ -1,6 +1,6 @@
+import { Player } from './usersReducerInterfaces';
 import {
   AddVouted,
-  CandidateOrNominated,
   FinishVoting,
   SetCandidateUser,
   SetNominatedUser,
@@ -19,13 +19,13 @@ export const AddVoutedActionCreator = (): AddVouted => ({
   type: VoutingActionsTypes.ADD_VOUTED_VOUTER,
 });
 export const SetCandidateActionCreator = (
-  payload: CandidateOrNominated
+  payload: Player
 ): SetCandidateUser => ({
   type: VoutingActionsTypes.SET_CANDIDATE,
   payload,
 });
 export const SetNominatedActionCreator = (
-  payload: CandidateOrNominated
+  payload: Player
 ): SetNominatedUser => ({
   type: VoutingActionsTypes.SET_NOMINATED,
   payload,

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import { Player } from '../reducers/usersReducerInterfaces';
 
 const axiosInstance = axios.create({
   baseURL: 'https://safe-lowlands-48809.herokuapp.com/',
@@ -24,4 +25,8 @@ export const handleAdminSubmit = (payload: payloadType) => {
 };
 export const handleUserSubmit = (payload: payloadType) => {
   socket.emit('joinGame', payload);
+};
+
+export const handleVotingSubmit = (candidate: Player, nominant: Player) => {
+  socket.emit('voteKick', candidate, nominant);
 };

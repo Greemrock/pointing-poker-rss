@@ -1,55 +1,63 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
-import { Player, UsersActions } from '../../reducers/usersReducerInterfaces';
+import { Player } from '../../reducers/usersReducerInterfaces';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
 import { initialState, VoutingReducer } from '../../reducers/voutingReducer';
-import { StartVoutingActionCreator } from '../../reducers/voutingActionCreators';
-import { CandidateOrNominated } from '../../reducers/voutingReducerInterfaces';
-import { socket } from '../../api/playersRequests';
+import {
+  SetCandidateActionCreator,
+  SetNominatedActionCreator,
+  StartVoutingActionCreator,
+} from '../../reducers/voutingActionCreators';
+import { handleVotingSubmit, socket } from '../../api/playersRequests';
 import { ReloadUsersActionCreator } from '../../reducers/usersActionCreators';
+import { AppContext } from '../../App';
 
 type Props = {
-  playersCards: PlayerCard[];
   view?: Place;
-  currentPlayer: Player;
-  dispatch: React.Dispatch<UsersActions>;
 };
 
-export const PlayerContainer: React.FC<Props> = ({
-  view,
-  playersCards,
-  currentPlayer,
-  dispatch,
-}) => {
+export const PlayerContainer: React.FC<Props> = ({ view }) => {
+  const {
+    appState: { currentPlayer, players },
+    dispatch,
+  } = useContext(AppContext);
   const [isOpenKickMenu, setIsOpenKickMenu] = useState(false);
-  const [snitch, setSnitch] = useState<string | null>(null);
-  const [rogue, setRogue] = useState<CandidateOrNominated | undefined>();
+  const [rogue, setRogue] = useState<Player | undefined>();
   const [vouteState, dispatchVouting] = useReducer(
     VoutingReducer,
     initialState
   );
   const classes = usePlayerContainerStyles();
 
-  const startVoting = (
-    candidate: CandidateOrNominated | null,
-    nominated: CandidateOrNominated | null
-  ) => {
-    console.log('to back', candidate, nominated);
-    dispatchVouting(StartVoutingActionCreator());
+  const startVoting = (candidate: Player, nominated: Player) => {
+    handleVotingSubmit(candidate, nominated);
   };
   useEffect(() => {
-    setSnitch(`${currentPlayer.name}${currentPlayer.surname}`);
+    socket.off('voteStarted');
+    socket.on('voteStarted', (isStarted, nominated, candidate) => {
+      if (isStarted) {
+        dispatchVouting(SetCandidateActionCreator(candidate));
+        dispatchVouting(SetNominatedActionCreator(nominated));
+        dispatchVouting(StartVoutingActionCreator());
+        if (currentPlayer.id !== '' && currentPlayer.id !== nominated.id) {
+          setIsOpenKickMenu(true);
+        }
+      }
+    });
+  });
+  useEffect(() => {
+    socket.off('roomInfo');
     socket.on('roomInfo', (roomInfo) => {
       dispatch(ReloadUsersActionCreator(roomInfo.users));
     });
-  }, [currentPlayer.name, currentPlayer.surname]);
+  }, []);
   const closeKickMenu = () => {
     setIsOpenKickMenu(false);
   };
-  const openKickMenu = (rogue?: CandidateOrNominated) => {
+  const openKickMenu = (rogue?: Player) => {
     setRogue(rogue);
     setIsOpenKickMenu(true);
   };
@@ -62,49 +70,51 @@ export const PlayerContainer: React.FC<Props> = ({
         </Typography>
       ) : null}
       <Container className={classes.container} maxWidth="md">
-        {playersCards.map(({ id, job, name, surname, image, isAdmin }) => {
-          return (
-            <PlayerCard
-              key={id}
-              id={id}
-              job={job}
-              name={name}
-              surname={surname}
-              image={image}
-              playerId={currentPlayer.id}
-              isAdmin={isAdmin}
-              size={view === Place.game ? SizeCard.small : undefined}
-              removeUser={() => {
-                if (isAdmin) {
-                  openKickMenu();
-                } else {
-                  openKickMenu({ id, name: `${name} ${surname}` });
-                }
-              }}
-              isDisabled={vouteState.voutingStarted}
-            />
-          );
-        })}
+        {players.map(
+          ({ id, job, name, surname, image, isAdmin, observer, roomId }) => {
+            return (
+              <PlayerCard
+                key={id}
+                id={id}
+                job={job}
+                name={name}
+                surname={surname}
+                image={image}
+                playerId={currentPlayer.id}
+                isAdmin={isAdmin}
+                size={view === Place.game ? SizeCard.small : undefined}
+                removeUser={() => {
+                  if (isAdmin) {
+                    openKickMenu();
+                  } else {
+                    openKickMenu({
+                      id,
+                      name,
+                      surname,
+                      job,
+                      image,
+                      isAdmin,
+                      observer,
+                      roomId,
+                    });
+                  }
+                }}
+                isDisabled={vouteState.voutingStarted}
+              />
+            );
+          }
+        )}
       </Container>
       <DeletePlayerBlock
-        isAdmin={currentPlayer.isAdmin}
-        isVoting={
-          vouteState.nominated.id !== currentPlayer.id &&
-          vouteState.voutingStarted
-        }
+        isVoting={vouteState.voutingStarted}
+        votingCandidate={vouteState.candidate}
+        votingNominated={vouteState.nominated}
         rogue={rogue}
-        snitch={snitch}
         isOpen={isOpenKickMenu}
         closeMenu={closeKickMenu}
         startVoting={() => {
           if (rogue) {
-            startVoting(
-              {
-                id: currentPlayer.id,
-                name: `${currentPlayer.name} ${currentPlayer.surname}`,
-              },
-              { id: rogue.id, name: rogue.name }
-            );
+            startVoting(currentPlayer, rogue);
           }
         }}
       />

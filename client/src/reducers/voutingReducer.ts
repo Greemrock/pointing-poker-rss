@@ -1,5 +1,5 @@
+import { Player } from './usersReducerInterfaces';
 import {
-  CandidateOrNominated,
   VoutingActions,
   VoutingActionsTypes,
 } from './voutingReducerInterfaces';
@@ -8,8 +8,8 @@ export type VoutingState = {
   voutingStarted: boolean;
   voutersCount: number;
   voutedCount: number;
-  candidate: CandidateOrNominated;
-  nominated: CandidateOrNominated;
+  candidate: Player;
+  nominated: Player;
 };
 
 export const initialState = {
@@ -19,10 +19,22 @@ export const initialState = {
   candidate: {
     id: '',
     name: '',
+    surname: '',
+    job: '',
+    image: null,
+    observer: false,
+    isAdmin: false,
+    roomId: '',
   },
   nominated: {
     id: '',
     name: '',
+    surname: '',
+    job: '',
+    image: null,
+    observer: false,
+    isAdmin: false,
+    roomId: '',
   },
 };
 

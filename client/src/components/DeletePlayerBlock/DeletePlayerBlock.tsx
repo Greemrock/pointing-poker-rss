@@ -8,23 +8,23 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
-import { CandidateOrNominated } from '../../reducers/voutingReducerInterfaces';
+import { Player } from '../../reducers/usersReducerInterfaces';
 
 type Props = {
-  isAdmin: boolean | undefined;
   isVoting: boolean | undefined;
-  snitch: string | null;
-  rogue?: CandidateOrNominated;
+  rogue?: Player;
+  votingCandidate: Player;
+  votingNominated: Player;
   isOpen: boolean;
   closeMenu: () => void;
   startVoting: () => void;
 };
 
 export const DeletePlayerBlock: React.FC<Props> = ({
-  isAdmin,
   isVoting,
   rogue,
-  snitch,
+  votingCandidate,
+  votingNominated,
   isOpen,
   closeMenu,
   startVoting,
@@ -63,9 +63,16 @@ export const DeletePlayerBlock: React.FC<Props> = ({
           </Typography>
         ) : (
           <Typography className={classes.textBlock} component="h6" variant="h6">
-            <span className={classes.nameSpan}> {snitch} </span> want to kick
-            member <span className={classes.nameSpan}> {rogue?.name}</span>. Do
-            you agree with it?
+            <span className={classes.nameSpan}>
+              {' '}
+              {`${votingNominated.name} ${votingNominated.surname}`}{' '}
+            </span>{' '}
+            want to kick member{' '}
+            <span className={classes.nameSpan}>
+              {' '}
+              {`${votingCandidate.name} ${votingCandidate.surname}`}
+            </span>
+            . Do you agree with it?
           </Typography>
         )}
       </Container>
