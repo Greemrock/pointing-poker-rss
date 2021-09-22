@@ -18,7 +18,7 @@ import { IssueContext } from '../../../reducers/issue/issue.context';
 import { AddIssueActionCreator } from '../../../reducers/issue/issue.create-action';
 import { socket } from '../../../api/playersRequests';
 import { AppContext } from '../../../App';
-import { handleIssueSubmit } from '../../../api/issue/issue.request';
+import { handleIssueSubmit } from '../../../api/issue';
 
 type Props = {
   open: boolean;
