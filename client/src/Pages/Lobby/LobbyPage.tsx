@@ -6,6 +6,7 @@ import { StartExitBtn } from '../../components/StartExitBtn';
 import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
+import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 
 type Props = {
@@ -38,6 +39,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
           dispatch={dispatch}
         />
         {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
+        {currentPlayer.isAdmin ? <Settings /> : null}
       </Container>
     </>
   );
