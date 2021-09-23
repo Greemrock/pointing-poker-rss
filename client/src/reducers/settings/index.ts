@@ -1,3 +1,3 @@
-export * from './settingsActionCreators';
-export * from './settingsReducer';
-export * from './settingsReducerInterfaces';
+export * from './settings.create-actions';
+export * from './settings.reducer';
+export * from './settings.type';

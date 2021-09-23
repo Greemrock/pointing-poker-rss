@@ -8,7 +8,7 @@ import {
   setRoomIdAction,
   SetsActionsTypes,
   ReloadSetsAction,
-} from './settingsReducerInterfaces';
+} from './settings.type';
 
 export const ReloadSetsActionCreator = (payload: Sets): ReloadSetsAction => ({
   type: SetsActionsTypes.ADD_SETS,
