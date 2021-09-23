@@ -21,9 +21,9 @@ import {
   SettingsState,
   initialSetsState,
   setsReducer,
-} from './reducers/settings/settingsReducer';
+} from './reducers/settings';
 import { UsersActions } from './reducers/usersReducerInterfaces';
-import { SettingsActions } from './reducers/settings/settingsReducerInterfaces';
+import { SettingsActions } from './reducers/settings';
 
 export const AppContext = React.createContext<{
   appState: AppState;

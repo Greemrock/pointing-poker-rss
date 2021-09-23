@@ -25,7 +25,7 @@ import {
   SetSecondsActionCreator,
   SetDeckActionCreator,
   SetRoomIdActionCreator,
-} from '../../reducers/settings/settingsActionCreators';
+} from '../../reducers/settings';
 
 export const Settings: React.FC = () => {
   const { appState, dispatch } = useContext(AppContext);

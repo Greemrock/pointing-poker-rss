@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import { Sets } from '../reducers/settings/settingsReducerInterfaces';
+import { Sets } from '../reducers/settings';
 
 export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
   transports: ['websocket'],
