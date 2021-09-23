@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -17,23 +17,34 @@ import { cardsArrays } from '../../Shared/settingsArrays';
 import { Decks } from '../../Shared/enums';
 import { Card } from '../Card';
 import { decksArray } from '../../Shared/settingsArrays';
+import { AppContext } from '../../App';
 import { SettingsContext } from '../../App';
 import {
   SetTimerActionCreator,
   SetMinutesActionCreator,
   SetSecondsActionCreator,
   SetDeckActionCreator,
+  SetRoomIdActionCreator,
 } from '../../reducers/settings/settingsActionCreators';
 
 export const Settings: React.FC = () => {
+  const { appState, dispatch } = useContext(AppContext);
   const { settingsState, settingsDispatch } = useContext(SettingsContext);
   const classes = useStyles();
-
   const decksItems = decksArray.map((el: { val: string; name: string }) => (
     <MenuItem key={el.val} value={el.val}>
       {el.name}
     </MenuItem>
   ));
+
+  useEffect(() => {
+    console.log(123);
+    console.log(appState.currentPlayer.roomId);
+    settingsDispatch(
+      SetRoomIdActionCreator(appState.currentPlayer.roomId as string)
+    );
+  }, []);
+
   const cardsPreview = cardsArrays[settingsState.currentSets.deck]
     .map((el: string) => <Card key={el} value={el} />)
     .slice(0, 5);
