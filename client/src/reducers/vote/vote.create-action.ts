@@ -1,38 +1,38 @@
-import { Player } from './usersReducerInterfaces';
+import { Player } from '../users/users.type';
 import {
-  AddVouted,
+  AddVoted,
   FinishVoting,
   SetCandidateUser,
   SetNominatedUser,
   SetParticipants,
   StartVoting,
-  VoutingActionsTypes,
-} from './voutingReducerInterfaces';
+  VotingActionsTypes,
+} from './vote.type';
 
 export const StartVoutingActionCreator = (): StartVoting => ({
-  type: VoutingActionsTypes.START_VOTING,
+  type: VotingActionsTypes.START_VOTING,
 });
 export const FinishVoutingActionCreator = (): FinishVoting => ({
-  type: VoutingActionsTypes.FINISH_VOTING,
+  type: VotingActionsTypes.FINISH_VOTING,
 });
-export const AddVoutedActionCreator = (): AddVouted => ({
-  type: VoutingActionsTypes.ADD_VOUTED_VOUTER,
+export const AddVoutedActionCreator = (): AddVoted => ({
+  type: VotingActionsTypes.ADD_VOTED_VOTER,
 });
 export const SetCandidateActionCreator = (
   payload: Player
 ): SetCandidateUser => ({
-  type: VoutingActionsTypes.SET_CANDIDATE,
+  type: VotingActionsTypes.SET_CANDIDATE,
   payload,
 });
 export const SetNominatedActionCreator = (
   payload: Player
 ): SetNominatedUser => ({
-  type: VoutingActionsTypes.SET_NOMINATED,
+  type: VotingActionsTypes.SET_NOMINATED,
   payload,
 });
 export const SetParticipantsActionCreator = (
   payload: number
 ): SetParticipants => ({
-  type: VoutingActionsTypes.SET_PARTICIPANTS,
+  type: VotingActionsTypes.SET_PARTICIPANTS,
   payload,
 });

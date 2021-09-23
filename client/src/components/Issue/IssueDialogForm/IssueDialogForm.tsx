@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Dialog,
   Typography,
@@ -13,39 +13,59 @@ import {
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
-import { checkLink, IssueType, Priority } from '../../../Shared';
+import { checkLink, Priority } from '../../../Shared';
+import { socket } from '../../../api/playersRequests';
+import { AppContext } from '../../../context/index';
+import {
+  handleAddIssueSubmit,
+  handleUpdateIssueSubmit,
+} from '../../../api/issue';
+import { UpdateIssueActionCreator } from '../../../reducers/issue';
+import { IssueContext } from '../../../context';
 
 type Props = {
   open: boolean;
-  isEditForm: boolean;
-  issues: IssueType[];
-  idEditIssue: string;
   handleClose: () => void;
 };
 
-export const IssueDialogForm: React.FC<Props> = ({
-  open,
-  handleClose,
-  isEditForm,
-  issues,
-  idEditIssue,
-}) => {
+export const IssueDialogForm: React.FC<Props> = ({ open, handleClose }) => {
   const classes = useIssueDialogFormStyles();
-  const priorityOption = (
-    Object.keys(Priority) as (keyof typeof Priority)[]
-  ).map((p, index) => (
-    <MenuItem key={index} value={p}>
-      {p}
-    </MenuItem>
-  ));
 
-  const index = issues.findIndex((elem) => elem.id === idEditIssue);
+  const {
+    issueState: { editIssue, isEdit },
+    issueDispatch,
+  } = useContext(IssueContext);
+  const {
+    appState: { currentPlayer },
+  } = useContext(AppContext);
 
   const defaultValue = {
-    title: index === -1 ? '' : issues[index].title,
-    link: index === -1 ? '' : issues[index].link,
-    priority: Priority.low,
+    title: isEdit ? editIssue.title : '',
+    link: isEdit ? editIssue.link : '',
+    priority: isEdit ? editIssue.priority : Priority.low,
   };
+
+  const handleSubmit = (values: IssueFormType) => {
+    const baseIssue = {
+      ...values,
+      isDone: false,
+      roomId: currentPlayer.roomId,
+    };
+
+    if (isEdit) {
+      handleUpdateIssueSubmit({ ...baseIssue, id: editIssue.id });
+    } else {
+      handleAddIssueSubmit(baseIssue);
+    }
+    handleClose();
+  };
+
+  useEffect(() => {
+    socket.off('allIssues');
+    socket.on('allIssues', (data) => {
+      issueDispatch(UpdateIssueActionCreator(data));
+    });
+  });
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -56,7 +76,7 @@ export const IssueDialogForm: React.FC<Props> = ({
           variant="h3"
           align="center"
         >
-          {isEditForm ? 'Edit Issue' : 'Create Issue'}
+          {isEdit ? 'Edit Issue' : 'Create Issue'}
         </Typography>
         <Formik
           initialValues={defaultValue}
@@ -73,11 +93,8 @@ export const IssueDialogForm: React.FC<Props> = ({
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
+            handleSubmit(values);
             setSubmitting(false);
-            const payloadObject = {
-              ...values,
-            };
-            console.log(payloadObject);
           }}
         >
           {({ isSubmitting, touched, errors }) => (
@@ -119,7 +136,13 @@ export const IssueDialogForm: React.FC<Props> = ({
                   disabled={isSubmitting}
                   defaultValue={Priority.low}
                 >
-                  {priorityOption}
+                  {(Object.keys(Priority) as (keyof typeof Priority)[]).map(
+                    (p, index) => (
+                      <MenuItem key={index} value={p}>
+                        {p}
+                      </MenuItem>
+                    )
+                  )}
                 </Field>
               </FormControl>
               {isSubmitting && <LinearProgress />}
@@ -130,7 +153,7 @@ export const IssueDialogForm: React.FC<Props> = ({
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  {isEditForm ? 'Edit' : 'Create'}
+                  {isEdit ? 'Edit' : 'Create'}
                 </Button>
                 <Button
                   variant="contained"

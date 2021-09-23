@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
-import { Player } from '../../reducers/usersReducerInterfaces';
+import { Player } from '../../reducers/users/users.type';
 
 type Props = {
   isVoting: boolean | undefined;

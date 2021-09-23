@@ -4,7 +4,7 @@ import {
   Player,
   UsersActionsTypes,
   ReloadUsersAction,
-} from './usersReducerInterfaces';
+} from './users.type';
 
 export const AuthActionCreator = (): AuthUserAction => ({
   type: UsersActionsTypes.AUTH,

@@ -1,45 +1,45 @@
-import { Player } from './usersReducerInterfaces';
+import { Player } from '../users/users.type';
 
-export enum VoutingActionsTypes {
+export enum VotingActionsTypes {
   START_VOTING = 'START-VOTING',
   FINISH_VOTING = 'RELOAD-USERS',
   SET_CANDIDATE = 'SET-CANDIDATE',
   SET_NOMINATED = 'SET-NOMINATED',
-  ADD_VOUTED_VOUTER = 'ADD-VOUTED-VOUTER',
+  ADD_VOTED_VOTER = 'ADD-VOTED-VOTER',
   SET_PARTICIPANTS = 'SET-PARTICIPANTS',
 }
 
 export interface SetParticipants {
-  type: VoutingActionsTypes.SET_PARTICIPANTS;
+  type: VotingActionsTypes.SET_PARTICIPANTS;
   payload: number;
 }
 
 export interface StartVoting {
-  type: VoutingActionsTypes.START_VOTING;
+  type: VotingActionsTypes.START_VOTING;
 }
 
 export interface FinishVoting {
-  type: VoutingActionsTypes.FINISH_VOTING;
+  type: VotingActionsTypes.FINISH_VOTING;
 }
 
-export interface AddVouted {
-  type: VoutingActionsTypes.ADD_VOUTED_VOUTER;
+export interface AddVoted {
+  type: VotingActionsTypes.ADD_VOTED_VOTER;
 }
 
 export interface SetCandidateUser {
-  type: VoutingActionsTypes.SET_CANDIDATE;
+  type: VotingActionsTypes.SET_CANDIDATE;
   payload: Player;
 }
 
 export interface SetNominatedUser {
-  type: VoutingActionsTypes.SET_NOMINATED;
+  type: VotingActionsTypes.SET_NOMINATED;
   payload: Player;
 }
 
-export type VoutingActions =
+export type VoteActions =
   | StartVoting
   | FinishVoting
-  | AddVouted
+  | AddVoted
   | SetCandidateUser
   | SetParticipants
   | SetNominatedUser;

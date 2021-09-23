@@ -3,17 +3,17 @@ import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
-import { Player } from '../../reducers/usersReducerInterfaces';
+import { Player } from '../../reducers/users/users.type';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
-import { initialState, VoutingReducer } from '../../reducers/voutingReducer';
+import { initialState, VoteReducer } from '../../reducers/vote/';
 import {
   SetCandidateActionCreator,
   SetNominatedActionCreator,
   StartVoutingActionCreator,
-} from '../../reducers/voutingActionCreators';
+} from '../../reducers/vote/vote.create-action';
 import { handleVotingSubmit, socket } from '../../api/playersRequests';
-import { ReloadUsersActionCreator } from '../../reducers/usersActionCreators';
-import { AppContext } from '../../App';
+import { ReloadUsersActionCreator } from '../../reducers/users/users.create-action';
+import { AppContext } from '../../context/index';
 
 type Props = {
   view?: Place;
@@ -26,10 +26,7 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   } = useContext(AppContext);
   const [isOpenKickMenu, setIsOpenKickMenu] = useState(false);
   const [rogue, setRogue] = useState<Player | undefined>();
-  const [vouteState, dispatchVouting] = useReducer(
-    VoutingReducer,
-    initialState
-  );
+  const [voteState, dispatchVoting] = useReducer(VoteReducer, initialState);
   const classes = usePlayerContainerStyles();
 
   const startVoting = (candidate: Player, nominated: Player) => {
@@ -39,9 +36,9 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
     socket.off('voteStarted');
     socket.on('voteStarted', (isStarted, nominated, candidate) => {
       if (isStarted) {
-        dispatchVouting(SetCandidateActionCreator(candidate));
-        dispatchVouting(SetNominatedActionCreator(nominated));
-        dispatchVouting(StartVoutingActionCreator());
+        dispatchVoting(SetCandidateActionCreator(candidate));
+        dispatchVoting(SetNominatedActionCreator(nominated));
+        dispatchVoting(StartVoutingActionCreator());
         if (currentPlayer.id !== '' && currentPlayer.id !== nominated.id) {
           setIsOpenKickMenu(true);
         }
@@ -99,16 +96,16 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
                     });
                   }
                 }}
-                isDisabled={vouteState.voutingStarted}
+                isDisabled={voteState.votingStarted}
               />
             );
           }
         )}
       </Container>
       <DeletePlayerBlock
-        isVoting={vouteState.voutingStarted}
-        votingCandidate={vouteState.candidate}
-        votingNominated={vouteState.nominated}
+        isVoting={voteState.votingStarted}
+        votingCandidate={voteState.candidate}
+        votingNominated={voteState.nominated}
         rogue={rogue}
         isOpen={isOpenKickMenu}
         closeMenu={closeKickMenu}

@@ -1,29 +1,16 @@
-import axios from 'axios';
 import { io } from 'socket.io-client';
-import { Player } from '../reducers/usersReducerInterfaces';
-
-const axiosInstance = axios.create({
-  baseURL: 'https://safe-lowlands-48809.herokuapp.com/',
-});
-
-export const getAllPlayers = async (): Promise<requestPlayerType> => {
-  const result = await axiosInstance.get('users');
-  return result.data;
-};
-
-export const addPlayer = async (payload: payloadType): Promise<void> => {
-  const result = await axiosInstance.post('users', payload);
-};
+import { Player } from '../reducers/users/users.type';
 
 export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
   transports: ['websocket'],
   upgrade: false,
 });
 
-export const handleAdminSubmit = (payload: payloadType) => {
+export const handleAdminSubmit = (payload: payloadType): void => {
   socket.emit('hostGame', payload);
 };
-export const handleUserSubmit = (payload: payloadType) => {
+
+export const handleUserSubmit = (payload: payloadType): void => {
   socket.emit('joinGame', payload);
 };
 
