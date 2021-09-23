@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { MessageContext, IssueContext } from './context';
 import { LobbyPage } from './Pages/Lobby';
+import { MeetingRoomPage } from './Pages/MeetingRoom';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
 import { initialIssueState, issueReducer } from './reducers/issue';
 import { initialMessageState, msgReducer } from './reducers/message';
@@ -58,6 +59,9 @@ export const App: React.FC = () => {
                 </Route>
                 <Route exact path="/lobby">
                   <LobbyPage link={appState.currentPlayer.roomId} />
+                </Route>
+                <Route exact path="/game">
+                  <MeetingRoomPage />
                 </Route>
               </Switch>
               <ChatBlock isOpenChat={isOpenChat} />
