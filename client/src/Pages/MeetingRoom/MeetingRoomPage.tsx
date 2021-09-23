@@ -3,6 +3,8 @@ import { Redirect } from 'react-router';
 import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { AppContext } from '../../App';
+import { StartExitBtn } from '../../components/StartExitBtn';
+import { ScorePlayers } from '../../components/ScorePlayers';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -12,13 +14,17 @@ export const MeetingRoomPage: React.FC = () => {
   } = useContext(AppContext);
   return (
     <>
-      {!isAuth && <Redirect to="/" />}
+      {/* {!isAuth && <Redirect to="/" />} */}
       <Container maxWidth="lg" className={classes.container}>
-        <div className={classes.nameGame}>
-          <Typography variant="h6" align="center">
-            Meeting room
-          </Typography>
+        <div>
+          <div className={classes.nameGame}>
+            <Typography variant="h6" align="center">
+              Meeting room
+            </Typography>
+          </div>
+          <StartExitBtn link="" isAdmin={false} />
         </div>
+        <ScorePlayers />
       </Container>
     </>
   );

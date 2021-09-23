@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
@@ -6,21 +6,19 @@ import { Place, SizeCard } from '../../Shared/enums';
 import { Player, UsersActions } from '../../reducers/usersReducerInterfaces';
 import { socket } from '../../api/playersRequests';
 import { ReloadUsersActionCreator } from '../../reducers/usersActionCreators';
+import { AppContext } from '../../App';
 
 type Props = {
   playersCards: PlayerCard[];
   view?: Place;
-  currentPlayer: Player;
-  dispatch: React.Dispatch<UsersActions>;
 };
 
-export const PlayerContainer: React.FC<Props> = ({
-  view,
-  playersCards,
-  currentPlayer,
-  dispatch,
-}) => {
+export const PlayerContainer: React.FC<Props> = ({ view, playersCards }) => {
   const classes = usePlayerContainerStyles();
+  const {
+    appState: { isAuth, currentPlayer, players },
+    dispatch,
+  } = useContext(AppContext);
 
   socket.on('roomInfo', (roomInfo) => {
     dispatch(ReloadUsersActionCreator(roomInfo.users));
@@ -28,11 +26,9 @@ export const PlayerContainer: React.FC<Props> = ({
 
   return (
     <div className={classes.root}>
-      {!view ? (
-        <Typography variant="h6" align="center" className={classes.title}>
-          Members:
-        </Typography>
-      ) : null}
+      <Typography variant="h6" align="center" className={classes.title}>
+        Members:
+      </Typography>
       <Container className={classes.container} maxWidth="md">
         {playersCards.map(({ id, job, name, surname, image, isAdmin }) => {
           return (

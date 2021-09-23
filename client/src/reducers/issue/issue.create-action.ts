@@ -1,10 +1,10 @@
-import { IssueActionType } from './issue.action';
 import {
   UpdateIssueAction,
   IssueType,
   AddEditIssueAction,
   EditIssueTrueAction,
   EditIssueFalseAction,
+  IssueActionType,
 } from './issue.type';
 
 export const UpdateIssueActionCreator = (

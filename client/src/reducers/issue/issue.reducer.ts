@@ -1,6 +1,5 @@
 import { Priority } from '../../Shared';
-import { IssueActionType } from './issue.action';
-import { IssueActions, IssueStateType } from './issue.type';
+import { IssueActions, IssueActionType, IssueStateType } from './issue.type';
 
 export const initialIssueState: IssueStateType = {
   issues: [],

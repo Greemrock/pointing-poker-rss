@@ -1,4 +1,6 @@
-import { MessageActionType } from './msg.action';
+export enum MessageActionType {
+  ADD_MESSAGE = 'ADD-USER',
+}
 
 export type MessageType = {
   id: string;

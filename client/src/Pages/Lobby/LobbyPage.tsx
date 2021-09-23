@@ -31,12 +31,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
           </Typography>
         </div>
         <StartExitBtn link={link} isAdmin={currentPlayer.isAdmin} />
-        <PlayerContainer
-          view={view}
-          playersCards={players}
-          currentPlayer={currentPlayer}
-          dispatch={dispatch}
-        />
+        <PlayerContainer view={view} playersCards={players} />
         {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
       </Container>
     </>
