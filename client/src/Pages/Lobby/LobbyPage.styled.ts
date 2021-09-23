@@ -11,12 +11,4 @@ export const useLobbyPageStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  svg: {
-    position: 'relative',
-    bottom: '6px',
-    '& svg': {
-      width: '15px',
-      height: '15px',
-    },
-  },
 }));
