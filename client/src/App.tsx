@@ -20,7 +20,7 @@ import { AppState, initialState, usersReducer } from './reducers/usersReducer';
 import {
   SettingsState,
   initialSetsState,
-  setsReducer,
+  settingsReducer,
 } from './reducers/settings';
 import { UsersActions } from './reducers/usersReducerInterfaces';
 import { SettingsActions } from './reducers/settings';
@@ -57,7 +57,7 @@ export const App: React.FC = () => {
     initialMessageState
   );
   const [settingsState, settingsDispatch] = useReducer(
-    setsReducer,
+    settingsReducer,
     initialSetsState
   );
   const [isOpenChat, setIsOpenChat] = useState(false);

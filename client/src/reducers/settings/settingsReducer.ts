@@ -16,7 +16,7 @@ export const initialSetsState: SettingsState = {
     roomId: '',
   },
 };
-export const setsReducer = (
+export const settingsReducer = (
   state: SettingsState = initialSetsState,
   action: SettingsActions
 ): SettingsState => {

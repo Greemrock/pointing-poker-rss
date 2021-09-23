@@ -1,6 +1,6 @@
-import { payloadSettings } from './settings.type';
+import { Sets } from '../../reducers/settings';
 import { socket } from '../playersRequests';
 
-export const handleSettingsSubmit = (payload: payloadSettings): void => {
-  socket.emit('addSettings', payload);
+export const handleSendSettings = (payload: Sets): void => {
+  socket.emit('sendSettings', payload);
 };

@@ -1,5 +1,4 @@
 import { io } from 'socket.io-client';
-import { Sets } from '../reducers/settings';
 
 export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
   transports: ['websocket'],
@@ -12,8 +11,4 @@ export const handleAdminSubmit = (payload: payloadType): void => {
 
 export const handleUserSubmit = (payload: payloadType): void => {
   socket.emit('joinGame', payload);
-};
-
-export const handleSendSettings = (payload: Sets): void => {
-  socket.emit('sendSettings', payload);
 };
