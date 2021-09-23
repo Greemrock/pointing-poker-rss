@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
-import { Place } from '../../Shared/enums';
+import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
 import { Settings } from '../../components/Settings';
+import { IssueContainer } from '../../components/Issue/IssueContainer';
 
 type Props = {
   link: string;
@@ -14,23 +16,31 @@ type Props = {
 
 export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
-  const { appState, dispatch } = useContext(AppContext);
+
+  const {
+    appState: { isAuth, currentPlayer, players },
+    dispatch,
+  } = useContext(AppContext);
 
   return (
-    <Container maxWidth="lg" className={classes.container}>
-      <div className={classes.nameGame}>
-        <Typography variant="h6" align="center">
-          Meeting room
-        </Typography>
-      </div>
-      <StartExitBtn link={link} isAdmin={appState.currentPlayer.isAdmin} />
-      <PlayerContainer
-        view={view}
-        playersCards={appState.players}
-        currentPlayer={appState.currentPlayer}
-        dispatch={dispatch}
-      />
-      {appState.currentPlayer.isAdmin ? <Settings /> : null}
-    </Container>
+    <>
+      {!isAuth && <Redirect to="/" />}
+      <Container maxWidth="lg" className={classes.container}>
+        <div className={classes.nameGame}>
+          <Typography variant="h6" align="center">
+            Meeting room
+          </Typography>
+        </div>
+        <StartExitBtn link={link} isAdmin={currentPlayer.isAdmin} />
+        <PlayerContainer
+          view={view}
+          playersCards={players}
+          currentPlayer={currentPlayer}
+          dispatch={dispatch}
+        />
+        {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
+        {currentPlayer.isAdmin ? <Settings /> : null}
+      </Container>
+    </>
   );
 };

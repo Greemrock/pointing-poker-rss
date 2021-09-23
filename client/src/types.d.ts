@@ -38,3 +38,9 @@ type PlayerCard = {
   isAdmin: boolean;
   image: string | null;
 };
+
+type IssueFormType = {
+  title: string;
+  link: string;
+  priority: Priority;
+};

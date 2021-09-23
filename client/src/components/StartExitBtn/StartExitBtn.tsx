@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Button, Container, Paper, TextField } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
-import { SettingsContext } from '../../App';
 import { handleSendSettings } from '../../api/settings/settings.request';
+import { SettingsContext } from '../../context/settings.context';
 
 type Props = {
   isAdmin: boolean;

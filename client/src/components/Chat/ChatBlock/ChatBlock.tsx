@@ -3,7 +3,8 @@ import { Container, Paper } from '@material-ui/core';
 import { useChatBlockStyles } from './ChatBlock.styled';
 import { TextInput } from '../TextInput/';
 import { MessageLeft, MessageRight } from '../Message';
-import { AppContext, MessageContext } from '../../../App';
+import { AppContext } from '../../../App';
+import { MessageContext } from '../../../context';
 
 type Props = {
   isOpenChat: boolean;
@@ -28,10 +29,10 @@ export const ChatBlock: React.FC<Props> = ({ isOpenChat }) => {
       <Paper className={classes.paper} elevation={3}>
         <Paper className={classes.messagesBody}>
           <ul className={classes.wrapper}>
-            {messageState.message.map((message) => {
+            {messageState.message.map((message, key) => {
               return message.id === appState.currentPlayer?.id ? (
                 <MessageRight
-                  key={message.id}
+                  key={key}
                   name={message.name}
                   surname={message.surname}
                   message={message.message}

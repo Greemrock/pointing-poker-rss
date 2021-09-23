@@ -1,14 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { useTextInputStyles } from './TextInput.styled';
 import { Field, Form, Formik } from 'formik';
-import { AppContext, MessageContext } from '../../../App';
 import { TextField } from 'formik-material-ui';
-import { AddMessageActionCreator } from '../../../reducers/message/msg.create-action';
+import { useTextInputStyles } from './TextInput.styled';
+import { AppContext } from '../../../App';
 import { getDate } from '../../../Util/getDate';
 import { handleMessageSubmit } from '../../../api/message';
 import { socket } from '../../../api/playersRequests';
+import { AddMessageActionCreator } from '../../../reducers/message';
+import { MessageContext } from '../../../context';
 
 export const TextInput: React.FC = () => {
   const {
@@ -18,6 +19,7 @@ export const TextInput: React.FC = () => {
   const { messageDispatch } = useContext(MessageContext);
 
   useEffect(() => {
+    socket.off('msgToClient');
     socket.on('msgToClient', (data) => {
       messageDispatch(
         AddMessageActionCreator({ ...data, timestamp: getDate() })
