@@ -17,7 +17,8 @@ export const useChatBlockStyles = makeStyles({
     transition: '.55s opacity, .55s visibility',
     position: 'absolute',
     right: 0,
-    top: '30px',
+    top: '80px',
+    zIndex: 1,
   },
   wrapper: {
     height: '100%',
@@ -25,7 +26,7 @@ export const useChatBlockStyles = makeStyles({
   },
   paper: {
     width: '80vw',
-    height: '80vh',
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',

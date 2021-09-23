@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
-import { Place } from '../../Shared/enums';
+import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
+import { IssueContainer } from '../../components/Issue/IssueContainer';
 
 type Props = {
   link: string;
@@ -14,7 +15,6 @@ type Props = {
 export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
   const { appState, dispatch } = useContext(AppContext);
-
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.nameGame}>
@@ -29,6 +29,9 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         currentPlayer={appState.currentPlayer}
         dispatch={dispatch}
       />
+      {appState.currentPlayer?.isAdmin && (
+        <IssueContainer view={Issue.update} />
+      )}
     </Container>
   );
 };
