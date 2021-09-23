@@ -17,7 +17,13 @@ import {
 } from './reducers/message/msg.reducer';
 import { MessageActions, MessageStateType } from './reducers/message/msg.type';
 import { AppState, initialState, usersReducer } from './reducers/usersReducer';
+import {
+  SettingsState,
+  initialSetsState,
+  setsReducer,
+} from './reducers/settings/settingsReducer';
 import { UsersActions } from './reducers/usersReducerInterfaces';
+import { SettingsActions } from './reducers/settings/settingsReducerInterfaces';
 
 export const AppContext = React.createContext<{
   appState: AppState;
@@ -35,6 +41,14 @@ export const MessageContext = React.createContext<{
   messageDispatch: () => null,
 });
 
+export const SettingsContext = React.createContext<{
+  settingsState: SettingsState;
+  settingsDispatch: React.Dispatch<SettingsActions>;
+}>({
+  settingsState: initialSetsState,
+  settingsDispatch: () => null,
+});
+
 export const App: React.FC = () => {
   const classes = useAppStyles();
   const [appState, dispatch] = useReducer(usersReducer, initialState);
@@ -42,29 +56,39 @@ export const App: React.FC = () => {
     msgReducer,
     initialMessageState
   );
+  const [settingsState, settingsDispatch] = useReducer(
+    setsReducer,
+    initialSetsState
+  );
   const [isOpenChat, setIsOpenChat] = useState(false);
   return (
     <AppContext.Provider value={{ appState, dispatch }}>
       <MessageContext.Provider value={{ messageState, messageDispatch }}>
-        <Router>
-          <Header
-            isOpenChat={isOpenChat}
-            setIsOpenChat={setIsOpenChat}
-            isAuth={appState.isAuth}
-          />
-          <div className={classes.container}>
-            <Switch>
-              <Route exact path="/">
-                {appState.isAuth ? <Redirect to="/lobby" /> : <WelcomeBlock />}
-              </Route>
-              <Route exact path="/lobby">
-                <LobbyPage link={appState.currentPlayer.roomId} />
-              </Route>
-            </Switch>
-            <ChatBlock isOpenChat={isOpenChat} />
-          </div>
-          <Footer />
-        </Router>
+        <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
+          <Router>
+            <Header
+              isOpenChat={isOpenChat}
+              setIsOpenChat={setIsOpenChat}
+              isAuth={appState.isAuth}
+            />
+            <div className={classes.container}>
+              <Switch>
+                <Route exact path="/">
+                  {appState.isAuth ? (
+                    <Redirect to="/lobby" />
+                  ) : (
+                    <WelcomeBlock />
+                  )}
+                </Route>
+                <Route exact path="/lobby">
+                  <LobbyPage link={appState.currentPlayer.roomId} />
+                </Route>
+              </Switch>
+              <ChatBlock isOpenChat={isOpenChat} />
+            </div>
+            <Footer />
+          </Router>
+        </SettingsContext.Provider>
       </MessageContext.Provider>
     </AppContext.Provider>
   );

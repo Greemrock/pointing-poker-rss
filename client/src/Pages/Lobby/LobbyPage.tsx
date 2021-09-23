@@ -5,6 +5,7 @@ import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
+import { Settings } from '../../components/Settings';
 
 type Props = {
   link: string;
@@ -29,6 +30,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         currentPlayer={appState.currentPlayer}
         dispatch={dispatch}
       />
+      {appState.currentPlayer.isAdmin ? <Settings /> : null}
     </Container>
   );
 };
