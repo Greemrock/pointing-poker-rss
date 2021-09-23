@@ -1,7 +1,7 @@
 import { Decks } from '../../Shared/enums';
-import { SettingsActions, SetsActionsTypes } from './settingsReducerInterfaces';
+import { SettingsActions, SetsActionsTypes } from './settings.type';
 
-import { Sets } from './settingsReducerInterfaces';
+import { Sets } from './settings.type';
 
 export type SettingsState = {
   currentSets: Sets;
