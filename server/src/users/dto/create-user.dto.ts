@@ -11,3 +11,8 @@ export class CreateUserDto {
 export class UpdateUserDto {
   readonly name: string;
 }
+
+export class DeleteUserDto {
+  readonly id: string;
+  readonly roomId: string;
+}
