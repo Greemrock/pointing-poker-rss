@@ -8,10 +8,14 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import {
+  CreateIssueDto,
+  UpdateIssueDto,
+} from 'src/issues/dto/create-issue.dto';
 import { IssuesService } from 'src/issues/issues.service';
 import { RoomsService } from 'src/rooms/rooms.service';
 import { SettingsService } from 'src/settings/settings.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto, DeleteUserDto } from 'src/users/dto/create-user.dto';
 import { UsersModule } from 'src/users/users.module';
 import { UsersService } from 'src/users/users.service';
 
@@ -62,16 +66,55 @@ export class PokerGateway
     };
     const userInfo = await this.UsersService.createUser(userUpdated);
     const roomInfo = await this.RoomsService.getOneRoom(roomData.id);
-    client.emit('roomInfo', userInfo, roomInfo);
     client.join(roomData.id);
+    client.emit('personalData', userInfo);
+    client.emit('roomInfo', roomInfo);
   }
 
   @SubscribeMessage('joinGame')
   async handleJoinGame(client: Socket, user: CreateUserDto) {
     const userInfo = await this.UsersService.createUser(user);
     const roomInfo = await this.RoomsService.getOneRoom(user.roomId);
-    client.emit('roomInfo', userInfo, roomInfo);
     client.join(user.roomId);
+    client.emit('personalData', userInfo);
+    this.wss.to(user.roomId).emit('roomInfo', roomInfo);
+  }
+
+  @SubscribeMessage('deleteUser')
+  async handleDeleteUser(client: Socket, user: DeleteUserDto) {
+    await this.UsersService.removeUser(user.id);
+    const roomInfo = await this.RoomsService.getOneRoom(user.roomId);
+    client.leave(user.roomId);
+    this.wss.to(user.roomId).emit('allUsers', roomInfo.users);
+  }
+
+  @SubscribeMessage('addIssue')
+  async handleAddIssue(client: Socket, issue: CreateIssueDto) {
+    await this.IssuesService.createIssue(issue);
+    const roomInfo = await this.RoomsService.getOneRoom(issue.roomId);
+    this.wss.to(issue.roomId).emit('allIssues', roomInfo.issues);
+    this.logger.log(`${JSON.stringify(issue)}`);
+    this.logger.log(`${JSON.stringify(roomInfo)}`);
+  }
+
+  @SubscribeMessage('updateIssue')
+  async handleUpdateIssue(client: Socket, issue: UpdateIssueDto) {
+    await this.IssuesService.updateIssue(issue);
+    const roomInfo = await this.RoomsService.getOneRoom(issue.roomId);
+    this.wss.to(issue.roomId).emit('allIssues', roomInfo.issues);
+    this.logger.log(`${JSON.stringify(issue)}`);
+    this.logger.log(`${JSON.stringify(roomInfo)}`);
+  }
+
+  @SubscribeMessage('deleteIssue')
+  async handleDeleteIssue(
+    client: Socket,
+    issue: { id: string; roomId: string },
+  ) {
+    await this.IssuesService.removeIssue(issue.id);
+    const roomInfo = await this.RoomsService.getOneRoom(issue.roomId);
+    this.wss.to(issue.roomId).emit('allIssues', roomInfo.issues);
+    this.logger.log(`${JSON.stringify(roomInfo)}`);
   }
 
   @SubscribeMessage('joinRoom')

@@ -49,6 +49,7 @@ export const AntSwitch = withStyles((theme: Theme) =>
 
 export const useStyles = makeStyles((theme: Theme) => ({
   mainSettingsBlock: {
+    marginTop: SPACE_LG,
     width: '100%',
   },
   accordionInnerBlock: {

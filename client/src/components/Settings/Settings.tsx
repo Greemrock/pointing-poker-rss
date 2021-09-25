@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -17,42 +17,59 @@ import { cardsArrays } from '../../Shared/settingsArrays';
 import { Decks } from '../../Shared/enums';
 import { Card } from '../Card';
 import { decksArray } from '../../Shared/settingsArrays';
+import { AppContext } from '../../App';
+import {
+  SetTimerActionCreator,
+  SetMinutesActionCreator,
+  SetSecondsActionCreator,
+  SetDeckActionCreator,
+  SetRoomIdActionCreator,
+} from '../../reducers/settings';
+import { SettingsContext } from '../../context/settings.context';
 
 export const Settings: React.FC = () => {
-  const [deck, setDeck] = useState<
-    Decks.fibonacci | Decks.modifiedFibonacci | Decks.tshirts | Decks.powers
-  >(Decks.fibonacci);
-  const [isTimer, setIsTimer] = useState(false);
-  const [minutes, setMinutes] = useState(1);
-  const [seconds, setSeconds] = useState(0);
+  const { appState, dispatch } = useContext(AppContext);
+  const {
+    settingsState: { currentSets },
+    settingsDispatch,
+  } = useContext(SettingsContext);
   const classes = useStyles();
-
   const decksItems = decksArray.map((el: { val: string; name: string }) => (
     <MenuItem key={el.val} value={el.val}>
       {el.name}
     </MenuItem>
   ));
-  const cardsPreview = cardsArrays[deck]
+
+  useEffect(() => {
+    settingsDispatch(
+      SetRoomIdActionCreator(appState.currentPlayer.roomId as string)
+    );
+  }, []);
+
+  const cardsPreview = cardsArrays[currentSets.deck]
     .map((el: string) => <Card key={el} value={el} />)
     .slice(0, 5);
 
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const newDeck = event.target.value as Decks;
-    setDeck(newDeck);
+    settingsDispatch(SetDeckActionCreator(event.target.value as Decks));
   };
+
   const handleSwitcherChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsTimer(event.target.checked);
+    settingsDispatch(SetTimerActionCreator());
   };
+
   const handleSecondsChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setSeconds(event.target.value as number);
+    settingsDispatch(SetSecondsActionCreator(event.target.value as number));
   };
+
   const handleMinutesChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setMinutes(event.target.value as number);
+    settingsDispatch(SetMinutesActionCreator(event.target.value as number));
   };
+
   return (
     <Container className={classes.mainSettingsBlock}>
       <Accordion>
@@ -69,7 +86,7 @@ export const Settings: React.FC = () => {
             <Select
               labelId="deckSelect"
               id="deckSelect"
-              value={deck}
+              value={currentSets.deck}
               onChange={handleSelectChange}
             >
               {decksItems}
@@ -77,17 +94,17 @@ export const Settings: React.FC = () => {
           </FormControl>
           <FormControl className={classes.switcherLabel}>
             <AntSwitch
-              checked={isTimer}
+              checked={currentSets.isTimerNeeded}
               onChange={handleSwitcherChange}
               id="observer"
               name="observer"
             />
             <Typography>Would you like a story timer?</Typography>
           </FormControl>
-          {isTimer ? (
+          {currentSets.isTimerNeeded ? (
             <SettingsTimer
-              minutes={minutes}
-              seconds={seconds}
+              minutes={currentSets.minutes}
+              seconds={currentSets.seconds}
               stylesBox={classes.boxTimer}
               stylesText={classes.timerText}
               stylesMinutes={classes.minutesBlock}

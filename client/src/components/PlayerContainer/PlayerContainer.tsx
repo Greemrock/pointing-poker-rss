@@ -8,7 +8,7 @@ import { socket } from '../../api/playersRequests';
 import { ReloadUsersActionCreator } from '../../reducers/usersActionCreators';
 
 type Props = {
-  playersCards: PlayerCard[];
+  playersCards: PlayerCardType[];
   view?: Place;
   currentPlayer: Player;
   dispatch: React.Dispatch<UsersActions>;

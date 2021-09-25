@@ -17,11 +17,11 @@ export class IssuesService {
     return issues;
   }
 
-  async updateIssue(id: string, dto: UpdateIssueDto) {
+  async updateIssue(dto: UpdateIssueDto) {
     await this.issueRepository.update(dto, {
-      where: { id: id },
+      where: { id: dto.id },
     });
-    const issue = await this.issueRepository.findByPk(id);
+    const issue = await this.issueRepository.findByPk(dto.id);
     return issue;
   }
 
