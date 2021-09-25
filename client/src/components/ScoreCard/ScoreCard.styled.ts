@@ -7,7 +7,7 @@ export const useScoreCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    width: '80px',
+    minWidth: '80px',
     height: '40px',
     padding: SPACE_XXS,
   },

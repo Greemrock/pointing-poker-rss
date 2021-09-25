@@ -11,6 +11,6 @@ export const useScoreContainerStyles = makeStyles({
   },
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    flexWrap: 'wrap',
   },
 });
