@@ -30,7 +30,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         currentPlayer={appState.currentPlayer}
         dispatch={dispatch}
       />
-      <GameTimer time={280} />
+      <GameTimer time={10} />
     </Container>
   );
 };
