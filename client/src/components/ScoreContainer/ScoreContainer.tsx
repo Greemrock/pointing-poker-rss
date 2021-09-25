@@ -1,9 +1,6 @@
 import React from 'react';
-import { Container, Paper, Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { useScoreContainerStyles } from './ScoreContainer.styled';
-import { Place } from '@material-ui/icons';
-import { SizeCard } from '../../Shared';
-import { PlayerCard } from '../PlayerCard';
 import { ScoreCard } from '../ScoreCard';
 
 const results = [
@@ -26,8 +23,8 @@ export const ScoreContainer: React.FC = () => {
         Score:
       </Typography>
       <Container className={classes.container} maxWidth="md">
-        {results.map((res) => (
-          <ScoreCard key={res.id} />
+        {results.map(({ id, score }) => (
+          <ScoreCard key={id} score={score} />
         ))}
       </Container>
     </div>

@@ -8,7 +8,7 @@ export const Card: React.FC<{ value: string }> = ({ value }) => {
   const classes = useStyles();
   return (
     <Paper elevation={1} className={classes.cardBlock}>
-      <Typography className={classes.topText}>SP</Typography>
+      <Typography className={classes.topText}>{value}</Typography>
       <Box className={classes.centerBlock}>
         {value === '?' ? (
           <QuestionIconComponent />

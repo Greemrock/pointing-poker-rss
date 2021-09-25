@@ -1,15 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import {
-  GREEN_2,
-  RED,
-  SIZE_XS,
-  SIZE_XXS,
-  SPACE_MD,
-  SPACE_SM,
-  SPACE_XS,
-  SPACE_XXS,
-  SPACE_XXXS,
-} from '../../Shared/cssConstants';
+import { SPACE_MD, SPACE_SM } from '../../Shared/cssConstants';
 
 export const useScoreContainerStyles = makeStyles({
   root: {
@@ -21,6 +11,6 @@ export const useScoreContainerStyles = makeStyles({
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 });

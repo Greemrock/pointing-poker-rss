@@ -1,14 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import {
-  GREEN_2,
-  RED,
-  SIZE_XS,
-  SIZE_XXS,
-  SPACE_SM,
-  SPACE_XS,
-  SPACE_XXS,
-  SPACE_XXXS,
-} from '../../Shared/cssConstants';
+import { SIZE_XS, SPACE_XXS, SPACE_XXXS } from '../../Shared';
 
 export const useScoreCardStyles = makeStyles({
   field: {
@@ -16,12 +7,13 @@ export const useScoreCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    width: '160px',
+    width: '80px',
     height: '40px',
-    padding: `${SPACE_XXS} ${SPACE_XXS} ${SPACE_XXS} ${SPACE_XS}`,
+    padding: SPACE_XXS,
   },
   userPointer: {
+    width: '100%',
     fontWeight: 'bold',
-    fontSize: SIZE_XXS,
+    fontSize: SIZE_XS,
   },
 });

@@ -82,7 +82,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   cardsPreviewBlock: {
     display: 'flex',
     justifyContent: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('lg')]: {
       '& div': {
         marginRight: `-${SPACE_LG}`,
       },

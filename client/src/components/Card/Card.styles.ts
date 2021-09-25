@@ -51,5 +51,10 @@ export const useStyles = makeStyles(() => ({
       width: '50px',
       height: '50px',
     },
+    '& div': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'flex-start',
+    },
   },
 }));

@@ -7,6 +7,7 @@ import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
+import { Settings } from '../../components/Settings';
 
 type Props = {
   link: string;
@@ -33,6 +34,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         <StartExitBtn link={link} isAdmin={currentPlayer.isAdmin} />
         <PlayerContainer view={view} playersCards={players} />
         {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
+        <Settings />
       </Container>
     </>
   );

@@ -32,9 +32,10 @@ export const Settings: React.FC = () => {
       {el.name}
     </MenuItem>
   ));
-  const cardsPreview = cardsArrays[deck]
-    .map((el: string) => <Card key={el} value={el} />)
-    .slice(0, 5);
+  const cardsPreview = cardsArrays[deck].map((el: string) => (
+    <Card key={el} value={el} />
+  ));
+  // .slice(0, 5);
 
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const newDeck = event.target.value as Decks;

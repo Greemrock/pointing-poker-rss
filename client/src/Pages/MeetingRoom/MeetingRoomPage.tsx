@@ -5,6 +5,7 @@ import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { AppContext } from '../../App';
 import { StartExitBtn } from '../../components/StartExitBtn';
 import { ScorePlayers } from '../../components/ScorePlayers';
+import { Settings } from '../../components/Settings';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -16,13 +17,12 @@ export const MeetingRoomPage: React.FC = () => {
     <>
       {/* {!isAuth && <Redirect to="/" />} */}
       <Container maxWidth="lg" className={classes.container}>
-        <div>
+        <div className={classes.wrapper}>
           <div className={classes.nameGame}>
             <Typography variant="h6" align="center">
               Meeting room
             </Typography>
           </div>
-          <StartExitBtn link="" isAdmin={false} />
         </div>
         <ScorePlayers />
       </Container>
