@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Dialog,
@@ -9,6 +9,10 @@ import {
 import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
 import { Player } from '../../reducers/users/users.type';
+import {
+  handleVotingNoSubmit,
+  handleVotingYesSubmit,
+} from '../../api/playersRequests';
 
 type Props = {
   isVoting: boolean | undefined;
@@ -16,6 +20,8 @@ type Props = {
   votingCandidate: Player;
   votingNominated: Player;
   isOpen: boolean;
+  allPlayersNumber: number;
+  roomId: string;
   closeMenu: () => void;
   startVoting: () => void;
 };
@@ -26,23 +32,42 @@ export const DeletePlayerBlock: React.FC<Props> = ({
   votingCandidate,
   votingNominated,
   isOpen,
+  allPlayersNumber,
+  roomId,
   closeMenu,
   startVoting,
 }) => {
   const classes = useStyles();
-  const [isKick, setIsKick] = useState<boolean>(false);
+
+  const [disabledPrimaryButton, setDisabledPrimaryButton] = useState(false);
+  const [disabledSecondaryButton, setDisabledSecondaryButton] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setDisabledPrimaryButton(false);
+      setDisabledPrimaryButton(false);
+    };
+  });
+
+  const handleCloseDialog = () => {
+    closeMenu();
+    !isVoting
+      ? closeMenu()
+      : () => {
+          closeMenu();
+          handleVotingNoSubmit(votingCandidate.id, allPlayersNumber, roomId);
+        };
+    setDisabledSecondaryButton(true);
+  };
 
   const formik = useFormik({
-    initialValues: {
-      isKick: false,
-    },
+    initialValues: {},
     onSubmit: () => {
-      setIsKick(true);
-      const payloadObject = {
-        isKick,
-      };
       closeMenu();
-      startVoting();
+      !isVoting
+        ? startVoting()
+        : handleVotingYesSubmit(votingCandidate.id, allPlayersNumber, roomId);
+      setDisabledPrimaryButton(true);
     },
   });
   return (
@@ -78,10 +103,25 @@ export const DeletePlayerBlock: React.FC<Props> = ({
       </Container>
       <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
         <DialogActions className={classes.buttonsBlock}>
-          <Button color="primary" variant="contained" type="submit">
+          <Button
+            onClick={(e) => {
+              const button = e.target as HTMLButtonElement;
+              button.disabled = true;
+            }}
+            onDoubleClick={(e) => e.preventDefault()}
+            color="primary"
+            variant="contained"
+            type="submit"
+            disabled={disabledPrimaryButton}
+          >
             Yes
           </Button>
-          <Button onClick={closeMenu} color="secondary" variant="contained">
+          <Button
+            onClick={handleCloseDialog}
+            color="secondary"
+            variant="contained"
+            disabled={disabledSecondaryButton}
+          >
             No
           </Button>
         </DialogActions>

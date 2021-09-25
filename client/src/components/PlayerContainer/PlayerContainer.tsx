@@ -46,6 +46,12 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
     });
   });
   useEffect(() => {
+    socket.off('voteEnd');
+    socket.on('voteEnd', (results) => {
+      console.log(results);
+    });
+  });
+  useEffect(() => {
     socket.off('roomInfo');
     socket.on('roomInfo', (roomInfo) => {
       dispatch(ReloadUsersActionCreator(roomInfo.users));
@@ -106,6 +112,8 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
         isVoting={voteState.votingStarted}
         votingCandidate={voteState.candidate}
         votingNominated={voteState.nominated}
+        allPlayersNumber={players.length}
+        roomId={currentPlayer.roomId}
         rogue={rogue}
         isOpen={isOpenKickMenu}
         closeMenu={closeKickMenu}

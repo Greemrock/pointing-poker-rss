@@ -17,3 +17,17 @@ export const handleUserSubmit = (payload: payloadType): void => {
 export const handleVotingSubmit = (candidate: Player, nominant: Player) => {
   socket.emit('voteKick', candidate, nominant);
 };
+export const handleVotingYesSubmit = (
+  voteKickId: string,
+  userQuantity: number,
+  roomId: string
+) => {
+  socket.emit('voteYes', { voteKickId, userQuantity, roomId });
+};
+export const handleVotingNoSubmit = (
+  voteKickId: string,
+  userQuantity: number,
+  roomId: string
+) => {
+  socket.emit('voteNo', { voteKickId, userQuantity, roomId });
+};
