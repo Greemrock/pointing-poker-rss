@@ -5,6 +5,7 @@ import {
   SetCandidateUser,
   SetNominatedUser,
   SetParticipants,
+  SetVoteId,
   StartVoting,
   VotingActionsTypes,
 } from './vote.type';
@@ -34,5 +35,9 @@ export const SetParticipantsActionCreator = (
   payload: number
 ): SetParticipants => ({
   type: VotingActionsTypes.SET_PARTICIPANTS,
+  payload,
+});
+export const SetVoteIdActionCreator = (payload: string): SetVoteId => ({
+  type: VotingActionsTypes.SET_VOTE_ID,
   payload,
 });

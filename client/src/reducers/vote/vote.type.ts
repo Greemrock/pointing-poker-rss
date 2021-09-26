@@ -7,6 +7,7 @@ export enum VotingActionsTypes {
   SET_NOMINATED = 'SET-NOMINATED',
   ADD_VOTED_VOTER = 'ADD-VOTED-VOTER',
   SET_PARTICIPANTS = 'SET-PARTICIPANTS',
+  SET_VOTE_ID = 'SET-VOTE-ID',
 }
 
 export interface SetParticipants {
@@ -36,10 +37,16 @@ export interface SetNominatedUser {
   payload: Player;
 }
 
+export interface SetVoteId {
+  type: VotingActionsTypes.SET_VOTE_ID;
+  payload: string;
+}
+
 export type VoteActions =
   | StartVoting
   | FinishVoting
   | AddVoted
   | SetCandidateUser
   | SetParticipants
-  | SetNominatedUser;
+  | SetNominatedUser
+  | SetVoteId;

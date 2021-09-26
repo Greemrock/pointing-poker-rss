@@ -7,8 +7,10 @@ import { Player } from '../../reducers/users/users.type';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
 import { initialState, VoteReducer } from '../../reducers/vote/';
 import {
+  FinishVoutingActionCreator,
   SetCandidateActionCreator,
   SetNominatedActionCreator,
+  SetVoteIdActionCreator,
   StartVoutingActionCreator,
 } from '../../reducers/vote/vote.create-action';
 import { handleVotingSubmit, socket } from '../../api/playersRequests';
@@ -34,10 +36,11 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   };
   useEffect(() => {
     socket.off('voteStarted');
-    socket.on('voteStarted', (isStarted, nominated, candidate) => {
+    socket.on('voteStarted', (isStarted, nominated, candidate, voteId) => {
       if (isStarted) {
         dispatchVoting(SetCandidateActionCreator(candidate));
         dispatchVoting(SetNominatedActionCreator(nominated));
+        dispatchVoting(SetVoteIdActionCreator(voteId));
         dispatchVoting(StartVoutingActionCreator());
         if (currentPlayer.id !== '' && currentPlayer.id !== nominated.id) {
           setIsOpenKickMenu(true);
@@ -48,7 +51,8 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   useEffect(() => {
     socket.off('voteEnd');
     socket.on('voteEnd', (results) => {
-      console.log(results);
+      dispatchVoting(FinishVoutingActionCreator());
+      setIsOpenKickMenu(false);
     });
   });
   useEffect(() => {
@@ -114,6 +118,7 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
         votingNominated={voteState.nominated}
         allPlayersNumber={players.length}
         roomId={currentPlayer.roomId}
+        voteId={voteState.voteId}
         rogue={rogue}
         isOpen={isOpenKickMenu}
         closeMenu={closeKickMenu}

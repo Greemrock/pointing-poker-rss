@@ -20,14 +20,20 @@ export const handleVotingSubmit = (candidate: Player, nominant: Player) => {
 export const handleVotingYesSubmit = (
   voteKickId: string,
   userQuantity: number,
-  roomId: string
+  roomId: string,
+  userId: string
 ) => {
-  socket.emit('voteYes', { voteKickId, userQuantity, roomId });
+  socket.emit('voteYes', {
+    voteKickId,
+    userQuantity,
+    user: { roomId, userId },
+  });
 };
 export const handleVotingNoSubmit = (
   voteKickId: string,
   userQuantity: number,
-  roomId: string
+  roomId: string,
+  userId: string
 ) => {
-  socket.emit('voteNo', { voteKickId, userQuantity, roomId });
+  socket.emit('voteNo', { voteKickId, userQuantity, user: { roomId, userId } });
 };

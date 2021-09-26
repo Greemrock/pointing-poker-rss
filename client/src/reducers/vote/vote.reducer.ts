@@ -7,6 +7,7 @@ export type VoteState = {
   votedCount: number;
   candidate: Player;
   nominated: Player;
+  voteId: string;
 };
 
 export const initialState = {
@@ -33,6 +34,7 @@ export const initialState = {
     isAdmin: false,
     roomId: '',
   },
+  voteId: '',
 };
 
 export const VoteReducer = (
@@ -70,6 +72,12 @@ export const VoteReducer = (
         ...state,
         votersCount: action.payload,
       };
+    case VotingActionsTypes.SET_VOTE_ID:
+      return {
+        ...state,
+        voteId: action.payload,
+      };
+
     default:
       return state;
   }

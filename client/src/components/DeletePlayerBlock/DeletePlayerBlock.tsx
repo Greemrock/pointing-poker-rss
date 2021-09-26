@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Typography,
   Dialog,
@@ -22,6 +22,7 @@ type Props = {
   isOpen: boolean;
   allPlayersNumber: number;
   roomId: string;
+  voteId: string;
   closeMenu: () => void;
   startVoting: () => void;
 };
@@ -34,30 +35,24 @@ export const DeletePlayerBlock: React.FC<Props> = ({
   isOpen,
   allPlayersNumber,
   roomId,
+  voteId,
   closeMenu,
   startVoting,
 }) => {
   const classes = useStyles();
 
-  const [disabledPrimaryButton, setDisabledPrimaryButton] = useState(false);
-  const [disabledSecondaryButton, setDisabledSecondaryButton] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      setDisabledPrimaryButton(false);
-      setDisabledPrimaryButton(false);
-    };
-  });
-
   const handleCloseDialog = () => {
-    closeMenu();
     !isVoting
       ? closeMenu()
-      : () => {
+      : (() => {
           closeMenu();
-          handleVotingNoSubmit(votingCandidate.id, allPlayersNumber, roomId);
-        };
-    setDisabledSecondaryButton(true);
+          handleVotingNoSubmit(
+            voteId,
+            allPlayersNumber,
+            roomId,
+            votingCandidate.id
+          );
+        })();
   };
 
   const formik = useFormik({
@@ -66,15 +61,21 @@ export const DeletePlayerBlock: React.FC<Props> = ({
       closeMenu();
       !isVoting
         ? startVoting()
-        : handleVotingYesSubmit(votingCandidate.id, allPlayersNumber, roomId);
-      setDisabledPrimaryButton(true);
+        : handleVotingYesSubmit(
+            voteId,
+            allPlayersNumber,
+            roomId,
+            votingCandidate.id
+          );
     },
   });
+
   return (
     <Dialog
       open={isOpen}
       onClose={closeMenu}
       aria-labelledby="form-dialog-title"
+      disableBackdropClick
     >
       <Container className={classes.boxBlock}>
         <Typography className={classes.heding} component="h4" variant="h4">
@@ -108,11 +109,9 @@ export const DeletePlayerBlock: React.FC<Props> = ({
               const button = e.target as HTMLButtonElement;
               button.disabled = true;
             }}
-            onDoubleClick={(e) => e.preventDefault()}
             color="primary"
             variant="contained"
             type="submit"
-            disabled={disabledPrimaryButton}
           >
             Yes
           </Button>
@@ -120,7 +119,6 @@ export const DeletePlayerBlock: React.FC<Props> = ({
             onClick={handleCloseDialog}
             color="secondary"
             variant="contained"
-            disabled={disabledSecondaryButton}
           >
             No
           </Button>
