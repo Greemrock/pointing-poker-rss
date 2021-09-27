@@ -14,7 +14,10 @@ import {
   StartVoutingActionCreator,
 } from '../../reducers/vote/vote.create-action';
 import { handleVotingSubmit, socket } from '../../api/playersRequests';
-import { ReloadUsersActionCreator } from '../../reducers/users/users.create-action';
+import {
+  AuthActionCreator,
+  ReloadUsersActionCreator,
+} from '../../reducers/users/users.create-action';
 import { AppContext } from '../../context/index';
 
 type Props = {
@@ -58,6 +61,8 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   useEffect(() => {
     socket.off('roomInfo');
     socket.on('roomInfo', (roomInfo) => {
+      if (!roomInfo.users.find((el: Player) => el.id === currentPlayer.id))
+        dispatch(AuthActionCreator(false));
       dispatch(ReloadUsersActionCreator(roomInfo.users));
     });
   }, []);

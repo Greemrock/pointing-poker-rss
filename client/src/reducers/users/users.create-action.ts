@@ -1,3 +1,4 @@
+import { boolean } from 'yup/lib/locale';
 import {
   AddUserAction,
   AuthUserAction,
@@ -6,8 +7,9 @@ import {
   ReloadUsersAction,
 } from './users.type';
 
-export const AuthActionCreator = (): AuthUserAction => ({
+export const AuthActionCreator = (payload: boolean): AuthUserAction => ({
   type: UsersActionsTypes.AUTH,
+  payload,
 });
 
 export const AddUserActionCreator = (payload: Player): AddUserAction => ({

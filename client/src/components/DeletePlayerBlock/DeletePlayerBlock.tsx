@@ -73,7 +73,11 @@ export const DeletePlayerBlock: React.FC<Props> = ({
   return (
     <Dialog
       open={isOpen}
-      onClose={closeMenu}
+      onClose={(e, reason) => {
+        if (reason !== 'backdropClick') {
+          closeMenu();
+        }
+      }}
       aria-labelledby="form-dialog-title"
       disableBackdropClick
     >

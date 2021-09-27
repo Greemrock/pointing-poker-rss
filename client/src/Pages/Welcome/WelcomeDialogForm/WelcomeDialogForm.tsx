@@ -86,7 +86,7 @@ export const WelcomeFormDialog: FC<Props> = ({
       handleUserSubmit(payloadObject);
     }
     socket.on('personalData', (userInfo) => {
-      dispatch(AuthActionCreator());
+      dispatch(AuthActionCreator(true));
       dispatch(AddUserActionCreator(userInfo));
       handleClose();
       setIsLoading(false);

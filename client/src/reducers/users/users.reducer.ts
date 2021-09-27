@@ -1,3 +1,4 @@
+import { PlaylistAddOutlined } from '@material-ui/icons';
 import { UsersActions, UsersActionsTypes } from './users.type';
 
 import { Player } from './users.type';
@@ -30,7 +31,7 @@ export const usersReducer = (
     case UsersActionsTypes.AUTH:
       return {
         ...state,
-        isAuth: true,
+        isAuth: action.payload,
       };
     case UsersActionsTypes.ADD_USER:
       return {
