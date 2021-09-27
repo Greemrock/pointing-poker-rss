@@ -1,4 +1,3 @@
-import { PlaylistAddOutlined } from '@material-ui/icons';
 import { UsersActions, UsersActionsTypes } from './users.type';
 
 import { Player } from './users.type';

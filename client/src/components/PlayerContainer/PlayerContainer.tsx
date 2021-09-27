@@ -53,16 +53,18 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   });
   useEffect(() => {
     socket.off('voteEnd');
-    socket.on('voteEnd', (results) => {
+    socket.on('voteEnd', (isVoteEnd, results, isDeleted) => {
       dispatchVoting(FinishVoutingActionCreator());
       setIsOpenKickMenu(false);
+      if (isDeleted === 'DELETED') {
+        if (currentPlayer.id === voteState.candidate.id)
+          dispatch(AuthActionCreator(false));
+      }
     });
   });
   useEffect(() => {
     socket.off('roomInfo');
     socket.on('roomInfo', (roomInfo) => {
-      if (!roomInfo.users.find((el: Player) => el.id === currentPlayer.id))
-        dispatch(AuthActionCreator(false));
       dispatch(ReloadUsersActionCreator(roomInfo.users));
     });
   }, []);
