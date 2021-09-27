@@ -10,6 +10,6 @@ export const useVoteGraphStyled = makeStyles({
     margin: SPACE_MD,
   },
   graph: {
-    width: 300,
+    maxnWidth: 300,
   },
 });
