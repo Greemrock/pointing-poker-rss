@@ -3,6 +3,8 @@ import { Redirect } from 'react-router';
 import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { AppContext } from '../../App';
+import { Card } from '../../components/Card';
+import { cardsArrays } from '../../Shared';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -10,14 +12,20 @@ export const MeetingRoomPage: React.FC = () => {
     appState: { isAuth, currentPlayer, players },
     dispatch,
   } = useContext(AppContext);
+
   return (
     <>
-      {!isAuth && <Redirect to="/" />}
+      {/* {!isAuth && <Redirect to="/" />} */}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.nameGame}>
           <Typography variant="h6" align="center">
             Meeting room
           </Typography>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {cardsArrays.modifiedFibonacci.map((elem) => (
+            <Card key={elem} value={elem} />
+          ))}
         </div>
       </Container>
     </>
