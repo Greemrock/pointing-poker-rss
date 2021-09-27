@@ -13,7 +13,7 @@ export const MeetingRoomPage: React.FC = () => {
   } = useContext(AppContext);
   return (
     <>
-      {/* {!isAuth && <Redirect to="/" />} */}
+      {!isAuth && <Redirect to="/" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.nameGame}>
           <Typography variant="h6" align="center">
