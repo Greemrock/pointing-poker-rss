@@ -21,12 +21,12 @@ import {
   socket,
 } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
-import { AppContext } from '../../../context/index';
+import { UsersContext } from '../../../context/';
 import {
   AddUserActionCreator,
   AuthActionCreator,
 } from '../../../reducers/users/users.create-action';
-import { UsersActions } from '../../../reducers/users/users.type';
+import { UsersActions } from '../../../reducers/users/';
 
 const validationSchema = yup.object({
   name: yup
@@ -71,7 +71,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const { dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(UsersContext);
 
   const sendPalyerDataWithWS = (
     dispatch: React.Dispatch<UsersActions>,

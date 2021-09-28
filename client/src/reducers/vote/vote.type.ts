@@ -10,6 +10,15 @@ export enum VotingActionsTypes {
   SET_VOTE_ID = 'SET-VOTE-ID',
 }
 
+export type VoteState = {
+  votingStarted: boolean;
+  votersCount: number;
+  votedCount: number;
+  candidate: Player;
+  nominated: Player;
+  voteId: string;
+};
+
 export interface SetParticipants {
   type: VotingActionsTypes.SET_PARTICIPANTS;
   payload: number;

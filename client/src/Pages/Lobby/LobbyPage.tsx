@@ -5,7 +5,7 @@ import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
 import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
-import { AppContext } from '../../context/index';
+import { UsersContext } from '../../context/';
 import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 
@@ -19,7 +19,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
 
   const {
     appState: { isAuth, currentPlayer },
-  } = useContext(AppContext);
+  } = useContext(UsersContext);
 
   return (
     <>

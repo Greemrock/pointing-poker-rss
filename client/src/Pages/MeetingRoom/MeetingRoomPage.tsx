@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { Redirect } from 'react-router';
 import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
-import { AppContext } from '../../context/index';
+import { UsersContext } from '../../context/';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
   const {
     appState: { isAuth, currentPlayer, players },
     dispatch,
-  } = useContext(AppContext);
+  } = useContext(UsersContext);
   return (
     <>
       {!isAuth && <Redirect to="/" />}

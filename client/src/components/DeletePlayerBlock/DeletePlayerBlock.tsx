@@ -79,7 +79,6 @@ export const DeletePlayerBlock: React.FC<Props> = ({
         }
       }}
       aria-labelledby="form-dialog-title"
-      disableBackdropClick
     >
       <Container className={classes.boxBlock}>
         <Typography className={classes.heding} component="h4" variant="h4">
@@ -94,7 +93,6 @@ export const DeletePlayerBlock: React.FC<Props> = ({
         ) : (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             <span className={classes.nameSpan}>
-              {' '}
               {`${votingNominated.name} ${votingNominated.surname}`}{' '}
             </span>{' '}
             want to kick member{' '}

@@ -1,15 +1,4 @@
-import { Player } from '../users/users.type';
-import { VoteActions, VotingActionsTypes } from './vote.type';
-
-export type VoteState = {
-  votingStarted: boolean;
-  votersCount: number;
-  votedCount: number;
-  candidate: Player;
-  nominated: Player;
-  voteId: string;
-};
-
+import { VoteActions, VotingActionsTypes, VoteState } from './vote.type';
 export const initialState = {
   votingStarted: false,
   votersCount: 0,

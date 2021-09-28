@@ -17,7 +17,7 @@ import { cardsArrays } from '../../Shared/settingsArrays';
 import { Decks } from '../../Shared/enums';
 import { Card } from '../Card';
 import { decksArray } from '../../Shared/settingsArrays';
-import { AppContext } from '../../context/index';
+import { UsersContext } from '../../context/index';
 import {
   SetTimerActionCreator,
   SetMinutesActionCreator,
@@ -28,7 +28,7 @@ import {
 import { SettingsContext } from '../../context/settings.context';
 
 export const Settings: React.FC = () => {
-  const { appState } = useContext(AppContext);
+  const { appState } = useContext(UsersContext);
   const {
     settingsState: { currentSets },
     settingsDispatch,

@@ -18,7 +18,7 @@ import {
   AuthActionCreator,
   ReloadUsersActionCreator,
 } from '../../reducers/users/users.create-action';
-import { AppContext } from '../../context/index';
+import { UsersContext } from '../../context/index';
 
 type Props = {
   view?: Place;
@@ -28,7 +28,7 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   const {
     appState: { currentPlayer, players },
     dispatch,
-  } = useContext(AppContext);
+  } = useContext(UsersContext);
   const [isOpenKickMenu, setIsOpenKickMenu] = useState(false);
   const [rogue, setRogue] = useState<Player | undefined>();
   const [voteState, dispatchVoting] = useReducer(VoteReducer, initialState);

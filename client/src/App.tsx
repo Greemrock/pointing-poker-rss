@@ -9,7 +9,7 @@ import { useAppStyles } from './App.styled';
 import { ChatBlock } from './components/Chat';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { MessageContext, IssueContext, AppContext } from './context';
+import { MessageContext, IssueContext, UsersContext } from './context';
 import { LobbyPage } from './Pages/Lobby';
 import { MeetingRoomPage } from './Pages/MeetingRoom';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
@@ -36,7 +36,7 @@ export const App: React.FC = () => {
     initialSetsState
   );
   return (
-    <AppContext.Provider value={{ appState, dispatch }}>
+    <UsersContext.Provider value={{ appState, dispatch }}>
       <MessageContext.Provider value={{ messageState, messageDispatch }}>
         <IssueContext.Provider value={{ issueState, issueDispatch }}>
           <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
@@ -70,6 +70,6 @@ export const App: React.FC = () => {
           </SettingsContext.Provider>
         </IssueContext.Provider>
       </MessageContext.Provider>
-    </AppContext.Provider>
+    </UsersContext.Provider>
   );
 };
