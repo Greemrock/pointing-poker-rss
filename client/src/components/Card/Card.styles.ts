@@ -7,7 +7,6 @@ import {
   SHADOW,
   GRAY_2,
   GREEN_2,
-  GREEN_3,
 } from '../../Shared/cssConstants';
 
 export const useCardStyles = makeStyles(() => ({
@@ -26,8 +25,18 @@ export const useCardStyles = makeStyles(() => ({
     zIndex: 1,
     marginTop: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 0 : ''),
     boxShadow: ({ isOpen }: { isOpen: boolean }) => (isOpen ? SHADOW : ''),
-    backgroundColor: ({ isOpen }: { isOpen: boolean }) =>
-      isOpen ? GRAY_2 : '',
+    backgroundColor: ({
+      isOpen,
+      isSelect,
+      isCardSelected,
+    }: {
+      isOpen: boolean;
+      isSelect: boolean;
+      isCardSelected: boolean;
+    }) => (isOpen ? GRAY_2 : !isCardSelected ? '' : isSelect ? GREEN_2 : ''),
+    '&:hover': {
+      boxShadow: SHADOW,
+    },
   },
   clickFild: {
     display: 'flex',
@@ -37,7 +46,7 @@ export const useCardStyles = makeStyles(() => ({
     textAlign: 'center',
     transition: 'all 0.5s',
     left: '8px',
-    backgroundColor: GREEN_3,
+    backgroundColor: GRAY_2,
     opacity: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),
     top: ({ isOpen }: { isOpen: boolean }) => (isOpen ? '-40px' : '10px'),
     zIndex: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),

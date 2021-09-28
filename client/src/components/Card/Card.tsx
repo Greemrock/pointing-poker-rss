@@ -1,16 +1,8 @@
-import React, {
-  ChangeEvent,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
   ClickAwayListener,
-  Menu,
-  MenuItem,
   Paper,
   Typography,
 } from '@material-ui/core';
@@ -18,43 +10,73 @@ import { useCardStyles } from './Card.styles';
 import { QuestionIconComponent } from './QuestionIconComponent';
 import { CoffeIconComponent } from './CoffeIconComponent';
 
-export const Card: React.FC<{ value: string }> = ({ value }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const classes = useCardStyles({ isOpen });
+type Props = {
+  isCardSelected: boolean;
+  setCardSelected: (isSelect: boolean) => void;
+  nameCard: string;
+};
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+export const Card: React.FC<Props> = ({
+  nameCard,
+  isCardSelected,
+  setCardSelected,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
+  const classes = useCardStyles({ isOpen, isSelect, isCardSelected });
+
+  useEffect(() => {
+    if (!isCardSelected) {
+      setIsOpen(false);
+      setIsSelect(false);
+    }
+  }, [isCardSelected]);
+
+  const handleClickCard = () => {
+    if (isCardSelected) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(!isOpen);
+    }
   };
-  const handleClose = () => {
+
+  const handleClickOutside = () => {
     setIsOpen(false);
   };
 
   const handleSubmitYes = () => {
-    handleClose();
+    setIsOpen(false);
+    setIsSelect(true);
+    setCardSelected(true);
   };
+
   return (
     <div style={{ position: 'relative' }}>
-      <Button className={classes.clickFild} onClick={handleSubmitYes}>
+      <Button
+        variant="outlined"
+        className={classes.clickFild}
+        onClick={handleSubmitYes}
+      >
         Yes
       </Button>
-      <ClickAwayListener onClickAway={handleClose}>
+      <ClickAwayListener onClickAway={handleClickOutside}>
         <Paper
           elevation={2}
           variant="outlined"
           className={classes.cardBlock}
-          onClick={handleClick}
+          onClick={handleClickCard}
         >
-          <Typography className={classes.topText}>{value}</Typography>
+          <Typography className={classes.topText}>{nameCard}</Typography>
           <Box className={classes.centerBlock}>
-            {value === '?' ? (
+            {nameCard === '?' ? (
               <QuestionIconComponent />
-            ) : value === 'Pass' ? (
+            ) : nameCard === 'Pass' ? (
               <CoffeIconComponent />
             ) : (
-              <Typography variant="h3">{value}</Typography>
+              <Typography variant="h3">{nameCard}</Typography>
             )}
           </Box>
-          <Typography className={classes.bottomText}>{value}</Typography>
+          <Typography className={classes.bottomText}>{nameCard}</Typography>
         </Paper>
       </ClickAwayListener>
     </div>

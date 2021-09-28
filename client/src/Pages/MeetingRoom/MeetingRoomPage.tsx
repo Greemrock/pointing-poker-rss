@@ -3,8 +3,7 @@ import { Redirect } from 'react-router';
 import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { AppContext } from '../../App';
-import { Card } from '../../components/Card';
-import { cardsArrays } from '../../Shared';
+import { CardContainer } from '../../components/CardContainer';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -22,11 +21,7 @@ export const MeetingRoomPage: React.FC = () => {
             Meeting room
           </Typography>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {cardsArrays.modifiedFibonacci.map((elem) => (
-            <Card key={elem} value={elem} />
-          ))}
-        </div>
+        <CardContainer cardSelected={false} />
       </Container>
     </>
   );

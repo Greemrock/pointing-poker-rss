@@ -46,9 +46,7 @@ export const Settings: React.FC = () => {
     );
   }, []);
 
-  const cardsPreview = cardsArrays[currentSets.deck]
-    .map((el: string) => <Card key={el} value={el} />)
-    .slice(0, 5);
+  const cardsPreview = '';
 
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     settingsDispatch(SetDeckActionCreator(event.target.value as Decks));
