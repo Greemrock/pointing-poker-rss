@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Paper, Button, Container, Tooltip } from '@material-ui/core';
+import {
+  Box,
+  Paper,
+  Button,
+  Container,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import RestoreIcon from '@material-ui/icons/Restore';
 import { useStyles } from './GameTimer.styles';
@@ -12,9 +19,7 @@ const STATUS = {
 const minutesAndSecondsFromTime = (time: number): string => {
   const minutes = Math.floor(time / 60);
   const seconds = time - 60 * minutes;
-  return `${minutes >= 10 ? minutes : `0${minutes}`}:${
-    seconds >= 10 ? seconds : `0${seconds}`
-  }`;
+  return `${minutes} :${seconds >= 10 ? seconds : `0${seconds}`}`;
 };
 
 export const GameTimer: React.FC<{
@@ -43,35 +48,35 @@ export const GameTimer: React.FC<{
   );
 
   return (
-    <Paper elevation={1}>
-      <Box className={classes.centerBlock}>
-        <div className={classes.topText}>
+    <Box className={classes.centerBlock}>
+      <Paper className={classes.paperDigits}>
+        <Typography className={classes.topText}>
           {minutesAndSecondsFromTime(secondsRemaining)}
-        </div>
-        <Container className={classes.buttonsBlock}>
-          <Tooltip title="Run Round" aria-label="Run Round">
-            <Button
-              className={classes.timerButton}
-              onClick={handleStart}
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<PlayCircleFilledWhiteIcon />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Reset Round" aria-label="Reset Round">
-            <Button
-              className={classes.timerButton}
-              onClick={handleReset}
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<RestoreIcon />}
-            ></Button>
-          </Tooltip>
-        </Container>
+        </Typography>
+      </Paper>
+      <Box className={classes.buttonsBlock}>
+        <Tooltip title="Run Round" aria-label="Run Round">
+          <Button
+            className={classes.timerButton}
+            onClick={handleStart}
+            variant="contained"
+            color="primary"
+            size="small"
+            startIcon={<PlayCircleFilledWhiteIcon />}
+          ></Button>
+        </Tooltip>
+        <Tooltip title="Reset Round" aria-label="Reset Round">
+          <Button
+            className={classes.timerButton}
+            onClick={handleReset}
+            variant="contained"
+            color="primary"
+            size="small"
+            startIcon={<RestoreIcon />}
+          ></Button>
+        </Tooltip>
       </Box>
-    </Paper>
+    </Box>
   );
 };
 

@@ -10,30 +10,35 @@ export const useStyles = makeStyles(() => ({
     fontSize: SIZE_LG,
     fontWeight: 700,
   },
+  paperDigits: {
+    width: '180px',
+  },
   centerBlock: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '220px',
     height: '70%',
     '& p': {
       fontSize: SIZE_LG,
-      fontWeight: 700,
+      fontWeight: 400,
       lineHeight: '50px',
     },
     '& .MuiSvgIcon-root': {
-      width: '50px',
-      height: '50px',
+      width: '40px',
+      height: '40px',
     },
   },
   timerButton: {
     '& .MuiButton-startIcon': {
       margin: 0,
     },
+    width: '40%',
   },
   buttonsBlock: {
     width: '180px',
+    marginTop: SPACE_SM,
     display: 'flex',
     justifyContent: 'space-around',
   },

@@ -5,7 +5,6 @@ import { StartExitBtn } from '../../components/StartExitBtn';
 import { Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { AppContext } from '../../App';
-import { GameTimer } from '../../components/GameTimer';
 
 type Props = {
   link: string;
