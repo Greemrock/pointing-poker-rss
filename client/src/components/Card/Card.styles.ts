@@ -1,6 +1,14 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { SPACE_L, SHADOW, GRAY_2, GREEN_1 } from './../../Shared/cssConstants';
-import { SPACE_XS, SIZE_LG, SIZE_XS } from '../../Shared/cssConstants';
+import {
+  SPACE_XS,
+  SIZE_LG,
+  SIZE_XS,
+  SPACE_L,
+  SHADOW,
+  GRAY_2,
+  GREEN_2,
+  GREEN_3,
+} from '../../Shared/cssConstants';
 
 export const useCardStyles = makeStyles(() => ({
   cardBlock: {
@@ -27,10 +35,15 @@ export const useCardStyles = makeStyles(() => ({
     width: '80px',
     position: 'absolute',
     textAlign: 'center',
-    zIndex: 0,
     transition: 'all 0.5s',
-    top: ({ isOpen }: { isOpen: boolean }) => (isOpen ? '-40px' : 0),
-    backgroundColor: GREEN_1,
+    left: '8px',
+    backgroundColor: GREEN_3,
+    opacity: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),
+    top: ({ isOpen }: { isOpen: boolean }) => (isOpen ? '-40px' : '10px'),
+    zIndex: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),
+    '&:hover': {
+      backgroundColor: GREEN_2,
+    },
   },
   topText: {
     width: '100%',
