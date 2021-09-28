@@ -15,7 +15,7 @@ import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
 import { checkLink, Priority } from '../../../Shared';
 import { socket } from '../../../api/playersRequests';
-import { UsersContext } from '../../../context/index';
+import { UsersContext } from '../../../context/';
 import {
   handleAddIssueSubmit,
   handleUpdateIssueSubmit,

@@ -15,9 +15,9 @@ import { MeetingRoomPage } from './Pages/MeetingRoom';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
 import { initialIssueState, issueReducer } from './reducers/issue';
 import { initialMessageState, msgReducer } from './reducers/message';
-import { initialState, usersReducer } from './reducers/users/users.reducer';
+import { initialState, usersReducer } from './reducers/users/';
 import { initialSetsState, settingsReducer } from './reducers/settings';
-import { SettingsContext } from './context/settings.context';
+import { SettingsContext } from './context/';
 
 export const App: React.FC = () => {
   const classes = useAppStyles();

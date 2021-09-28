@@ -3,7 +3,7 @@ import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
 import { Place, SizeCard } from '../../Shared/enums';
-import { Player } from '../../reducers/users/users.type';
+import { Player } from '../../reducers/users/';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
 import { initialState, VoteReducer } from '../../reducers/vote/';
 import {
@@ -12,13 +12,13 @@ import {
   SetNominatedActionCreator,
   SetVoteIdActionCreator,
   StartVoutingActionCreator,
-} from '../../reducers/vote/vote.create-action';
+} from '../../reducers/vote/';
 import { handleVotingSubmit, socket } from '../../api/playersRequests';
 import {
   AuthActionCreator,
   ReloadUsersActionCreator,
-} from '../../reducers/users/users.create-action';
-import { UsersContext } from '../../context/index';
+} from '../../reducers/users/';
+import { UsersContext } from '../../context/';
 
 type Props = {
   view?: Place;
@@ -39,21 +39,24 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   };
   useEffect(() => {
     socket.off('voteStarted');
-    socket.on('voteStarted', (isStarted, nominated, candidate, voteId) => {
-      if (isStarted) {
-        dispatchVoting(SetCandidateActionCreator(candidate));
-        dispatchVoting(SetNominatedActionCreator(nominated));
-        dispatchVoting(SetVoteIdActionCreator(voteId));
-        dispatchVoting(StartVoutingActionCreator());
-        if (currentPlayer.id !== '' && currentPlayer.id !== nominated.id) {
-          setIsOpenKickMenu(true);
+    socket.on(
+      'voteStarted',
+      (isStarted: boolean, nominated, candidate, voteId: string) => {
+        if (isStarted) {
+          dispatchVoting(SetCandidateActionCreator(candidate));
+          dispatchVoting(SetNominatedActionCreator(nominated));
+          dispatchVoting(SetVoteIdActionCreator(voteId));
+          dispatchVoting(StartVoutingActionCreator());
+          if (currentPlayer.id !== '' && currentPlayer.id !== nominated.id) {
+            setIsOpenKickMenu(true);
+          }
         }
       }
-    });
+    );
   });
   useEffect(() => {
     socket.off('voteEnd');
-    socket.on('voteEnd', (isVoteEnd, results, isDeleted) => {
+    socket.on('voteEnd', (isVoteEnd: boolean, results, isDeleted: string) => {
       dispatchVoting(FinishVoutingActionCreator());
       setIsOpenKickMenu(false);
       if (isDeleted === 'DELETED') {

@@ -17,7 +17,7 @@ import { cardsArrays } from '../../Shared/settingsArrays';
 import { Decks } from '../../Shared/enums';
 import { Card } from '../Card';
 import { decksArray } from '../../Shared/settingsArrays';
-import { UsersContext } from '../../context/index';
+import { UsersContext } from '../../context/';
 import {
   SetTimerActionCreator,
   SetMinutesActionCreator,

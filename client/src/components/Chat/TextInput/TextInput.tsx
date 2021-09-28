@@ -4,7 +4,7 @@ import SendIcon from '@material-ui/icons/Send';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { useTextInputStyles } from './TextInput.styled';
-import { UsersContext } from '../../../context/index';
+import { UsersContext } from '../../../context/';
 import { getDate } from '../../../Util/getDate';
 import { handleMessageSubmit } from '../../../api/message';
 import { socket } from '../../../api/playersRequests';
