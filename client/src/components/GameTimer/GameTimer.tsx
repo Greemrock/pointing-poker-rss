@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Box,
-  Paper,
-  Button,
-  Container,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
-import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import { Box, Paper, Button, Tooltip, Typography } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RestoreIcon from '@material-ui/icons/Restore';
 import { useStyles } from './GameTimer.styles';
 
@@ -62,7 +55,7 @@ export const GameTimer: React.FC<{
             variant="contained"
             color="primary"
             size="small"
-            startIcon={<PlayCircleFilledWhiteIcon />}
+            startIcon={<PlayArrowIcon />}
           ></Button>
         </Tooltip>
         <Tooltip title="Reset Round" aria-label="Reset Round">
