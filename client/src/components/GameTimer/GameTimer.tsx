@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Box, Paper, Button, Tooltip, Typography } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RestoreIcon from '@material-ui/icons/Restore';
 import { useStyles } from './GameTimer.styles';
+import { getMinutesAndSecondsFromTime } from '../../Util/getMinutesAndSecondsFromTime';
+import { useInterval } from '../../Util/hooks/useInterval';
 
 const STATUS = {
   STARTED: 'Started',
   STOPPED: 'Stopped',
-};
-
-const minutesAndSecondsFromTime = (time: number): string => {
-  const minutes = Math.floor(time / 60);
-  const seconds = time - 60 * minutes;
-  return `${minutes} :${seconds >= 10 ? seconds : `0${seconds}`}`;
 };
 
 export const GameTimer: React.FC<{
@@ -44,7 +40,7 @@ export const GameTimer: React.FC<{
     <Box className={classes.centerBlock}>
       <Paper className={classes.paperDigits}>
         <Typography className={classes.topText}>
-          {minutesAndSecondsFromTime(secondsRemaining)}
+          {getMinutesAndSecondsFromTime(secondsRemaining)}
         </Typography>
       </Paper>
       <Box className={classes.buttonsBlock}>
@@ -72,21 +68,3 @@ export const GameTimer: React.FC<{
     </Box>
   );
 };
-
-function useInterval(callback: () => void, delay: number | null) {
-  const savedCallback = useRef<() => void>();
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    function tick() {
-      if (savedCallback.current) savedCallback.current();
-    }
-    if (delay !== null) {
-      const id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}

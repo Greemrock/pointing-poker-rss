@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
-import { Place } from '../../Shared/enums';
+import { Issue, Place } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { UsersContext } from '../../context/';
 import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
+import { Redirect } from 'react-router-dom';
 
 type Props = {
   link: string;
