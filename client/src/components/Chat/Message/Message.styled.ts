@@ -11,10 +11,12 @@ import { makeStyles, Theme } from '@material-ui/core';
 export const useMessageStyles = makeStyles((theme: Theme) => ({
   messageRow: {
     display: 'flex',
+    margin: `0 ${SPACE_MD}`,
   },
   messageRowRight: {
     display: 'flex',
     justifyContent: 'flex-end',
+    margin: `0 ${SPACE_MD}`,
   },
   messageLeft: {
     position: 'relative',
