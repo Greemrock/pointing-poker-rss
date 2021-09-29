@@ -1,3 +1,4 @@
+import { SPACE_XS } from './../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
 import {
   DARK_BLUE,
@@ -23,7 +24,7 @@ export const useFooterStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: `0 ${SPACE_MD}`,
+    margin: `0 ${SPACE_XS}`,
     color: WHITE,
     cursor: 'pointer',
     '&': {

@@ -4,7 +4,7 @@ import SendIcon from '@material-ui/icons/Send';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { useTextInputStyles } from './TextInput.styled';
-import { AppContext } from '../../../App';
+import { UsersContext } from '../../../context/';
 import { getDate } from '../../../Util/getDate';
 import { handleMessageSubmit } from '../../../api/message';
 import { socket } from '../../../api/playersRequests';
@@ -14,7 +14,7 @@ import { MessageContext } from '../../../context';
 export const TextInput: React.FC = () => {
   const {
     appState: { currentPlayer },
-  } = useContext(AppContext);
+  } = useContext(UsersContext);
   const classes = useTextInputStyles();
   const { messageDispatch } = useContext(MessageContext);
 
@@ -46,11 +46,12 @@ export const TextInput: React.FC = () => {
       {({ isSubmitting }) => (
         <Form className={classes.wrapForm}>
           <Field
+            autoFocus
             fullWidth
+            variant="outlined"
             component={TextField}
             type="text"
             name="message"
-            label="message"
             className={classes.wrapText}
           />
           <Button

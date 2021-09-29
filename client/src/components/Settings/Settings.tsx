@@ -13,11 +13,9 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useStyles, AntSwitch } from './Settings.styles';
 import { SettingsTimer } from './SettingsTimer';
-import { cardsArrays } from '../../Shared/settingsArrays';
 import { Decks } from '../../Shared/enums';
-import { Card } from '../Card';
 import { decksArray } from '../../Shared/settingsArrays';
-import { AppContext } from '../../App';
+import { UsersContext } from '../../context/';
 import {
   SetTimerActionCreator,
   SetMinutesActionCreator,
@@ -26,9 +24,10 @@ import {
   SetRoomIdActionCreator,
 } from '../../reducers/settings';
 import { SettingsContext } from '../../context/settings.context';
+import { CardContainer } from '../CardContainer';
 
 export const Settings: React.FC = () => {
-  const { appState, dispatch } = useContext(AppContext);
+  const { appState } = useContext(UsersContext);
   const {
     settingsState: { currentSets },
     settingsDispatch,
@@ -46,15 +45,11 @@ export const Settings: React.FC = () => {
     );
   }, []);
 
-  const cardsPreview = cardsArrays[currentSets.deck]
-    .map((el: string) => <Card key={el} value={el} />)
-    .slice(0, 5);
-
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     settingsDispatch(SetDeckActionCreator(event.target.value as Decks));
   };
 
-  const handleSwitcherChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSwitcherChange = () => {
     settingsDispatch(SetTimerActionCreator());
   };
 
@@ -113,7 +108,7 @@ export const Settings: React.FC = () => {
             />
           ) : null}
           <Container className={classes.cardsPreviewBlock}>
-            {cardsPreview}
+            <CardContainer cardSelected={true} deck={currentSets.deck} />
           </Container>
         </AccordionDetails>
       </Accordion>

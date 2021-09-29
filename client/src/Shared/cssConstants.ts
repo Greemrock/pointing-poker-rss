@@ -27,5 +27,6 @@ export const BLUE = '#a8ddfd';
 export const SAND = '#FFC482';
 export const WHITE = '#FFFFFF';
 export const GRAY = '#888888';
+export const GRAY_2 = '#f2f2f2';
 
-export const BORDER = `1px solid ${GRAY}`;
+export const SHADOW = `5px 3px 13px 0px ${GRAY}`;

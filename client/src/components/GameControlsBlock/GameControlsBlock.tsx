@@ -6,6 +6,7 @@ import {
   NextIssueActionCreator,
   PrevIssueActionCreator,
 } from '../../reducers/issue';
+import { GameTimer } from '../GameTimer';
 
 export const GameControlsBlock: React.FC = () => {
   const classes = useStartExitGameStyles();
@@ -24,7 +25,9 @@ export const GameControlsBlock: React.FC = () => {
 
   return (
     <Container className={classes.root} maxWidth="md">
-      <Paper>{currentIssue}</Paper>
+      <Paper>
+        <GameTimer time={90} />
+      </Paper>
       <div className={classes.container}>
         {currentIssue === 0 ? null : (
           <Button
