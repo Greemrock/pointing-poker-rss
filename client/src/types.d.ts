@@ -30,15 +30,6 @@ type payloadImage = {
   image: string | null | undefined;
 };
 
-type PlayerCardType = {
-  id: string;
-  name: string;
-  surname: string;
-  job: string;
-  isAdmin: boolean;
-  image: string | null;
-};
-
 type IssueFormType = {
   title: string;
   link: string;
