@@ -1,9 +1,15 @@
+const percent = (voteAmount: number[]) => {
+  const total = voteAmount.reduce((a, b) => a + b);
+  return voteAmount.map((elem) => Math.floor((elem / total) * 100 + 0.5));
+};
+
 export const dataForGraph = (typeCard: string[], voteAmount: number[]) => ({
+  type: 'pie',
   labels: typeCard,
   datasets: [
     {
       label: '# of Votes',
-      data: voteAmount,
+      data: percent(voteAmount),
       backgroundColor: [
         'rgba(255, 99, 132)',
         'rgba(54, 162, 235)',
