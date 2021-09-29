@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Box, Button, Drawer, Fab, Paper } from '@material-ui/core';
+import { Box, Button, Drawer, Fab, Paper, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import ChatIcon from '@material-ui/icons/Chat';
 import { useChatBlockStyles } from './ChatBlock.styled';
@@ -41,14 +41,16 @@ export const ChatBlock: React.FC = () => {
   return (
     <>
       {isAuth && (
-        <Fab
-          onClick={toggleDrawer(true)}
-          color="primary"
-          aria-label="add"
-          className={classes.btnChat}
-        >
-          <ChatIcon />
-        </Fab>
+        <Tooltip title="Chat" placement="left">
+          <Fab
+            onClick={toggleDrawer(true)}
+            color="primary"
+            aria-label="add"
+            className={classes.btnChat}
+          >
+            <ChatIcon />
+          </Fab>
+        </Tooltip>
       )}
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         <Box role="presentation" className={classes.container}>

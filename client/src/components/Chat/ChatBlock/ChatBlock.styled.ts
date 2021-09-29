@@ -16,7 +16,7 @@ export const useChatBlockStyles = makeStyles((theme: Theme) => ({
     },
   },
   wrapper: {
-    height: '100%',
+    height: '96%',
     overflowY: 'scroll',
     paddingTop: SPACE_XS,
   },
