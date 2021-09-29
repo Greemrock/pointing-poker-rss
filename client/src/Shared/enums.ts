@@ -25,3 +25,8 @@ export enum Decks {
   tshirts = 'tshirts',
   powers = 'powers',
 }
+
+export enum TimerStatus {
+  STARTED = 'Started',
+  STOPPED = 'Stopped',
+}

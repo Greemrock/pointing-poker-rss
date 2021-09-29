@@ -10,7 +10,7 @@ import { GameTimer } from '../GameTimer';
 
 export const GameControlsBlock: React.FC = () => {
   const classes = useStartExitGameStyles();
-  const [isRoundStarted, setIsRoundStarted] = useState(false);
+  const [isRoundEnded, setIsRoundEnded] = useState(false);
 
   const {
     issueState: { currentIssue, issues },
@@ -26,30 +26,32 @@ export const GameControlsBlock: React.FC = () => {
   return (
     <Container className={classes.root} maxWidth="md">
       <Paper>
-        <GameTimer time={90} />
+        <GameTimer time={10} setIsRoundEnded={setIsRoundEnded} />
       </Paper>
-      <div className={classes.container}>
-        {currentIssue === 0 ? null : (
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={handlePrevIssue}
-          >
-            Prev Issue
-          </Button>
-        )}
-        {currentIssue === issues.length - 1 ? null : (
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={handleNextIssue}
-          >
-            Next Issue
-          </Button>
-        )}
-      </div>
+      {isRoundEnded ? (
+        <div className={classes.container}>
+          {currentIssue === 0 ? null : (
+            <Button
+              className={classes.btn}
+              variant="contained"
+              color="primary"
+              onClick={handlePrevIssue}
+            >
+              Prev Issue
+            </Button>
+          )}
+          {currentIssue === issues.length - 1 ? null : (
+            <Button
+              className={classes.btn}
+              variant="contained"
+              color="primary"
+              onClick={handleNextIssue}
+            >
+              Next Issue
+            </Button>
+          )}
+        </div>
+      ) : null}
       <Button className={classes.btn} variant="outlined" color="primary">
         Stop Game
       </Button>

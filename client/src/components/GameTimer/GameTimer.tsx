@@ -5,24 +5,24 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import { useStyles } from './GameTimer.styles';
 import { getMinutesAndSecondsFromTime } from '../../Util/getMinutesAndSecondsFromTime';
 import { useInterval } from '../../Util/hooks/useInterval';
+import { TimerStatus } from '../../Shared/enums';
 
-const STATUS = {
-  STARTED: 'Started',
-  STOPPED: 'Stopped',
+type Props = {
+  time: number;
+  setIsRoundEnded: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const GameTimer: React.FC<{
-  time: number;
-}> = ({ time }) => {
+export const GameTimer: React.FC<Props> = ({ time, setIsRoundEnded }) => {
   const classes = useStyles();
   const [secondsRemaining, setSecondsRemaining] = useState(time);
-  const [statusStarted, setStatusStarted] = useState(STATUS.STOPPED);
+  const [statusStarted, setStatusStarted] = useState(TimerStatus.STOPPED);
 
   const handleStart = () => {
-    setStatusStarted(STATUS.STARTED);
+    setStatusStarted(TimerStatus.STARTED);
+    setIsRoundEnded(false);
   };
   const handleReset = () => {
-    setStatusStarted(STATUS.STOPPED);
+    setStatusStarted(TimerStatus.STOPPED);
     setSecondsRemaining(time);
   };
   useInterval(
@@ -30,10 +30,11 @@ export const GameTimer: React.FC<{
       if (secondsRemaining > 0) {
         setSecondsRemaining(secondsRemaining - 1);
       } else {
-        setStatusStarted(STATUS.STOPPED);
+        setStatusStarted(TimerStatus.STOPPED);
+        setIsRoundEnded(true);
       }
     },
-    statusStarted === STATUS.STARTED ? 1000 : null
+    statusStarted === TimerStatus.STARTED ? 1000 : null
   );
 
   return (
