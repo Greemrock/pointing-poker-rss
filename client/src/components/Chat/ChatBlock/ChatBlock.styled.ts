@@ -43,5 +43,22 @@ export const useChatBlockStyles = makeStyles((theme: Theme) => ({
     marginBottom: SPACE_XXL,
     bottom: 0,
     right: 0,
+    animation: `$myEffect 3s ${theme.transitions.duration.complex}`,
+  },
+  '@keyframes myEffect': {
+    '0%': {
+      boxShadow: '0 0 0 0 rgba(255, 0, 64, 0.7), 0 0 0 0 rgba(255, 0, 64, 0.7)',
+    },
+    '40%': {
+      boxShadow:
+        '0 0 0 15px rgba(255, 0, 64, 0), 0 0 0 0 rgba(255, 0, 64, 0.7)',
+    },
+    '80%': {
+      boxShadow:
+        '0 0 0 20px rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0)',
+    },
+    '100%': {
+      boxShadow: '0 0 0 0 rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0)',
+    },
   },
 }));
