@@ -3,7 +3,7 @@ import { Container, Paper } from '@material-ui/core';
 import { useChatBlockStyles } from './ChatBlock.styled';
 import { TextInput } from '../TextInput/';
 import { MessageLeft, MessageRight } from '../Message';
-import { AppContext } from '../../../App';
+import { UsersContext } from '../../../context/';
 import { MessageContext } from '../../../context';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export const ChatBlock: React.FC<Props> = ({ isOpenChat }) => {
   const classes = useChatBlockStyles({ isOpenChat });
   const { messageState } = useContext(MessageContext);
-  const { appState } = useContext(AppContext);
+  const { appState } = useContext(UsersContext);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const scrollToBottom = () => {

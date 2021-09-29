@@ -15,7 +15,7 @@ import { TextField, Select } from 'formik-material-ui';
 import { useIssueDialogFormStyles } from './IssueDialogForm.styled';
 import { checkLink, Priority } from '../../../Shared';
 import { socket } from '../../../api/playersRequests';
-import { AppContext } from '../../../App';
+import { UsersContext } from '../../../context/';
 import {
   handleAddIssueSubmit,
   handleUpdateIssueSubmit,
@@ -37,7 +37,7 @@ export const IssueDialogForm: React.FC<Props> = ({ open, handleClose }) => {
   } = useContext(IssueContext);
   const {
     appState: { currentPlayer },
-  } = useContext(AppContext);
+  } = useContext(UsersContext);
 
   const defaultValue = {
     title: isEdit ? editIssue.title : '',

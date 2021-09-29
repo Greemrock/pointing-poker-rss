@@ -9,25 +9,15 @@ import { useAppStyles } from './App.styled';
 import { ChatBlock } from './components/Chat';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { MessageContext, IssueContext } from './context';
-
+import { MessageContext, IssueContext, UsersContext } from './context';
 import { LobbyPage } from './Pages/Lobby';
 import { MeetingRoomPage } from './Pages/MeetingRoom';
 import { WelcomeBlock } from './Pages/Welcome/WelcomeBlock';
 import { initialIssueState, issueReducer } from './reducers/issue';
 import { initialMessageState, msgReducer } from './reducers/message';
-import { AppState, initialState, usersReducer } from './reducers/usersReducer';
+import { initialState, usersReducer } from './reducers/users/';
 import { initialSetsState, settingsReducer } from './reducers/settings';
-import { UsersActions } from './reducers/usersReducerInterfaces';
-import { SettingsContext } from './context/settings.context';
-
-export const AppContext = React.createContext<{
-  appState: AppState;
-  dispatch: React.Dispatch<UsersActions>;
-}>({
-  appState: initialState,
-  dispatch: () => null,
-});
+import { SettingsContext } from './context/';
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
@@ -46,7 +36,7 @@ export const App: React.FC = () => {
     initialSetsState
   );
   return (
-    <AppContext.Provider value={{ appState, dispatch }}>
+    <UsersContext.Provider value={{ appState, dispatch }}>
       <MessageContext.Provider value={{ messageState, messageDispatch }}>
         <IssueContext.Provider value={{ issueState, issueDispatch }}>
           <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
@@ -80,6 +70,6 @@ export const App: React.FC = () => {
           </SettingsContext.Provider>
         </IssueContext.Provider>
       </MessageContext.Provider>
-    </AppContext.Provider>
+    </UsersContext.Provider>
   );
 };
