@@ -1,28 +1,9 @@
 import React from 'react';
-import {
-  AppBar,
-  Paper,
-  Typography,
-  IconButton,
-  Tooltip,
-} from '@material-ui/core';
-import ChatIcon from '@material-ui/icons/Chat';
+import { AppBar, Paper, Typography } from '@material-ui/core';
 import { useStyles } from './Header.styles';
 
-type Props = {
-  isAuth: boolean;
-  isOpenChat: boolean;
-  setIsOpenChat: (open: boolean) => void;
-};
-
-export const Header: React.FC<Props> = ({
-  isAuth,
-  isOpenChat,
-  setIsOpenChat,
-}) => {
+export const Header: React.FC = () => {
   const classes = useStyles();
-
-  const handleClick = () => setIsOpenChat(!isOpenChat);
   return (
     <AppBar position="relative">
       <div className={classes.topBlock}>
@@ -30,13 +11,6 @@ export const Header: React.FC<Props> = ({
           <Typography className={classes.firstLetter}>p</Typography>
           <Typography className={classes.secondLetter}>p</Typography>
         </Paper>
-        {isAuth && (
-          <Tooltip onClick={handleClick} title="Chat" aria-label="chat">
-            <IconButton className={classes.chat}>
-              <ChatIcon />
-            </IconButton>
-          </Tooltip>
-        )}
       </div>
       <div className={classes.bottomBlock}></div>
     </AppBar>
