@@ -46,11 +46,12 @@ export const TextInput: React.FC = () => {
       {({ isSubmitting }) => (
         <Form className={classes.wrapForm}>
           <Field
+            autoFocus
             fullWidth
+            variant="outlined"
             component={TextField}
             type="text"
             name="message"
-            label="message"
             className={classes.wrapText}
           />
           <Button

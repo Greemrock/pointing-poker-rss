@@ -21,7 +21,7 @@ export const MessageLeft: React.FC<Props> = ({
 }) => {
   const classes = useMessageStyles();
   return (
-    <Container component="li" className={classes.messageRow}>
+    <div className={classes.messageRow}>
       <Avatar alt={name} className={classes.avatar} src={photoURL}>
         {getInitialLetters(name, surname)}
       </Avatar>
@@ -36,7 +36,7 @@ export const MessageLeft: React.FC<Props> = ({
           <Typography variant="caption">{timestamp}</Typography>
         </Paper>
       </div>
-    </Container>
+    </div>
   );
 };
 
@@ -49,7 +49,7 @@ export const MessageRight: React.FC<Props> = ({
 }) => {
   const classes = useMessageStyles();
   return (
-    <Container component="li" className={classes.messageRowRight}>
+    <div className={classes.messageRowRight}>
       <div>
         <Typography className={classes.displayNameRight}>
           {`${name} ${surname}`}
@@ -64,6 +64,6 @@ export const MessageRight: React.FC<Props> = ({
       <Avatar alt={name} className={classes.avatar} src={photoURL}>
         {getInitialLetters(name, surname)}
       </Avatar>
-    </Container>
+    </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import {
   Route,
   BrowserRouter as Router,
@@ -21,7 +21,6 @@ import { SettingsContext } from './context/';
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
-  const [isOpenChat, setIsOpenChat] = useState(false);
   const [appState, dispatch] = useReducer(usersReducer, initialState);
   const [issueState, issueDispatch] = useReducer(
     issueReducer,
@@ -41,11 +40,7 @@ export const App: React.FC = () => {
         <IssueContext.Provider value={{ issueState, issueDispatch }}>
           <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
             <Router>
-              <Header
-                isOpenChat={isOpenChat}
-                setIsOpenChat={setIsOpenChat}
-                isAuth={appState.isAuth}
-              />
+              <Header />
               <div className={classes.container}>
                 <Switch>
                   <Route exact path="/">
@@ -63,7 +58,7 @@ export const App: React.FC = () => {
                     <MeetingRoomPage />
                   </Route>
                 </Switch>
-                <ChatBlock isOpenChat={isOpenChat} />
+                <ChatBlock />
               </div>
               <Footer />
             </Router>

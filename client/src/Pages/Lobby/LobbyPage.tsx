@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
@@ -8,6 +7,7 @@ import { useLobbyPageStyles } from './LobbyPage.styled';
 import { UsersContext } from '../../context/';
 import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
+import { Redirect } from 'react-router-dom';
 
 type Props = {
   link: string;
@@ -16,7 +16,6 @@ type Props = {
 
 export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
-
   const {
     appState: { isAuth, currentPlayer },
   } = useContext(UsersContext);
