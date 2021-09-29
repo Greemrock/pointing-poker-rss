@@ -1,6 +1,6 @@
-import { UsersActions, UsersActionsTypes } from './usersReducerInterfaces';
+import { UsersActions, UsersActionsTypes } from './users.type';
 
-import { Player } from './usersReducerInterfaces';
+import { Player } from './users.type';
 
 export type AppState = {
   isAuth: boolean;
@@ -30,7 +30,7 @@ export const usersReducer = (
     case UsersActionsTypes.AUTH:
       return {
         ...state,
-        isAuth: true,
+        isAuth: action.payload,
       };
     case UsersActionsTypes.ADD_USER:
       return {
