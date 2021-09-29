@@ -63,7 +63,11 @@ export const ChatBlock: React.FC = () => {
                 onClick={() => setOpen(false)}
                 endIcon={<CloseIcon />}
               />
-              <Paper variant="outlined" className={classes.wrapper}>
+              <Paper
+                component="ul"
+                variant="outlined"
+                className={classes.wrapper}
+              >
                 {messageState.message.map((message, key) => {
                   return message.id === currentPlayer?.id ? (
                     <MessageRight
