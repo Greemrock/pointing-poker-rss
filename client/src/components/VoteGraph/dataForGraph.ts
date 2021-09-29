@@ -3,6 +3,35 @@ const percent = (voteAmount: number[]) => {
   return voteAmount.map((elem) => Math.floor((elem / total) * 100 + 0.5));
 };
 
+const randomColorFactor = () => {
+  return Math.round(Math.random() * 255);
+};
+
+const randomColor = (opacity: number) => {
+  return (
+    'rgba(' +
+    randomColorFactor() +
+    ',' +
+    randomColorFactor() +
+    ',' +
+    randomColorFactor() +
+    ',' +
+    (opacity || '.3') +
+    ')'
+  );
+};
+
+const randomColorsArray = (length: number) => {
+  const arr: string[] = [];
+  let n = 0;
+
+  while (n < length) {
+    arr.push(randomColor(1));
+    n++;
+  }
+  return arr;
+};
+
 export const dataForGraph = (typeCard: string[], voteAmount: number[]) => ({
   type: 'pie',
   labels: typeCard,
@@ -10,21 +39,7 @@ export const dataForGraph = (typeCard: string[], voteAmount: number[]) => ({
     {
       label: '# of Votes',
       data: percent(voteAmount),
-      backgroundColor: [
-        'rgba(255, 99, 132)',
-        'rgba(54, 162, 235)',
-        'rgb(244, 67, 54)',
-        'rgba(255, 206, 86)',
-        'rgb(50, 156, 53, 0.5)',
-        'rgba(75, 192, 192)',
-        'rgb(42, 29, 255, 0.8)',
-        'rgba(153, 102, 255)',
-        'rgba(255, 159, 64)',
-        'rgba(255, 99, 132, 0.5)',
-        'rgb(50, 156, 53)',
-        'rgb(216, 119, 204)',
-        'rgba(75, 192, 192, 0.4)',
-      ],
+      backgroundColor: randomColorsArray(typeCard.length),
     },
   ],
 });
