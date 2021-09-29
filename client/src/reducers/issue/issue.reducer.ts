@@ -3,7 +3,32 @@ import { IssueActionType } from './issue.action';
 import { IssueActions, IssueStateType } from './issue.type';
 
 export const initialIssueState: IssueStateType = {
-  issues: [],
+  issues: [
+    {
+      id: 'd',
+      link: 'd',
+      priority: Priority.hight,
+      title: 'd',
+      isDone: false,
+      roomId: 'd',
+    },
+    {
+      id: 'c',
+      link: 'c',
+      priority: Priority.hight,
+      title: 'c',
+      isDone: false,
+      roomId: 'c',
+    },
+    {
+      id: 'a',
+      link: 'a',
+      priority: Priority.hight,
+      title: 'a',
+      isDone: false,
+      roomId: 'a',
+    },
+  ],
   isEdit: false,
   editIssue: {
     id: '',
@@ -13,6 +38,7 @@ export const initialIssueState: IssueStateType = {
     isDone: false,
     roomId: '',
   },
+  currentIssue: 0,
 };
 
 export const issueReducer = (
@@ -39,6 +65,16 @@ export const issueReducer = (
       return {
         ...state,
         isEdit: false,
+      };
+    case IssueActionType.NEXT_ISSUE:
+      return {
+        ...state,
+        currentIssue: state.currentIssue + 1,
+      };
+    case IssueActionType.PREV_ISSUE:
+      return {
+        ...state,
+        currentIssue: state.currentIssue - 1,
       };
     default:
       return state;

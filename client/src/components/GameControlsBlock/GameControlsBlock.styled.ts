@@ -3,21 +3,20 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStartExitGameStyles = makeStyles({
   root: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     marginTop: SPACE_MD,
     marginBottom: SPACE_MD,
   },
-  link: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '300px',
-  },
   btn: {
-    marginLeft: `-${SPACE_XS}`,
+    width: '120px',
+    height: '40px',
+    margin: SPACE_XS,
   },
   container: {
     display: 'flex',
-    justifyContent: ({ isAdmin }: { isAdmin: boolean }) =>
-      isAdmin ? 'space-between' : 'flex-end',
-    marginTop: SPACE_LG,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 });

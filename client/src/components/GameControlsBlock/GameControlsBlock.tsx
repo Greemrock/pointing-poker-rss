@@ -1,25 +1,53 @@
 import React, { useContext, useState } from 'react';
-import { Box, Button, Container, Paper, TextField } from '@material-ui/core';
+import { Button, Container, Paper } from '@material-ui/core';
 import { useStartExitGameStyles } from './GameControlsBlock.styled';
+import { IssueContext } from '../../context';
+import {
+  NextIssueActionCreator,
+  PrevIssueActionCreator,
+} from '../../reducers/issue';
 
 export const GameControlsBlock: React.FC = () => {
-  const classes = useStartExitGameStyles({ isAdmin: true });
+  const classes = useStartExitGameStyles();
   const [isRoundStarted, setIsRoundStarted] = useState(false);
+
+  const {
+    issueState: { currentIssue, issues },
+    issueDispatch,
+  } = useContext(IssueContext);
+  const handleNextIssue = () => {
+    issueDispatch(NextIssueActionCreator());
+  };
+  const handlePrevIssue = () => {
+    issueDispatch(PrevIssueActionCreator());
+  };
 
   return (
     <Container className={classes.root} maxWidth="md">
-      <Paper className={classes.link} component="div" elevation={2}>
-        Timer
-      </Paper>
+      <Paper>{currentIssue}</Paper>
       <div className={classes.container}>
-        <Button variant="contained" color="primary">
-          Prev Issue
-        </Button>
-        <Button variant="contained" color="primary">
-          Next Issue
-        </Button>
+        {currentIssue === 0 ? null : (
+          <Button
+            className={classes.btn}
+            variant="contained"
+            color="primary"
+            onClick={handlePrevIssue}
+          >
+            Prev Issue
+          </Button>
+        )}
+        {currentIssue === issues.length - 1 ? null : (
+          <Button
+            className={classes.btn}
+            variant="contained"
+            color="primary"
+            onClick={handleNextIssue}
+          >
+            Next Issue
+          </Button>
+        )}
       </div>
-      <Button variant="outlined" color="primary">
+      <Button className={classes.btn} variant="outlined" color="primary">
         Stop Game
       </Button>
     </Container>

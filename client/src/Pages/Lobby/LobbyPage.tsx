@@ -42,7 +42,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
         {currentPlayer.isAdmin ? <Settings /> : null}
       </Container>
-      <GameControlsBlock></GameControlsBlock>
+      <GameControlsBlock />
     </>
   );
 };
