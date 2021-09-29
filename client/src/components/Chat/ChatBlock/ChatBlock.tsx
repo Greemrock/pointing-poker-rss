@@ -5,24 +5,22 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { useChatBlockStyles } from './ChatBlock.styled';
 import { TextInput } from '../TextInput/';
 import { MessageLeft, MessageRight } from '../Message';
-import { AppContext } from '../../../App';
+import { UsersContext } from '../../../context/';
 import { MessageContext } from '../../../context';
 
 export const ChatBlock: React.FC = () => {
   const classes = useChatBlockStyles();
+  const [open, setOpen] = useState(false);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
   const { messageState } = useContext(MessageContext);
   const {
     appState: { currentPlayer, isAuth },
-  } = useContext(AppContext);
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  } = useContext(UsersContext);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messageState]);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -36,7 +34,10 @@ export const ChatBlock: React.FC = () => {
       setOpen(open);
     };
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageState]);
+
   return (
     <>
       {isAuth && (

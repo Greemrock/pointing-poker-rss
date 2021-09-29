@@ -24,6 +24,7 @@ export interface ReloadUsersAction {
 }
 export interface AuthUserAction {
   type: UsersActionsTypes.AUTH;
+  payload: boolean;
 }
 
 export type UsersActions = AddUserAction | AuthUserAction | ReloadUsersAction;

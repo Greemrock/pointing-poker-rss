@@ -20,6 +20,7 @@ type Props = {
   job: string;
   image?: string | null;
   size?: SizeCard;
+  isDisabled: boolean;
   removeUser: () => void;
 };
 
@@ -32,6 +33,7 @@ export const PlayerCard: React.FC<Props> = ({
   image,
   size,
   isAdmin,
+  isDisabled,
   removeUser,
 }) => {
   const classes = usePlayerCardStyles({ size });
@@ -72,6 +74,7 @@ export const PlayerCard: React.FC<Props> = ({
             aria-label="kick player"
             className={classes.svg}
             onClick={removeUser}
+            disabled={isDisabled}
           >
             <HighlightOffIcon />
           </IconButton>
