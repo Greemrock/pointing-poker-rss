@@ -19,6 +19,9 @@ export const useChatBlockStyles = makeStyles((theme: Theme) => ({
     height: '96%',
     overflowY: 'scroll',
     paddingTop: SPACE_XS,
+    '&::-webkit-scrollbar': {
+      width: 0,
+    },
   },
   paper: {
     width: '100%',

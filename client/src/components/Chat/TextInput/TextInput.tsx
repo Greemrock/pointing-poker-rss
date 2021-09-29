@@ -48,10 +48,10 @@ export const TextInput: React.FC = () => {
           <Field
             autoFocus
             fullWidth
+            variant="outlined"
             component={TextField}
             type="text"
             name="message"
-            label="message"
             className={classes.wrapText}
           />
           <Button

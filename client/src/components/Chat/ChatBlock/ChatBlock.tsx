@@ -54,16 +54,16 @@ export const ChatBlock: React.FC = () => {
       )}
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         <Box role="presentation" className={classes.container}>
-          <Paper className={classes.paper} elevation={3}>
-            <Paper className={classes.messagesBody}>
+          <div className={classes.paper}>
+            <div className={classes.messagesBody}>
               <Button
                 color="secondary"
+                variant="text"
                 fullWidth
                 onClick={() => setOpen(false)}
-              >
-                <CloseIcon />
-              </Button>
-              <ul className={classes.wrapper}>
+                endIcon={<CloseIcon />}
+              />
+              <Paper variant="outlined" className={classes.wrapper}>
                 {messageState.message.map((message, key) => {
                   return message.id === currentPlayer?.id ? (
                     <MessageRight
@@ -86,10 +86,10 @@ export const ChatBlock: React.FC = () => {
                   );
                 })}
                 <div ref={messagesEndRef} />
-              </ul>
-            </Paper>
+              </Paper>
+            </div>
             <TextInput />
-          </Paper>
+          </div>
         </Box>
       </Drawer>
     </>
