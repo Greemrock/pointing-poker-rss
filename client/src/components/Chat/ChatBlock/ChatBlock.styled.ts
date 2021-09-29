@@ -1,31 +1,27 @@
-import { SPACE_MD, SPACE_XXL } from './../../../Shared/cssConstants';
-import { makeStyles } from '@material-ui/core';
+import { SPACE_MD, SPACE_XXL, SPACE_XS } from './../../../Shared/cssConstants';
+import { makeStyles, Theme } from '@material-ui/core';
 import { SPACE_XXS } from '../../../Shared';
 
-export const useChatBlockStyles = makeStyles({
+export const useChatBlockStyles = makeStyles((theme: Theme) => ({
   container: {
-    width: '100vw',
-    height: '100vh',
-    maxWidth: '500px',
-    maxHeight: '700px',
+    height: '100%',
+    width: '500px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    visibility: ({ isOpenChat }: { isOpenChat: boolean }) =>
-      isOpenChat ? 'visible' : 'hidden',
-    opacity: ({ isOpenChat }: { isOpenChat: boolean }) => (isOpenChat ? 1 : 0),
     transition: '.55s opacity, .55s visibility',
-    position: 'absolute',
-    right: 0,
-    top: '80px',
     zIndex: 1,
+    [theme.breakpoints.down('xs')]: {
+      width: '100vw',
+    },
   },
   wrapper: {
     height: '100%',
     overflowY: 'scroll',
+    paddingTop: SPACE_XS,
   },
   paper: {
-    width: '80vw',
+    width: '100%',
     height: '100%',
     display: 'flex',
     alignItems: 'center',
@@ -38,4 +34,11 @@ export const useChatBlockStyles = makeStyles({
     height: `calc(100% - ${SPACE_XXL})`,
     margin: SPACE_XXS,
   },
-});
+  btnChat: {
+    position: 'fixed',
+    margin: SPACE_MD,
+    marginBottom: SPACE_XXL,
+    bottom: 0,
+    right: 0,
+  },
+}));

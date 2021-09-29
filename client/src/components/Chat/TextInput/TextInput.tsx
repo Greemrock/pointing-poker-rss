@@ -46,6 +46,7 @@ export const TextInput: React.FC = () => {
       {({ isSubmitting }) => (
         <Form className={classes.wrapForm}>
           <Field
+            autoFocus
             fullWidth
             component={TextField}
             type="text"
