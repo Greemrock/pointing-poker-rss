@@ -1,8 +1,3 @@
-const percent = (voteAmount: number[]) => {
-  const total = voteAmount.reduce((a, b) => a + b);
-  return voteAmount.map((elem) => Math.floor((elem / total) * 100 + 0.5));
-};
-
 const randomColorFactor = () => {
   return Math.round(Math.random() * 255);
 };
@@ -38,7 +33,7 @@ export const dataForGraph = (typeCard: string[], voteAmount: number[]) => ({
   datasets: [
     {
       label: '# of Votes',
-      data: percent(voteAmount),
+      data: voteAmount,
       backgroundColor: randomColorsArray(typeCard.length),
     },
   ],
