@@ -4,6 +4,7 @@ import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { SettingsContext, UsersContext } from '../../context/';
 import { CardContainer } from '../../components/CardContainer';
+import { VoteGraph } from '../../components/VoteGraph';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
