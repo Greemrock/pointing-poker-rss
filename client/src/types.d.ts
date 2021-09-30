@@ -7,6 +7,15 @@ type payloadType = {
   roomId: string | null;
 };
 
+type settingsPayloadType = {
+  id: string;
+  timer: string;
+  cardValue: string;
+  scoreType: string;
+  isTimerNeeded: boolean;
+  roomId: string;
+};
+
 type requestPlayerType = {
   id: string;
   name: string;
@@ -19,15 +28,6 @@ type requestPlayerType = {
 
 type payloadImage = {
   image: string | null | undefined;
-};
-
-type PlayerCard = {
-  id: string;
-  name: string;
-  surname: string;
-  job: string;
-  isAdmin: boolean;
-  image: string | null;
 };
 
 type IssueFormType = {

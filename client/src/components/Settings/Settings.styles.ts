@@ -47,8 +47,9 @@ export const AntSwitch = withStyles((theme: Theme) =>
   })
 )(Switch);
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = makeStyles(() => ({
   mainSettingsBlock: {
+    marginTop: SPACE_LG,
     width: '100%',
   },
   accordionInnerBlock: {
@@ -82,10 +83,5 @@ export const useStyles = makeStyles((theme: Theme) => ({
   cardsPreviewBlock: {
     display: 'flex',
     justifyContent: 'center',
-    [theme.breakpoints.down('lg')]: {
-      '& div': {
-        marginRight: `-${SPACE_LG}`,
-      },
-    },
   },
 }));

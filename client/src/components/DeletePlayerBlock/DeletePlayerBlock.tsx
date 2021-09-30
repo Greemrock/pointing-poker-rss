@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Typography,
   Dialog,
@@ -8,72 +8,120 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useStyles } from './DeletePlayerBlock.styles';
+import { Player } from '../../reducers/users/users.type';
+import {
+  handleVotingNoSubmit,
+  handleVotingYesSubmit,
+} from '../../api/playersRequests';
 
 type Props = {
-  isAdmin: boolean;
-  snitch: string | null;
-  rogue: string;
+  isVoting: boolean | undefined;
+  rogue?: Player;
+  votingCandidate: Player;
+  votingNominated: Player;
   isOpen: boolean;
+  allPlayersNumber: number;
+  roomId: string;
+  voteId: string;
+  closeMenu: () => void;
+  startVoting: () => void;
 };
 
 export const DeletePlayerBlock: React.FC<Props> = ({
-  isAdmin,
+  isVoting,
   rogue,
-  snitch,
+  votingCandidate,
+  votingNominated,
+  isOpen,
+  allPlayersNumber,
+  roomId,
+  voteId,
+  closeMenu,
+  startVoting,
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState<boolean>(true);
-  const [isKick, setIsKick] = useState<boolean>(false);
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDialog = () => {
+    !isVoting
+      ? closeMenu()
+      : (() => {
+          closeMenu();
+          handleVotingNoSubmit(
+            voteId,
+            allPlayersNumber,
+            roomId,
+            votingCandidate.id
+          );
+        })();
   };
+
   const formik = useFormik({
-    initialValues: {
-      isKick: false,
-    },
+    initialValues: {},
     onSubmit: () => {
-      setIsKick(true);
-      const payloadObject = {
-        isKick,
-      };
-      handleClose();
+      closeMenu();
+      !isVoting
+        ? startVoting()
+        : handleVotingYesSubmit(
+            voteId,
+            allPlayersNumber,
+            roomId,
+            votingCandidate.id
+          );
     },
   });
+
   return (
     <Dialog
-      open={open}
-      onClose={handleClose}
+      open={isOpen}
+      onClose={(e, reason) => {
+        if (reason !== 'backdropClick') {
+          closeMenu();
+        }
+      }}
       aria-labelledby="form-dialog-title"
     >
       <Container className={classes.boxBlock}>
         <Typography className={classes.heding} component="h4" variant="h4">
           Kick
         </Typography>
-        {isAdmin ? (
+        {!isVoting ? (
           <Typography className={classes.textBlock} component="h6" variant="h6">
             Are you really want to remove player{' '}
-            <span className={classes.nameSpan}>{rogue}</span>from game session?
+            <span className={classes.nameSpan}> {rogue?.name} </span>from game
+            session?
           </Typography>
         ) : (
           <Typography className={classes.textBlock} component="h6" variant="h6">
-            <span className={classes.nameSpan}> {snitch} </span> want to kick
-            member <span className={classes.nameSpan}>{rogue}</span>. Do you
-            agree with it?
+            <span className={classes.nameSpan}>
+              {`${votingNominated.name} ${votingNominated.surname}`}{' '}
+            </span>{' '}
+            want to kick member{' '}
+            <span className={classes.nameSpan}>
+              {' '}
+              {`${votingCandidate.name} ${votingCandidate.surname}`}
+            </span>
+            . Do you agree with it?
           </Typography>
         )}
-        <Typography className={classes.textBlock} component="h6" variant="h6">
-          <span className={classes.nameSpan}> {snitch} </span> want to kick
-          member <span className={classes.nameSpan}>{rogue}</span>. Do you agree
-          with it?
-        </Typography>
       </Container>
       <form action="" autoComplete="off" onSubmit={formik.handleSubmit}>
         <DialogActions className={classes.buttonsBlock}>
-          <Button color="primary" variant="contained" type="submit">
+          <Button
+            onClick={(e) => {
+              const button = e.target as HTMLButtonElement;
+              button.disabled = true;
+            }}
+            color="primary"
+            variant="contained"
+            type="submit"
+          >
             Yes
           </Button>
-          <Button onClick={handleClose} color="secondary" variant="contained">
+          <Button
+            onClick={handleCloseDialog}
+            color="secondary"
+            variant="contained"
+          >
             No
           </Button>
         </DialogActions>

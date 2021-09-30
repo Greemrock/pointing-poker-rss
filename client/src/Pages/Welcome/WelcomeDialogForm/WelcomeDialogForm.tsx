@@ -21,13 +21,12 @@ import {
   socket,
 } from '../../../api/playersRequests';
 import { PreloaderForForm } from '../../../components/PreloaderForForm';
-import { AppContext } from '../../../App';
+import { UsersContext } from '../../../context/';
 import {
   AddUserActionCreator,
   AuthActionCreator,
-  ReloadUsersActionCreator,
-} from '../../../reducers/usersActionCreators';
-import { UsersActions } from '../../../reducers/usersReducerInterfaces';
+} from '../../../reducers/users/users.create-action';
+import { UsersActions } from '../../../reducers/users/';
 
 const validationSchema = yup.object({
   name: yup
@@ -72,7 +71,7 @@ export const WelcomeFormDialog: FC<Props> = ({
   const [image, setImage] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
-  const { appState, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(UsersContext);
 
   const sendPalyerDataWithWS = (
     dispatch: React.Dispatch<UsersActions>,
@@ -87,7 +86,7 @@ export const WelcomeFormDialog: FC<Props> = ({
       handleUserSubmit(payloadObject);
     }
     socket.on('personalData', (userInfo) => {
-      dispatch(AuthActionCreator());
+      dispatch(AuthActionCreator(true));
       dispatch(AddUserActionCreator(userInfo));
       handleClose();
       setIsLoading(false);

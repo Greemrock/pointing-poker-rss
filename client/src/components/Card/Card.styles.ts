@@ -1,40 +1,75 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import {
   SPACE_XS,
-  SPACE_SM,
   SIZE_LG,
   SIZE_XS,
-  BORDER,
+  SPACE_L,
+  SHADOW,
+  GRAY_2,
+  GREEN_2,
 } from '../../Shared/cssConstants';
 
-export const useStyles = makeStyles(() => ({
+export const useCardStyles = makeStyles(() => ({
   cardBlock: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    width: '95px',
-    height: '150px',
+    position: 'relative',
+    width: '80px',
+    height: '136px',
     margin: SPACE_XS,
-    border: BORDER,
     borderRadius: '10px',
+    cursor: 'pointer',
+    transition: 'all 0.5s',
+    marginRight: `-${SPACE_L}`,
+    zIndex: 1,
+    marginTop: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 0 : ''),
+    boxShadow: ({ isOpen }: { isOpen: boolean }) => (isOpen ? SHADOW : ''),
+    backgroundColor: ({
+      isOpen,
+      isSelect,
+      isCardSelected,
+    }: {
+      isOpen: boolean;
+      isSelect: boolean;
+      isCardSelected: boolean;
+    }) => (isOpen ? GRAY_2 : !isCardSelected ? '' : isSelect ? GREEN_2 : ''),
     '&:hover': {
-      borderWidth: '2px',
+      boxShadow: SHADOW,
+    },
+  },
+  clickFild: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '80px',
+    position: 'absolute',
+    textAlign: 'center',
+    transition: 'all 0.5s',
+    left: '8px',
+    backgroundColor: GRAY_2,
+    opacity: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),
+    top: ({ isOpen }: { isOpen: boolean }) => (isOpen ? '-40px' : '10px'),
+    zIndex: ({ isOpen }: { isOpen: boolean }) => (isOpen ? 1 : 0),
+    '&:hover': {
+      backgroundColor: GREEN_2,
     },
   },
   topText: {
     width: '100%',
     height: '10%',
-    paddingLeft: SPACE_SM,
+    paddingLeft: SPACE_XS,
     fontSize: SIZE_XS,
     fontWeight: 700,
   },
   bottomText: {
     width: '100%',
     height: '10%',
-    paddingRight: SPACE_SM,
-    textAlign: 'right',
+    paddingLeft: SPACE_XS,
+    textAlign: 'left',
     fontSize: SIZE_XS,
     fontWeight: 700,
+    transform: 'rotate(180deg)',
+    zIndex: 0,
   },
   centerBlock: {
     display: 'flex',
@@ -54,7 +89,7 @@ export const useStyles = makeStyles(() => ({
     '& div': {
       width: '100%',
       display: 'flex',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
     },
   },
 }));

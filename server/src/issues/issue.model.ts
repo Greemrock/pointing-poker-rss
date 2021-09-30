@@ -47,7 +47,7 @@ export class Issue extends Model<Issue, IssueCreationAttributes> {
     unique: false,
     allowNull: false,
   })
-  isDone: false;
+  isDone: boolean;
   @Column({
     type: DataType.INTEGER,
     unique: false,

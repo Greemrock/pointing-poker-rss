@@ -1,7 +1,7 @@
 import { Paper } from '@material-ui/core';
 import React from 'react';
 import { useScorePlayersStyled } from '.';
-import { Place, SizeCard } from '../../Shared';
+import { Place } from '../../Shared';
 import { PlayerContainer } from '../PlayerContainer';
 import { ScoreContainer } from '../ScoreContainer';
 
@@ -73,7 +73,7 @@ export const ScorePlayers: React.FC = () => {
   return (
     <Paper elevation={1} className={classes.root}>
       <ScoreContainer />
-      <PlayerContainer playersCards={player} view={Place.game} />
+      <PlayerContainer view={Place.game} />
     </Paper>
   );
 };
