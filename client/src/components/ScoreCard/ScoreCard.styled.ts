@@ -1,3 +1,4 @@
+import { SIZE_MD, SIZE_SM } from './../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
 import { SIZE_XS, SPACE_XXS, SPACE_XXXS } from '../../Shared';
 
@@ -7,13 +8,13 @@ export const useScoreCardStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: SPACE_XXXS,
-    minWidth: '80px',
-    height: '40px',
+    width: '100px',
+    height: '75px',
     padding: SPACE_XXS,
   },
   userPointer: {
     width: '100%',
     fontWeight: 'bold',
-    fontSize: SIZE_XS,
+    fontSize: SIZE_SM,
   },
 });

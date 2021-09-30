@@ -3,9 +3,8 @@ import { Redirect } from 'react-router';
 import { Container, Typography } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { ScorePlayers } from '../../components/ScorePlayers';
-import { Settings } from '../../components/Settings';
 import { SettingsContext, UsersContext } from '../../context/';
-import { CardContainer } from '../../components/CardContainer';
+import { ChatBlock } from '../../components/Chat';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -26,8 +25,10 @@ export const MeetingRoomPage: React.FC = () => {
             </Typography>
           </div>
         </div>
+
         <ScorePlayers />
       </Container>
+      <ChatBlock />
     </>
   );
 };

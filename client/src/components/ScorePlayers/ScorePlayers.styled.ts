@@ -1,15 +1,35 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { SPACE_MD } from './../../Shared';
+import { SPACE_MD, SPACE_XXL, SPACE_XXS, GRAY_2 } from './../../Shared';
 
 export const useScorePlayersStyled = makeStyles((theme: Theme) => ({
-  root: {
-    maxWidth: '30%',
+  btnScore: {
+    position: 'fixed',
+    margin: SPACE_MD,
+    marginBottom: SPACE_XXL,
+    bottom: SPACE_XXL,
+    right: 0,
+  },
+  box: {
+    width: '520px',
+    height: '100%',
     display: 'flex',
-    width: '346px',
-    [theme.breakpoints.down('md')]: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: '.55s opacity, .55s visibility',
+    [theme.breakpoints.down('xs')]: {
       width: '100%',
-      maxWidth: '340px',
-      marginTop: SPACE_MD,
     },
+  },
+  scoreBody: {
+    width: `calc(100% - ${SPACE_MD})`,
+    height: `calc(100% - ${SPACE_MD})`,
+    margin: SPACE_XXS,
+    '& button': { borderColor: GRAY_2 },
+  },
+  wrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    position: 'relative',
   },
 }));
