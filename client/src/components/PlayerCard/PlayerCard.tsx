@@ -51,24 +51,23 @@ export const PlayerCard: React.FC<Props> = ({
             {getInitialLetters(name, surname)}
           </Avatar>
         )}
-
         <div className={classes.userInformation}>
           <Typography className={classes.userPointer}>
-            {id === playerId ? "IT'S YOU" : ''}
+            {id === playerId ? "IT'S YOU" : isAdmin && 'ADMIN'}
           </Typography>
           <Tooltip title={`${name} ${surname}`} placement="bottom-start">
             <Typography className={classes.userName} variant="h5">
               {`${name} ${surname}`}
             </Typography>
           </Tooltip>
-          {!size ? (
+          {!size && (
             <Tooltip title={job} placement="bottom-start">
               <Typography className={classes.userJob}>{job}</Typography>
             </Tooltip>
-          ) : null}
+          )}
         </div>
       </div>
-      {id !== playerId && !isAdmin ? (
+      {id !== playerId && !isAdmin && (
         <Tooltip title="kick player" placement="bottom-start">
           <IconButton
             aria-label="kick player"
@@ -79,7 +78,7 @@ export const PlayerCard: React.FC<Props> = ({
             <HighlightOffIcon />
           </IconButton>
         </Tooltip>
-      ) : null}
+      )}
     </Paper>
   );
 };
