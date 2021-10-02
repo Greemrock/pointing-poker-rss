@@ -14,6 +14,11 @@ export const useStartExitGameStyles = makeStyles({
     height: '40px',
     margin: SPACE_XS,
   },
+  btnRound: {
+    width: '140px',
+    height: '40px',
+    margin: SPACE_XS,
+  },
   container: {
     display: 'flex',
     flexDirection: 'column',
