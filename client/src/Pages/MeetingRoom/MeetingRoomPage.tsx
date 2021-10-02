@@ -16,7 +16,7 @@ export const MeetingRoomPage: React.FC = () => {
   } = useContext(SettingsContext);
   return (
     <>
-      {/* {!isAuth && <Redirect to="/" />} */}
+      {!isAuth && <Redirect to="/" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
           <div className={classes.nameGame}>
@@ -25,7 +25,6 @@ export const MeetingRoomPage: React.FC = () => {
             </Typography>
           </div>
         </div>
-
         <ScorePlayers />
       </Container>
       <ChatBlock />
