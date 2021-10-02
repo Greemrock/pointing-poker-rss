@@ -86,5 +86,10 @@ export const useCardStyles = makeStyles(() => ({
       width: '50px',
       height: '50px',
     },
+    '& div': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
 }));

@@ -1,11 +1,16 @@
-import { SPACE_MD, SPACE_XXL, SPACE_XS } from './../../../Shared/cssConstants';
 import { makeStyles, Theme } from '@material-ui/core';
-import { SPACE_XXS } from '../../../Shared';
+import {
+  SPACE_XXS,
+  SPACE_MD,
+  SPACE_XXL,
+  SPACE_XS,
+  GRAY_2,
+} from '../../../Shared';
 
 export const useChatBlockStyles = makeStyles((theme: Theme) => ({
   container: {
-    height: '100%',
     width: '500px',
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,6 +41,7 @@ export const useChatBlockStyles = makeStyles((theme: Theme) => ({
     width: `calc(100% - ${SPACE_MD})`,
     height: `calc(100% - ${SPACE_XXL})`,
     margin: SPACE_XXS,
+    '& button': { borderColor: GRAY_2 },
   },
   btnChat: {
     position: 'fixed',

@@ -37,30 +37,28 @@ export const ChatBlock: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messageState]);
-  // style={{ transform: 'translate(-50%, -50%)' }}
+
   return (
     <>
-      {isAuth && (
-        <div>
-          <Tooltip title="Chat" placement="left">
-            <Fab
-              onClick={toggleDrawer(true)}
-              color="secondary"
-              aria-label="add"
-              className={classes.btnChat}
-            >
-              <ChatIcon />
-            </Fab>
-          </Tooltip>
-        </div>
-      )}
+      {/* {isAuth && ( */}
+      <Tooltip title="Chat" placement="left">
+        <Fab
+          onClick={toggleDrawer(true)}
+          color="secondary"
+          aria-label="add"
+          className={classes.btnChat}
+        >
+          <ChatIcon />
+        </Fab>
+      </Tooltip>
+      {/* )} */}
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         <Box role="presentation" className={classes.container}>
           <div className={classes.paper}>
             <div className={classes.messagesBody}>
               <Button
                 color="secondary"
-                variant="text"
+                variant="outlined"
                 fullWidth
                 onClick={() => setOpen(false)}
                 endIcon={<CloseIcon />}

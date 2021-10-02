@@ -37,6 +37,7 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
   const startVoting = (candidate: Player, nominated: Player) => {
     handleVotingSubmit(candidate, nominated);
   };
+
   useEffect(() => {
     socket.off('voteStarted');
     socket.on(
@@ -54,6 +55,7 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
       }
     );
   });
+
   useEffect(() => {
     socket.off('voteEnd');
     socket.on('voteEnd', (isVoteEnd: boolean, results, isDeleted: string) => {
@@ -65,15 +67,18 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
       }
     });
   });
+
   useEffect(() => {
     socket.off('roomInfo');
     socket.on('roomInfo', (roomInfo) => {
       dispatch(ReloadUsersActionCreator(roomInfo.users));
     });
   }, []);
+
   const closeKickMenu = () => {
     setIsOpenKickMenu(false);
   };
+
   const openKickMenu = (rogue?: Player) => {
     setRogue(rogue);
     setIsOpenKickMenu(true);
@@ -81,11 +86,9 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
 
   return (
     <div className={classes.root}>
-      {!view ? (
-        <Typography variant="h6" align="center" className={classes.title}>
-          Members:
-        </Typography>
-      ) : null}
+      <Typography variant="h6" align="center" className={classes.title}>
+        Members:
+      </Typography>
       <Container className={classes.container} maxWidth="md">
         {players.map(
           ({ id, job, name, surname, image, isAdmin, observer, roomId }) => {

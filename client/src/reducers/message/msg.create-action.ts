@@ -1,5 +1,4 @@
-import { MessageActionType } from './msg.action';
-import { AddMessageAction, MessageType } from './msg.type';
+import { AddMessageAction, MessageActionType, MessageType } from './msg.type';
 
 export const AddMessageActionCreator = (
   payload: MessageType
