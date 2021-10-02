@@ -5,6 +5,8 @@ import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { SettingsContext, UsersContext } from '../../context/';
 import { ChatBlock } from '../../components/Chat';
+import { CardContainer } from '../../components/CardContainer';
+import { VoteGraph } from '../../components/VoteGraph';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
