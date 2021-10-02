@@ -23,7 +23,7 @@ export const GameControlsBlock: React.FC = () => {
     issueDispatch,
   } = useContext(IssueContext);
 
-  const [isRoundEnded, setIsRoundEnded] = useState(false);
+  const [isRoundEnded, setIsRoundEnded] = useState(true);
   const [statusStarted, setStatusStarted] = useState(TimerStatus.STOPPED);
   const [secondsRemaining, setSecondsRemaining] = useState(
     convertToSeconds(minutes, seconds)

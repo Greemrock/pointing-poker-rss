@@ -44,6 +44,7 @@ export const GameTimer: React.FC<Props> = ({
     setStatusStarted(TimerStatus.STOPPED);
     setSecondsRemaining(convertToSeconds(minutes, seconds));
     setButtonDisabled(!buttonDisabled);
+    setIsRoundEnded(true);
   };
   useInterval(
     () => {

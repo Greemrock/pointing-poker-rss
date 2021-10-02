@@ -12,7 +12,7 @@ export const initialSetsState: SettingsState = {
     minutes: 1,
     seconds: 0,
     deck: Decks.tshirts,
-    isTimerNeeded: false,
+    isTimerNeeded: true,
     roomId: '',
   },
 };
