@@ -28,7 +28,7 @@ type Props = {
   roomId?: string;
   view?: Issue;
   size?: SizeCard.small;
-  handleOpen: () => void;
+  handleOpen?: () => void;
 };
 
 export const IssueCard: React.FC<Props> = ({
@@ -70,13 +70,17 @@ export const IssueCard: React.FC<Props> = ({
 
   const handleCreate = () => {
     issueDispatch(EditIssueFalseActionCreator());
-    handleOpen();
+    if (handleOpen) {
+      handleOpen();
+    }
   };
 
   const handleUpdate = () => {
     issueDispatch(AddEditIssueActionCreator(editIssueData));
     issueDispatch(EditIssueTrueActionCreator());
-    handleOpen();
+    if (handleOpen) {
+      handleOpen();
+    }
   };
 
   return (

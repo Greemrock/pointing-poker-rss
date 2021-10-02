@@ -18,6 +18,7 @@ import { initialMessageState, msgReducer } from './reducers/message';
 import { initialState, usersReducer } from './reducers/users/';
 import { initialSetsState, settingsReducer } from './reducers/settings';
 import { SettingsContext } from './context/';
+import { ResultPage } from './Pages/ResultPage';
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
@@ -41,6 +42,7 @@ export const App: React.FC = () => {
           <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
             <Router>
               <Header />
+              {!appState.isAuth && <Redirect to="/" />}
               <div className={classes.container}>
                 <Switch>
                   <Route exact path="/">
@@ -56,6 +58,9 @@ export const App: React.FC = () => {
 
                   <Route exact path="/game">
                     <MeetingRoomPage />
+                  </Route>
+                  <Route exact path="/result">
+                    <ResultPage />
                   </Route>
                 </Switch>
                 <ChatBlock />
