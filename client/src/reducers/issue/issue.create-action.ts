@@ -1,4 +1,3 @@
-import { IssueActionType } from './issue.action';
 import {
   UpdateIssueAction,
   IssueType,
@@ -7,6 +6,7 @@ import {
   EditIssueFalseAction,
   NextIssueGameAction,
   PrevIssueGameAction,
+  IssueActionType,
 } from './issue.type';
 
 export const UpdateIssueActionCreator = (

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
@@ -7,8 +8,6 @@ import { useLobbyPageStyles } from './LobbyPage.styled';
 import { UsersContext } from '../../context/';
 import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
-import { GameControlsBlock } from '../../components/GameControlsBlock';
-import { Redirect } from 'react-router-dom';
 
 type Props = {
   link: string;
@@ -32,10 +31,13 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
         </div>
         <StartExitBtn link={link} isAdmin={currentPlayer.isAdmin} />
         <PlayerContainer view={view} />
-        {currentPlayer?.isAdmin && <IssueContainer view={Issue.update} />}
-        {currentPlayer.isAdmin ? <Settings /> : null}
+        {currentPlayer.isAdmin && (
+          <>
+            <IssueContainer view={Issue.update} />
+            <Settings />
+          </>
+        )}
       </Container>
-      <GameControlsBlock />
     </>
   );
 };

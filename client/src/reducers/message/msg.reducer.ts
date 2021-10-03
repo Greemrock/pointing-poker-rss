@@ -1,5 +1,8 @@
-import { MessageActionType } from './msg.action';
-import { MessageActions, MessageStateType } from './msg.type';
+import {
+  MessageActions,
+  MessageActionType,
+  MessageStateType,
+} from './msg.type';
 
 export const initialMessageState: MessageStateType = {
   message: [],

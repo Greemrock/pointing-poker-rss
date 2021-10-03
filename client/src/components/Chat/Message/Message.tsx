@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { useMessageStyles } from './Message.styled';
-import { Container, Paper, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { getInitialLetters } from '../../../Util/getInitialLetters';
 
 type Props = {
