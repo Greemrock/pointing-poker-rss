@@ -29,6 +29,7 @@ export const GameControlsBlock: React.FC = () => {
     convertToSeconds(minutes, seconds)
   );
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [roundButtonDisabled, setRoundButtonDisabled] = useState(false);
 
   const handleResetRound = () => {
     setStatusStarted(TimerStatus.STOPPED);
@@ -63,7 +64,11 @@ export const GameControlsBlock: React.FC = () => {
           />
         </Paper>
       ) : (
-        <RoundControlsButton setIsRoundEnded={setIsRoundEnded} />
+        <RoundControlsButton
+          setIsRoundEnded={setIsRoundEnded}
+          roundButtonDisabled={roundButtonDisabled}
+          setRoundButtonDisabled={setRoundButtonDisabled}
+        />
       )}
       <div className={classes.container}>
         {currentIssue === 0 ? null : (
