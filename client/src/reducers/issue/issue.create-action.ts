@@ -7,6 +7,7 @@ import {
   NextIssueGameAction,
   PrevIssueGameAction,
   IssueActionType,
+  SetCurrentIdGameAction,
 } from './issue.type';
 
 export const UpdateIssueActionCreator = (
@@ -37,4 +38,11 @@ export const NextIssueActionCreator = (): NextIssueGameAction => ({
 
 export const PrevIssueActionCreator = (): PrevIssueGameAction => ({
   type: IssueActionType.PREV_ISSUE,
+});
+
+export const SetCurrentIssueIdActionCreator = (
+  payload: string
+): SetCurrentIdGameAction => ({
+  type: IssueActionType.SET_CURRENT_ISSUE_ID,
+  payload,
 });

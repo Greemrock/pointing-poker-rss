@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Paper, Button, Tooltip, Typography } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -8,6 +8,9 @@ import { useInterval } from '../../Util/hooks/useInterval';
 import { TimerStatus } from '../../Shared/enums';
 import { SettingsContext } from '../../context';
 import { convertToSeconds } from '../../Util/convertToSeconds';
+import { UsersContext } from '../../context/users.context';
+import { handleResetTimerSubmit, handleStartTimerSubmit } from '../../api/game';
+import { socket } from '../../api/playersRequests';
 
 type Props = {
   secondsRemaining: number;
@@ -34,17 +37,36 @@ export const GameTimer: React.FC<Props> = ({
       currentSets: { minutes, seconds },
     },
   } = useContext(SettingsContext);
+  const {
+    appState: {
+      currentPlayer: { isAdmin, roomId },
+    },
+  } = useContext(UsersContext);
+
+  useEffect(() => {
+    socket.off('isTimerStarted');
+    socket.on('isTimerStarted', () => {
+      console.log('wwd');
+      setStatusStarted(TimerStatus.STARTED);
+      setIsRoundEnded(false);
+      setButtonDisabled(!buttonDisabled);
+    });
+  });
+
+  useEffect(() => {
+    socket.off('isTimerReset');
+    socket.on('isTimerReset', () => {
+      setStatusStarted(TimerStatus.STOPPED);
+      setSecondsRemaining(convertToSeconds(minutes, seconds));
+      setButtonDisabled(!buttonDisabled);
+    });
+  });
 
   const handleStart = () => {
-    setStatusStarted(TimerStatus.STARTED);
-    setIsRoundEnded(false);
-    setButtonDisabled(!buttonDisabled);
+    handleStartTimerSubmit(roomId);
   };
   const handleReset = () => {
-    setStatusStarted(TimerStatus.STOPPED);
-    setSecondsRemaining(convertToSeconds(minutes, seconds));
-    setButtonDisabled(!buttonDisabled);
-    setIsRoundEnded(true);
+    handleResetTimerSubmit(roomId);
   };
   useInterval(
     () => {
@@ -65,30 +87,32 @@ export const GameTimer: React.FC<Props> = ({
           {getMinutesAndSecondsFromTime(secondsRemaining)}
         </Typography>
       </Paper>
-      <Box className={classes.buttonsBlock}>
-        <Tooltip title="Run Round" aria-label="Run Round">
-          <Button
-            className={classes.timerButton}
-            onClick={handleStart}
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<PlayArrowIcon />}
-            disabled={buttonDisabled}
-          ></Button>
-        </Tooltip>
-        <Tooltip title="Reset Round" aria-label="Reset Round">
-          <Button
-            className={classes.timerButton}
-            onClick={handleReset}
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<RestoreIcon />}
-            disabled={!buttonDisabled}
-          ></Button>
-        </Tooltip>
-      </Box>
+      {isAdmin && (
+        <Box className={classes.buttonsBlock}>
+          <Tooltip title="Run Round" aria-label="Run Round">
+            <Button
+              className={classes.timerButton}
+              onClick={handleStart}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<PlayArrowIcon />}
+              disabled={buttonDisabled}
+            ></Button>
+          </Tooltip>
+          <Tooltip title="Reset Round" aria-label="Reset Round">
+            <Button
+              className={classes.timerButton}
+              onClick={handleReset}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<RestoreIcon />}
+              disabled={!buttonDisabled}
+            ></Button>
+          </Tooltip>
+        </Box>
+      )}
     </Box>
   );
 };

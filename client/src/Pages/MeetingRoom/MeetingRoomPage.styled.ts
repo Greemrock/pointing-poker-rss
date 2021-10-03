@@ -20,4 +20,9 @@ export const useMeetingRoomPageStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  cardsContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: SPACE_XL,
+  },
 }));

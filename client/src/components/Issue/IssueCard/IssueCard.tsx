@@ -55,9 +55,10 @@ export const IssueCard: React.FC<Props> = ({
     roomId: roomId as string,
   };
 
-  // plug
-  const currentId = '0';
-  //
+  const {
+    issueState: { currentId },
+    issueDispatch,
+  } = useContext(IssueContext);
 
   const classes = useIssueCardStyles({
     view,
@@ -66,7 +67,6 @@ export const IssueCard: React.FC<Props> = ({
     currentId,
     size,
   });
-  const { issueDispatch } = useContext(IssueContext);
 
   const handleCreate = () => {
     issueDispatch(EditIssueFalseActionCreator());

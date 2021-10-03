@@ -11,6 +11,7 @@ export enum Issue {
   update = 'update',
   delete = 'delete',
   create = 'create',
+  game = 'game',
 }
 
 export enum Priority {

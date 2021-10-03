@@ -7,6 +7,7 @@ export enum IssueActionType {
   EDIT_ISSUE_FALSE = 'EDIT_ISSUE_FALSE',
   NEXT_ISSUE = 'NEXT-ISSUE',
   PREV_ISSUE = 'PREV-ISSUE',
+  SET_CURRENT_ISSUE_ID = 'SET-CURRENT-ISSUE-ID',
 }
 
 export type IssueType = {
@@ -22,7 +23,8 @@ export type IssueStateType = {
   issues: IssueType[];
   isEdit: boolean;
   editIssue: IssueType;
-  currentIssue: number;
+  currentId: string;
+  currentIdNumber: number;
 };
 
 export type UpdateIssueAction = {
@@ -51,10 +53,16 @@ export type PrevIssueGameAction = {
   type: IssueActionType.PREV_ISSUE;
 };
 
+export type SetCurrentIdGameAction = {
+  type: IssueActionType.SET_CURRENT_ISSUE_ID;
+  payload: string;
+};
+
 export type IssueActions =
   | AddEditIssueAction
   | EditIssueTrueAction
   | UpdateIssueAction
   | EditIssueFalseAction
   | NextIssueGameAction
-  | PrevIssueGameAction;
+  | PrevIssueGameAction
+  | SetCurrentIdGameAction;

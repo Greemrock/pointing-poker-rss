@@ -37,7 +37,8 @@ export const initialIssueState: IssueStateType = {
     isDone: false,
     roomId: '',
   },
-  currentIssue: 0,
+  currentId: 'd',
+  currentIdNumber: 0,
 };
 
 export const issueReducer = (
@@ -49,6 +50,12 @@ export const issueReducer = (
       return {
         ...state,
         issues: action.payload,
+        currentId: action.payload[0].id,
+      };
+    case IssueActionType.SET_CURRENT_ISSUE_ID:
+      return {
+        ...state,
+        currentId: action.payload,
       };
     case IssueActionType.ADD_EDIT_ISSUE:
       return {
@@ -68,12 +75,14 @@ export const issueReducer = (
     case IssueActionType.NEXT_ISSUE:
       return {
         ...state,
-        currentIssue: state.currentIssue + 1,
+        currentIdNumber: state.currentIdNumber + 1,
+        currentId: state.issues[state.currentIdNumber + 1].id,
       };
     case IssueActionType.PREV_ISSUE:
       return {
         ...state,
-        currentIssue: state.currentIssue - 1,
+        currentIdNumber: state.currentIdNumber - 1,
+        currentId: state.issues[state.currentIdNumber - 1].id,
       };
     default:
       return state;

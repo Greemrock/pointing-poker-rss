@@ -21,6 +21,7 @@ export const CardContainer: React.FC<Props> = ({ cardSelected, deck }) => {
           nameCard={elem}
           isCardSelected={isCardSelected}
           setCardSelected={setCardSelected}
+          cardArray={cardsArrays[deck]}
         />
       ))}
     </div>

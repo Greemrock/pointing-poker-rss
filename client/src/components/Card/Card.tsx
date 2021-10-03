@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,21 +9,36 @@ import {
 import { useCardStyles } from './Card.styles';
 import { QuestionIconComponent } from './QuestionIconComponent';
 import { CoffeIconComponent } from './CoffeIconComponent';
+import { handleCardChoiceSubmit } from '../../api/game';
+import { UsersContext } from '../../context/users.context';
+import { IssueContext } from '../../context';
+import { Decks } from '../../Shared';
 
 type Props = {
   isCardSelected: boolean;
   setCardSelected: (isSelect: boolean) => void;
   nameCard: string;
+  cardArray: string[];
 };
 
 export const Card: React.FC<Props> = ({
   nameCard,
   isCardSelected,
   setCardSelected,
+  cardArray,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
   const classes = useCardStyles({ isOpen, isSelect, isCardSelected });
+
+  const {
+    appState: {
+      currentPlayer: { roomId },
+    },
+  } = useContext(UsersContext);
+  const {
+    issueState: { currentId },
+  } = useContext(IssueContext);
 
   useEffect(() => {
     if (!isCardSelected) {
@@ -48,6 +63,12 @@ export const Card: React.FC<Props> = ({
     setIsOpen(false);
     setIsSelect(true);
     setCardSelected(true);
+    const cardNumber = cardArray.findIndex((el: string) => el === nameCard)!;
+    handleCardChoiceSubmit({
+      roomId,
+      issueId: currentId,
+      cardNumber,
+    });
   };
 
   return (

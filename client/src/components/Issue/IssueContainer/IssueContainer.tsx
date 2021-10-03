@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const IssueContainer: React.FC<Props> = ({ view }) => {
-  const classes = useIssueContainerStyles();
+  const classes = useIssueContainerStyles({ view });
   const [open, setOpen] = useState(false);
   const { issueState } = useContext(IssueContext);
 
@@ -46,7 +46,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
             );
           }
         )}
-        {view && (
+        {view && view !== Issue.game && (
           <IssueCard
             id={Issue.create}
             view={Issue.create}
