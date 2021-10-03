@@ -18,7 +18,7 @@ export const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '220px',
+    width: '200px',
     height: '70%',
     '& p': {
       fontSize: SIZE_LG,

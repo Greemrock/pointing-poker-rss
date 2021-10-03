@@ -4,6 +4,8 @@ import {
   AddEditIssueAction,
   EditIssueTrueAction,
   EditIssueFalseAction,
+  NextIssueGameAction,
+  PrevIssueGameAction,
   IssueActionType,
 } from './issue.type';
 
@@ -27,4 +29,12 @@ export const EditIssueTrueActionCreator = (): EditIssueTrueAction => ({
 
 export const EditIssueFalseActionCreator = (): EditIssueFalseAction => ({
   type: IssueActionType.EDIT_ISSUE_FALSE,
+});
+
+export const NextIssueActionCreator = (): NextIssueGameAction => ({
+  type: IssueActionType.NEXT_ISSUE,
+});
+
+export const PrevIssueActionCreator = (): PrevIssueGameAction => ({
+  type: IssueActionType.PREV_ISSUE,
 });
