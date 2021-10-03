@@ -14,6 +14,9 @@ export const useStartExitGameStyles = makeStyles({
   btn: {
     marginLeft: `-${SPACE_XS}`,
   },
+  btnStart: {
+    textDecoration: 'none',
+  },
   container: {
     display: 'flex',
     justifyContent: ({ isAdmin }: { isAdmin: boolean }) =>

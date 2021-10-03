@@ -4,6 +4,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 import { handleSendSettings } from '../../api/settings/settings.request';
 import { SettingsContext } from '../../context/settings.context';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   isAdmin: boolean;
@@ -16,6 +17,10 @@ export const StartExitBtn: React.FC<Props> = ({ isAdmin, link }) => {
   const handleStartGame = () => {
     handleSendSettings(settingsState.currentSets);
   };
+  const handleExitGameButton = () => {
+    console.log('End');
+  };
+
   return (
     <Container className={classes.root} maxWidth="md">
       {isAdmin ? (
@@ -43,11 +48,21 @@ export const StartExitBtn: React.FC<Props> = ({ isAdmin, link }) => {
       ) : null}
       <div className={classes.container}>
         {isAdmin ? (
-          <Button variant="contained" color="primary" onClick={handleStartGame}>
-            Start
-          </Button>
+          <NavLink className={classes.btnStart} to="/game">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleStartGame}
+            >
+              Start
+            </Button>
+          </NavLink>
         ) : null}
-        <Button variant="outlined" color="secondary">
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleExitGameButton}
+        >
           Exit
         </Button>
       </div>
