@@ -2,56 +2,7 @@ import { Priority } from '../../Shared';
 import { IssueActions, IssueActionType, IssueStateType } from './issue.type';
 
 export const initialIssueState: IssueStateType = {
-  issues: [
-    {
-      id: '0',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#1',
-      isDone: true,
-      roomId: '0',
-    },
-    {
-      id: '1',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#2',
-      isDone: true,
-      roomId: '0',
-    },
-    {
-      id: '2',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#3',
-      isDone: true,
-      roomId: '0',
-    },
-    {
-      id: '0',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#1',
-      isDone: true,
-      roomId: '0',
-    },
-    {
-      id: '1',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#2',
-      isDone: true,
-      roomId: '0',
-    },
-    {
-      id: '2',
-      link: './link',
-      priority: Priority.low,
-      title: 'Issue#3',
-      isDone: true,
-      roomId: '0',
-    },
-  ],
+  issues: [],
   isEdit: false,
   editIssue: {
     id: '',
