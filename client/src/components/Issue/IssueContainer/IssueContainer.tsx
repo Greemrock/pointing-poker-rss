@@ -30,7 +30,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
       </Typography>
       <Container className={classes.container} maxWidth="md">
         {issueState.issues.map(
-          ({ id, link, isDone, priority, title, roomId }) => {
+          ({ id, link, isDone, priority, title, roomId, createdAt }) => {
             return (
               <IssueCard
                 key={id}
@@ -41,6 +41,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
                 title={title}
                 roomId={roomId}
                 view={view}
+                createdAt={createdAt}
                 handleOpen={handleOpen}
               />
             );
@@ -52,6 +53,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
             view={Issue.create}
             isDone={false}
             size={view === Issue.delete ? SizeCard.small : undefined}
+            createdAt={''}
             handleOpen={handleOpen}
           />
         )}

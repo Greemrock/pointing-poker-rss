@@ -7,6 +7,7 @@ export type AppState = {
   players: Player[];
   currentPlayer: Player;
   isGameStarted: boolean;
+  isGameEnded: boolean;
 };
 
 export const initialState: AppState = {
@@ -23,6 +24,7 @@ export const initialState: AppState = {
     roomId: '',
   },
   isGameStarted: false,
+  isGameEnded: false,
 };
 export const usersReducer = (
   state: AppState = initialState,
@@ -48,6 +50,11 @@ export const usersReducer = (
       return {
         ...state,
         isGameStarted: true,
+      };
+    case UsersActionsTypes.END_GAME:
+      return {
+        ...state,
+        isGameEnded: true,
       };
     default:
       return state;

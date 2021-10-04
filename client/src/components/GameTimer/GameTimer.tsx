@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Box, Paper, Button, Tooltip, Typography } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -9,8 +9,13 @@ import { TimerStatus } from '../../Shared/enums';
 import { SettingsContext } from '../../context';
 import { convertToSeconds } from '../../Util/convertToSeconds';
 import { UsersContext } from '../../context/users.context';
-import { handleResetTimerSubmit, handleStartTimerSubmit } from '../../api/game';
+import {
+  handleEndRoundSubmit,
+  handleResetTimerSubmit,
+  handleStartTimerSubmit,
+} from '../../api/game';
 import { socket } from '../../api/playersRequests';
+import { IssueContext } from '../../context/issue.context';
 
 type Props = {
   secondsRemaining: number;
@@ -42,14 +47,16 @@ export const GameTimer: React.FC<Props> = ({
       currentPlayer: { isAdmin, roomId },
     },
   } = useContext(UsersContext);
+  const {
+    issueState: { currentId },
+  } = useContext(IssueContext);
 
   useEffect(() => {
     socket.off('isTimerStarted');
     socket.on('isTimerStarted', () => {
-      console.log('wwd');
       setStatusStarted(TimerStatus.STARTED);
       setIsRoundEnded(false);
-      setButtonDisabled(!buttonDisabled);
+      setButtonDisabled(true);
     });
   });
 
@@ -58,7 +65,7 @@ export const GameTimer: React.FC<Props> = ({
     socket.on('isTimerReset', () => {
       setStatusStarted(TimerStatus.STOPPED);
       setSecondsRemaining(convertToSeconds(minutes, seconds));
-      setButtonDisabled(!buttonDisabled);
+      setButtonDisabled(false);
     });
   });
 
@@ -75,6 +82,7 @@ export const GameTimer: React.FC<Props> = ({
       } else {
         setStatusStarted(TimerStatus.STOPPED);
         setIsRoundEnded(true);
+        handleEndRoundSubmit({ roomId, issueId: currentId });
       }
     },
     statusStarted === TimerStatus.STARTED ? 1000 : null

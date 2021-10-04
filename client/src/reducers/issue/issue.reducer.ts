@@ -1,5 +1,11 @@
 import { Priority } from '../../Shared';
-import { IssueActions, IssueActionType, IssueStateType } from './issue.type';
+import { convertDate } from '../../Util/convertDate';
+import {
+  IssueActions,
+  IssueActionType,
+  IssueStateType,
+  IssueType,
+} from './issue.type';
 
 export const initialIssueState: IssueStateType = {
   issues: [
@@ -10,6 +16,7 @@ export const initialIssueState: IssueStateType = {
       title: 'd',
       isDone: false,
       roomId: 'd',
+      createdAt: '',
     },
     {
       id: 'c',
@@ -18,6 +25,7 @@ export const initialIssueState: IssueStateType = {
       title: 'c',
       isDone: false,
       roomId: 'c',
+      createdAt: '',
     },
     {
       id: 'a',
@@ -26,6 +34,7 @@ export const initialIssueState: IssueStateType = {
       title: 'a',
       isDone: false,
       roomId: 'a',
+      createdAt: '',
     },
   ],
   isEdit: false,
@@ -36,6 +45,7 @@ export const initialIssueState: IssueStateType = {
     title: '',
     isDone: false,
     roomId: '',
+    createdAt: '',
   },
   currentId: 'd',
   currentIdNumber: 0,
@@ -49,7 +59,9 @@ export const issueReducer = (
     case IssueActionType.UPDATE_ISSUE:
       return {
         ...state,
-        issues: action.payload,
+        issues: action.payload.sort((a, b) => {
+          return convertDate(a.createdAt) - convertDate(b.createdAt);
+        }),
         currentId: action.payload[0].id,
       };
     case IssueActionType.SET_CURRENT_ISSUE_ID:
@@ -83,6 +95,21 @@ export const issueReducer = (
         ...state,
         currentIdNumber: state.currentIdNumber - 1,
         currentId: state.issues[state.currentIdNumber - 1].id,
+      };
+    case IssueActionType.SET_ISSUE_DONE:
+      console.log(3);
+      return {
+        ...state,
+        issues: [
+          ...state.issues
+            .sort((a, b) => {
+              return convertDate(a.createdAt) - convertDate(b.createdAt);
+            })
+            .map((el: IssueType) => {
+              if (el.id === action.payload) el.isDone = true;
+              return el;
+            }),
+        ],
       };
     default:
       return state;

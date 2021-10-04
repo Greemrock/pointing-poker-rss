@@ -3,6 +3,7 @@ export enum UsersActionsTypes {
   RELOAD_USERS = 'RELOAD-USERS',
   AUTH = 'AUTH',
   START_GAME = 'START-GAME',
+  END_GAME = 'END-GAME',
 }
 export type Player = {
   id: string;
@@ -33,9 +34,13 @@ export interface AuthUserAction {
 export interface StartGameAction {
   type: UsersActionsTypes.START_GAME;
 }
+export interface EndGameAction {
+  type: UsersActionsTypes.END_GAME;
+}
 
 export type UsersActions =
   | AddUserAction
   | AuthUserAction
   | ReloadUsersAction
-  | StartGameAction;
+  | StartGameAction
+  | EndGameAction;

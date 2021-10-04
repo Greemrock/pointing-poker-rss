@@ -18,6 +18,7 @@ import {
 } from '../../../reducers/issue';
 import { handleDeleteIssueSubmit } from '../../../api/issue';
 import { IssueContext } from '../../../context';
+import { string } from 'yup/lib/locale';
 
 type Props = {
   id: string;
@@ -28,6 +29,7 @@ type Props = {
   roomId?: string;
   view?: Issue;
   size?: SizeCard.small;
+  createdAt: string;
   handleOpen: () => void;
 };
 
@@ -40,6 +42,7 @@ export const IssueCard: React.FC<Props> = ({
   roomId,
   view,
   size,
+  createdAt,
   handleOpen,
 }) => {
   const deleteIssueData = {
@@ -53,6 +56,7 @@ export const IssueCard: React.FC<Props> = ({
     priority: priority as Priority,
     isDone: isDone,
     roomId: roomId as string,
+    createdAt,
   };
 
   const {

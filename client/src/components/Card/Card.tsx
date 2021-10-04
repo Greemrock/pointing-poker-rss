@@ -9,9 +9,12 @@ import {
 import { useCardStyles } from './Card.styles';
 import { QuestionIconComponent } from './QuestionIconComponent';
 import { CoffeIconComponent } from './CoffeIconComponent';
-import { handleCardChoiceSubmit } from '../../api/game';
+import {
+  handleAddResultSubmit,
+  handleMyCardChoiceSubmit,
+} from '../../api/game';
 import { UsersContext } from '../../context/users.context';
-import { IssueContext } from '../../context';
+import { IssueContext, SettingsContext } from '../../context';
 import { Decks } from '../../Shared';
 
 type Props = {
@@ -33,12 +36,18 @@ export const Card: React.FC<Props> = ({
 
   const {
     appState: {
-      currentPlayer: { roomId },
+      currentPlayer: { roomId, id },
     },
   } = useContext(UsersContext);
   const {
     issueState: { currentId },
   } = useContext(IssueContext);
+
+  const {
+    settingsState: {
+      currentSets: { deck },
+    },
+  } = useContext(SettingsContext);
 
   useEffect(() => {
     if (!isCardSelected) {
@@ -64,10 +73,17 @@ export const Card: React.FC<Props> = ({
     setIsSelect(true);
     setCardSelected(true);
     const cardNumber = cardArray.findIndex((el: string) => el === nameCard)!;
-    handleCardChoiceSubmit({
+    handleAddResultSubmit({
       roomId,
       issueId: currentId,
       cardNumber,
+    });
+    handleMyCardChoiceSubmit({
+      issueId: currentId,
+      userId: id,
+      voteResult: nameCard,
+      roomId,
+      cardType: deck,
     });
   };
 

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { useScoreContainerStyles } from './ScoreContainer.styled';
 import { ScoreCard } from '../ScoreCard';
+import { ScoreContext } from '../../context';
 
 const results = [
   { id: '0', issueId: 'issue0', playerId: 'player0', score: 'xl' },
@@ -21,7 +22,9 @@ const results = [
 export const ScoreContainer: React.FC = () => {
   const classes = useScoreContainerStyles();
 
-  const currentId = 'issue0';
+  const { scoreState } = useContext(ScoreContext);
+
+  const results = scoreState.results;
 
   return (
     <div className={classes.root}>
@@ -29,8 +32,8 @@ export const ScoreContainer: React.FC = () => {
         Score:
       </Typography>
       <Container className={classes.container}>
-        {results.map(({ id, score }) => (
-          <ScoreCard key={id} score={score} />
+        {results.map(({ id, voteResult }) => (
+          <ScoreCard key={id} score={voteResult} />
         ))}
       </Container>
     </div>

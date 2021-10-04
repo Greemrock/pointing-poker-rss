@@ -8,9 +8,11 @@ export enum IssueActionType {
   NEXT_ISSUE = 'NEXT-ISSUE',
   PREV_ISSUE = 'PREV-ISSUE',
   SET_CURRENT_ISSUE_ID = 'SET-CURRENT-ISSUE-ID',
+  SET_ISSUE_DONE = 'SET-ISSUE-DONE',
 }
 
 export type IssueType = {
+  createdAt: string;
   id: string;
   link: string;
   priority: Priority;
@@ -53,6 +55,11 @@ export type PrevIssueGameAction = {
   type: IssueActionType.PREV_ISSUE;
 };
 
+export type SetIssueDoneAction = {
+  type: IssueActionType.SET_ISSUE_DONE;
+  payload: string;
+};
+
 export type SetCurrentIdGameAction = {
   type: IssueActionType.SET_CURRENT_ISSUE_ID;
   payload: string;
@@ -65,4 +72,5 @@ export type IssueActions =
   | EditIssueFalseAction
   | NextIssueGameAction
   | PrevIssueGameAction
-  | SetCurrentIdGameAction;
+  | SetCurrentIdGameAction
+  | SetIssueDoneAction;

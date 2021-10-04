@@ -11,6 +11,7 @@ import { TimerStatus } from '../../Shared';
 import { convertToSeconds } from '../../Util/convertToSeconds';
 import { RoundControlsButton } from './RoundControlsBlock';
 import { handleSendCurrentIssueIdSubmit } from '../../api/issue';
+import { handleResetTimerSubmit } from '../../api/game';
 
 type Props = {
   isRoundEnded: boolean;
@@ -55,9 +56,7 @@ export const GameControlsBlock: React.FC<Props> = ({
   };
 
   const handleResetRound = () => {
-    setStatusStarted(TimerStatus.STOPPED);
-    setSecondsRemaining(convertToSeconds(minutes, seconds));
-    setButtonDisabled(false);
+    handleResetTimerSubmit(roomId);
   };
   const handleNextIssue = () => {
     issueDispatch(NextIssueActionCreator());

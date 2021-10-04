@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography, Button } from '@material-ui/core';
 import { useMeetingRoomPageStyles } from './MeetingRoomPage.styled';
 import { ScorePlayers } from '../../components/ScorePlayers';
-import { IssueContext, SettingsContext, UsersContext } from '../../context/';
+import {
+  IssueContext,
+  ScoreContext,
+  SettingsContext,
+  UsersContext,
+} from '../../context/';
 import { ChatBlock } from '../../components/Chat';
 import { CardContainer } from '../../components/CardContainer';
 import { VoteGraph } from '../../components/VoteGraph';
@@ -13,22 +18,38 @@ import { Issue } from '../../Shared';
 import { socket } from '../../api/playersRequests';
 import { UpdateIssueActionCreator } from '../../reducers/issue';
 import { handleGetIssueSubmit } from '../../api/issue';
-import { SetCurrentIssueIdActionCreator } from '../../reducers/issue/issue.create-action';
+import {
+  SetCurrentIssueIdActionCreator,
+  SetIssueDoneActionCreator,
+} from '../../reducers/issue/issue.create-action';
 import { GameControlsBlock } from '../../components/GameControlsBlock';
+import { UpdateScoreActionCreator } from '../../reducers/score';
+import { handleEndGameSubmit } from '../../api/game';
+import { EndGameActionCreator } from '../../reducers/users';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
 
   const {
-    appState: { isAuth, currentPlayer },
+    appState: { isAuth, currentPlayer, isGameEnded },
+    dispatch,
   } = useContext(UsersContext);
 
   const {
     settingsState: { currentSets },
   } = useContext(SettingsContext);
-  const { issueDispatch } = useContext(IssueContext);
+  const {
+    issueState: { issues, currentId, currentIdNumber },
+    issueDispatch,
+  } = useContext(IssueContext);
+
+  const { scoreDispatch } = useContext(ScoreContext);
 
   const [isRoundEnded, setIsRoundEnded] = useState(true);
+
+  const endGame = () => {
+    handleEndGameSubmit(currentPlayer.roomId);
+  };
 
   useEffect(() => {
     handleGetIssueSubmit(currentPlayer.roomId);
@@ -53,9 +74,25 @@ export const MeetingRoomPage: React.FC = () => {
     });
   });
 
+  useEffect(() => {
+    socket.off('userResults');
+    socket.on('userResults', (results, currentIssue) => {
+      scoreDispatch(UpdateScoreActionCreator(results));
+      issueDispatch(SetIssueDoneActionCreator(currentIssue));
+    });
+  });
+  useEffect(() => {
+    socket.off('isGameEnded');
+    socket.on('isGameEnded', (isGameEnded) => {
+      console.log(isGameEnded);
+      dispatch(EndGameActionCreator());
+    });
+  });
+
   return (
     <>
       {!isAuth && <Redirect to="/" />}
+      {isGameEnded && <Redirect to="/" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
           <div className={classes.nameGame}>
@@ -73,6 +110,15 @@ export const MeetingRoomPage: React.FC = () => {
             <Container className={classes.cardsContainer}>
               <CardContainer cardSelected={false} deck={currentSets.deck} />
             </Container>
+          )}
+          {currentPlayer.isAdmin && (
+            <div>
+              {issues.every((el) => el.isDone === true) && (
+                <Button variant="contained" color="primary" onClick={endGame}>
+                  End Game
+                </Button>
+              )}
+            </div>
           )}
         </div>
         <ScorePlayers />

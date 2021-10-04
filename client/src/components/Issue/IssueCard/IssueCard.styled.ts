@@ -3,6 +3,7 @@ import {
   DARK_BLUE,
   GREEN_1,
   GREEN_2,
+  GREEN_5,
   RED,
   SIZE_MD,
   SIZE_XXS,
