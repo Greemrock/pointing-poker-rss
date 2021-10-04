@@ -1,6 +1,7 @@
 export enum Place {
   lobby = 'lobby',
   game = 'game',
+  result = 'result',
 }
 
 export enum SizeCard {
