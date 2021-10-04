@@ -11,7 +11,6 @@ import {
 } from '../../context/';
 import { ChatBlock } from '../../components/Chat';
 import { CardContainer } from '../../components/CardContainer';
-import { VoteGraph } from '../../components/VoteGraph';
 import { AdminBlock } from '../../components/AdminBlock';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 import { Issue } from '../../Shared';
@@ -39,7 +38,7 @@ export const MeetingRoomPage: React.FC = () => {
     settingsState: { currentSets },
   } = useContext(SettingsContext);
   const {
-    issueState: { issues, currentId, currentIdNumber },
+    issueState: { issues },
     issueDispatch,
   } = useContext(IssueContext);
 

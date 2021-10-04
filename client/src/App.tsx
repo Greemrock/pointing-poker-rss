@@ -24,6 +24,7 @@ import { initialState, usersReducer } from './reducers/users/';
 import { initialSetsState, settingsReducer } from './reducers/settings';
 import { SettingsContext } from './context/';
 import { scoreReducer, initialScoreState } from './reducers/score';
+import { ResultPage } from './Pages/ResultPage';
 
 export const App: React.FC = () => {
   const classes = useAppStyles();
@@ -67,6 +68,9 @@ export const App: React.FC = () => {
 
                     <Route exact path="/game">
                       <MeetingRoomPage />
+                    </Route>
+                    <Route exact path="/result">
+                      <ResultPage />
                     </Route>
                   </Switch>
                   <ChatBlock />

@@ -18,7 +18,6 @@ import {
 } from '../../../reducers/issue';
 import { handleDeleteIssueSubmit } from '../../../api/issue';
 import { IssueContext } from '../../../context';
-import { string } from 'yup/lib/locale';
 
 type Props = {
   id: string;
@@ -30,7 +29,7 @@ type Props = {
   view?: Issue;
   size?: SizeCard.small;
   createdAt: string;
-  handleOpen: () => void;
+  handleOpen?: () => void;
 };
 
 export const IssueCard: React.FC<Props> = ({
@@ -74,13 +73,17 @@ export const IssueCard: React.FC<Props> = ({
 
   const handleCreate = () => {
     issueDispatch(EditIssueFalseActionCreator());
-    handleOpen();
+    if (handleOpen) {
+      handleOpen();
+    }
   };
 
   const handleUpdate = () => {
     issueDispatch(AddEditIssueActionCreator(editIssueData));
     issueDispatch(EditIssueTrueActionCreator());
-    handleOpen();
+    if (handleOpen) {
+      handleOpen();
+    }
   };
 
   return (
