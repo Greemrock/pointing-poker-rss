@@ -28,12 +28,12 @@ export const useCardStyles = makeStyles(() => ({
     backgroundColor: ({
       isOpen,
       isSelect,
-      isCardSelected,
+      isSelectedCard,
     }: {
       isOpen: boolean;
       isSelect: boolean;
-      isCardSelected: boolean;
-    }) => (isOpen ? GRAY_2 : !isCardSelected ? '' : isSelect ? GREEN_2 : ''),
+      isSelectedCard: boolean;
+    }) => (isOpen ? GRAY_2 : !isSelectedCard ? '' : isSelect ? GREEN_2 : ''),
     '&:hover': {
       boxShadow: SHADOW,
     },

@@ -14,24 +14,24 @@ import {
   handleMyCardChoiceSubmit,
 } from '../../api/game';
 import { UsersContext } from '../../context/users.context';
-import { IssueContext, SettingsContext } from '../../context';
+import { IssueContext, ScoreContext, SettingsContext } from '../../context';
+import { IsSelectedCardActionCreator } from '../../reducers/score';
 
 type Props = {
-  isCardSelected: boolean;
-  setCardSelected: (isSelect: boolean) => void;
   nameCard: string;
   cardArray: string[];
 };
 
-export const Card: React.FC<Props> = ({
-  nameCard,
-  isCardSelected,
-  setCardSelected,
-  cardArray,
-}) => {
+export const Card: React.FC<Props> = ({ nameCard, cardArray }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
-  const classes = useCardStyles({ isOpen, isSelect, isCardSelected });
+
+  const {
+    scoreState: { isSelectedCard },
+    scoreDispatch,
+  } = useContext(ScoreContext);
+
+  const classes = useCardStyles({ isOpen, isSelect, isSelectedCard });
 
   const {
     appState: {
@@ -49,14 +49,14 @@ export const Card: React.FC<Props> = ({
   } = useContext(SettingsContext);
 
   useEffect(() => {
-    if (!isCardSelected) {
+    if (!isSelectedCard) {
       setIsOpen(false);
       setIsSelect(false);
     }
-  }, [isCardSelected]);
+  }, [isSelectedCard]);
 
   const handleClickCard = () => {
-    if (isCardSelected) {
+    if (isSelectedCard) {
       setIsOpen(false);
     } else {
       setIsOpen(!isOpen);
@@ -70,13 +70,16 @@ export const Card: React.FC<Props> = ({
   const handleSubmitYes = () => {
     setIsOpen(false);
     setIsSelect(true);
-    setCardSelected(true);
+    scoreDispatch(IsSelectedCardActionCreator(true));
+
     const cardNumber = cardArray.findIndex((el: string) => el === nameCard)!;
+
     handleAddResultSubmit({
       roomId,
       issueId: currentId,
       cardNumber,
     });
+
     handleMyCardChoiceSubmit({
       issueId: currentId,
       userId: id,

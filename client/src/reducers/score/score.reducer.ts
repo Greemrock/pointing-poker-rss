@@ -11,6 +11,7 @@ export const initialScoreState: ScoreType = {
   isWaitingResults: false,
   voteArray: [],
   wholeGameResults: [],
+  isSelectedCard: true,
 };
 
 const createDefaultResults = (players: Player[]): IssueScore[] => {
@@ -66,6 +67,11 @@ export const scoreReducer = (
       return {
         ...state,
         wholeGameResults: action.payload,
+      };
+    case ScoreActionType.IS_SELECTED_CARD:
+      return {
+        ...state,
+        isSelectedCard: action.payload,
       };
     default:
       return state;

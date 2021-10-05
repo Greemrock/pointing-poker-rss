@@ -7,6 +7,7 @@ export enum ScoreActionType {
   SET_SCORES_WAITING = 'SET-SCORES-WAINTING',
   SET_VOTE_ARRAY = 'SET-VOTE-ARRAY',
   SET_WHOLE_GAME_RESULTS = 'SET-WHOLE-GAME-RESULTS',
+  IS_SELECTED_CARD = 'IS_SELECTED_CARD',
 }
 
 export type IssueScore = {
@@ -23,22 +24,27 @@ export type ScoreType = {
   isWaitingResults: boolean;
   voteArray: number[];
   wholeGameResults: IssueScore[];
+  isSelectedCard: boolean;
 };
 
 export type UpdateScoresAction = {
   type: ScoreActionType.UPDATE_SCORES;
   payload: IssueScore[];
 };
+
 export type ResetScoresAction = {
   type: ScoreActionType.RESET_SCORES;
 };
+
 export type SetScoresWaitingAction = {
   type: ScoreActionType.SET_SCORES_WAITING;
 };
+
 export type SetDefaultScoreAction = {
   type: ScoreActionType.SET_DEFAULT_SCORES;
   payload: Player[];
 };
+
 export type SetVoteArrayAction = {
   type: ScoreActionType.SET_VOTE_ARRAY;
   payload: number[];
@@ -48,10 +54,16 @@ export type SetWholeResultsAction = {
   payload: IssueScore[];
 };
 
+export type IsSelectedCardAction = {
+  type: ScoreActionType.IS_SELECTED_CARD;
+  payload: boolean;
+};
+
 export type ScoreActions =
   | UpdateScoresAction
   | SetDefaultScoreAction
   | SetScoresWaitingAction
   | ResetScoresAction
   | SetVoteArrayAction
-  | SetWholeResultsAction;
+  | SetWholeResultsAction
+  | IsSelectedCardAction;

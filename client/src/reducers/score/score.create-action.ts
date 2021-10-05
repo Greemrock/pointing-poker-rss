@@ -8,6 +8,7 @@ import {
   SetDefaultScoreAction,
   SetVoteArrayAction,
   SetWholeResultsAction,
+  IsSelectedCardAction,
 } from './score.type';
 
 export const UpdateScoreActionCreator = (
@@ -43,5 +44,12 @@ export const SetWholeResultsActionCreator = (
   payload: IssueScore[]
 ): SetWholeResultsAction => ({
   type: ScoreActionType.SET_WHOLE_GAME_RESULTS,
+  payload,
+});
+
+export const IsSelectedCardActionCreator = (
+  payload: boolean
+): IsSelectedCardAction => ({
+  type: ScoreActionType.IS_SELECTED_CARD,
   payload,
 });

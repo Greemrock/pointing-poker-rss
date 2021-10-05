@@ -15,6 +15,7 @@ type Props = {
 export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
   const { settingsState } = useContext(SettingsContext);
   const classes = useStartExitGameStyles({ isAdmin });
+
   const handleStartGame = () => {
     handleSendSettings(settingsState.currentSets);
     handleStartGameSubmit(roomId);

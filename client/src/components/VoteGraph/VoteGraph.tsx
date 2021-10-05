@@ -4,10 +4,9 @@ import { Doughnut } from 'react-chartjs-2';
 import { dataForGraph } from './dataForGraph';
 import { useVoteGraphStyled } from './VoteGraph.styled';
 import { cardsArrays, Place } from '../../Shared';
-import { ScoreContext } from '../../context';
+import { ScoreContext, SettingsContext } from '../../context';
 import { getOverallVoite } from '../../Util/getOveralVote';
 import { removeZeros } from '../../Util/removeZeros';
-import { SettingsContext } from '../../context/settings.context';
 import { IssueContext } from '../../context/issue.context';
 import { IssueType } from '../../reducers/issue/issue.type';
 

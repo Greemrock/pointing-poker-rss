@@ -10,6 +10,9 @@ export const useResultPageStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
   },
   wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     width: '100%',
     [theme.breakpoints.down('md')]: {
       maxWidth: '100%',
@@ -22,5 +25,8 @@ export const useResultPageStyles = makeStyles((theme: Theme) => ({
   statistic: {
     position: 'relative',
     marginBottom: SPACE_MD,
+  },
+  download: {
+    width: '200px',
   },
 }));

@@ -9,18 +9,17 @@ import {
   SettingsContext,
   UsersContext,
 } from '../../context/';
-import { ChatBlock } from '../../components/Chat';
 import { CardContainer } from '../../components/CardContainer';
 import { AdminBlock } from '../../components/AdminBlock';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 import { Issue } from '../../Shared';
 import { socket } from '../../api/playersRequests';
-import { UpdateIssueActionCreator } from '../../reducers/issue';
 import { handleGetIssueSubmit } from '../../api/issue';
 import {
+  UpdateIssueActionCreator,
   SetCurrentIssueIdActionCreator,
   SetIssueDoneActionCreator,
-} from '../../reducers/issue/issue.create-action';
+} from '../../reducers/issue';
 import { GameControlsBlock } from '../../components/GameControlsBlock';
 import {
   SetDefaultScoreActionCreator,
@@ -30,18 +29,21 @@ import {
 import { handleEndGameSubmit } from '../../api/game';
 import { EndGameActionCreator } from '../../reducers/users';
 import { VoteGraph } from '../../components/VoteGraph';
+import { ReloadSetsActionCreator } from '../../reducers/settings';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
 
   const {
-    appState: { isAuth, currentPlayer, isGameEnded, players },
+    appState: { currentPlayer, isGameEnded, players },
     dispatch,
   } = useContext(UsersContext);
 
   const {
     settingsState: { currentSets },
+    settingsDispatch,
   } = useContext(SettingsContext);
+
   const {
     issueState: { issues },
     issueDispatch,
@@ -59,6 +61,13 @@ export const MeetingRoomPage: React.FC = () => {
   };
 
   useEffect(() => {
+    socket.off('returnSettings');
+    socket.on('returnSettings', (settings) => {
+      settingsDispatch(ReloadSetsActionCreator(settings));
+    });
+  }, []);
+
+  useEffect(() => {
     handleGetIssueSubmit(currentPlayer.roomId);
     socket.off('allIssues');
     socket.on('allIssues', (data, currentIssueId) => {
@@ -74,14 +83,14 @@ export const MeetingRoomPage: React.FC = () => {
     socket.on('changeCurrentId', (id) => {
       issueDispatch(SetCurrentIssueIdActionCreator(id));
     });
-  });
+  }, []);
 
   useEffect(() => {
     socket.off('overallInfo');
     socket.on('overallInfo', (score) => {
       scoreDispatch(SetVoteArrayActionCreator(score));
     });
-  });
+  }, []);
 
   useEffect(() => {
     socket.off('userResults');
@@ -92,17 +101,17 @@ export const MeetingRoomPage: React.FC = () => {
         !currentSets.isTimerNeeded && setIsRoundEnded(true);
       }
     });
-  });
+  }, []);
+
   useEffect(() => {
     socket.off('isGameEnded');
     socket.on('isGameEnded', () => {
       dispatch(EndGameActionCreator());
     });
-  });
+  }, []);
 
   return (
     <>
-      {!isAuth && <Redirect to="/" />}
       {isGameEnded && <Redirect to="/result" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
@@ -122,7 +131,7 @@ export const MeetingRoomPage: React.FC = () => {
           </Container>
           {!currentPlayer.observer && !isRoundEnded && (
             <Container className={classes.cardsContainer}>
-              <CardContainer cardSelected={false} deck={currentSets.deck} />
+              <CardContainer deck={currentSets.deck} />
             </Container>
           )}
           {currentPlayer.isAdmin && (
@@ -137,7 +146,6 @@ export const MeetingRoomPage: React.FC = () => {
         </div>
         <ScorePlayers />
       </Container>
-      <ChatBlock />
     </>
   );
 };
