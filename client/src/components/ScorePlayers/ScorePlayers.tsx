@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { Box, Button, Drawer, Fab, Paper, Tooltip } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Button, Drawer, Fab, Tooltip } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import CloseIcon from '@material-ui/icons/Close';
-import { UsersContext } from '../../context';
 import { Place } from '../../Shared';
 import { PlayerContainer } from '../PlayerContainer';
 import { ScoreContainer } from '../ScoreContainer';
@@ -11,10 +10,6 @@ import { useScorePlayersStyled } from './ScorePlayers.styled';
 export const ScorePlayers: React.FC = () => {
   const classes = useScorePlayersStyled();
   const [open, setOpen] = useState(false);
-
-  const {
-    appState: { currentPlayer, isAuth },
-  } = useContext(UsersContext);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -54,7 +49,7 @@ export const ScorePlayers: React.FC = () => {
 
             <div className={classes.wrapper}>
               <ScoreContainer />
-              <PlayerContainer />
+              <PlayerContainer view={Place.game} />
             </div>
           </div>
         </Box>

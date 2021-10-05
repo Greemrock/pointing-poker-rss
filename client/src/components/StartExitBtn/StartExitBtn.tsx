@@ -4,18 +4,21 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 import { handleSendSettings } from '../../api/settings/settings.request';
 import { SettingsContext } from '../../context/settings.context';
+import { handleStartGameSubmit } from '../../api/playersRequests';
 
 type Props = {
   isAdmin: boolean;
   link: string;
+  roomId: string;
 };
 
-export const StartExitBtn: React.FC<Props> = ({ isAdmin, link }) => {
-  const { settingsState, settingsDispatch } = useContext(SettingsContext);
+export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
+  const { settingsState } = useContext(SettingsContext);
   const classes = useStartExitGameStyles({ isAdmin });
 
   const handleStartGame = () => {
     handleSendSettings(settingsState.currentSets);
+    handleStartGameSubmit(roomId);
   };
 
   return (

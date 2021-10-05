@@ -28,6 +28,7 @@ type Props = {
   roomId?: string;
   view?: Issue;
   size?: SizeCard.small;
+  createdAt: string;
   handleOpen?: () => void;
 };
 
@@ -40,6 +41,7 @@ export const IssueCard: React.FC<Props> = ({
   roomId,
   view,
   size,
+  createdAt,
   handleOpen,
 }) => {
   const deleteIssueData = {
@@ -53,11 +55,13 @@ export const IssueCard: React.FC<Props> = ({
     priority: priority as Priority,
     isDone: isDone,
     roomId: roomId as string,
+    createdAt,
   };
 
-  // plug
-  const currentId = '0';
-  //
+  const {
+    issueState: { currentId },
+    issueDispatch,
+  } = useContext(IssueContext);
 
   const classes = useIssueCardStyles({
     view,
@@ -66,7 +70,6 @@ export const IssueCard: React.FC<Props> = ({
     currentId,
     size,
   });
-  const { issueDispatch } = useContext(IssueContext);
 
   const handleCreate = () => {
     issueDispatch(EditIssueFalseActionCreator());

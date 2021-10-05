@@ -9,8 +9,8 @@ export type SettingsState = {
 
 export const initialSetsState: SettingsState = {
   currentSets: {
-    minutes: 1,
-    seconds: 0,
+    minutes: 0,
+    seconds: 20,
     deck: Decks.tshirts,
     isTimerNeeded: false,
     roomId: '',

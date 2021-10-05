@@ -48,6 +48,7 @@ export const IssueDialogForm: React.FC<Props> = ({ open, handleClose }) => {
   const handleSubmit = (values: IssueFormType) => {
     const baseIssue = {
       ...values,
+      createdAt: '',
       isDone: false,
       roomId: currentPlayer.roomId,
     };

@@ -1,12 +1,6 @@
 import { SPACE_XS } from './../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
-import {
-  DARK_BLUE,
-  SAND,
-  WHITE,
-  SPACE_MD,
-  SIZE_XXS,
-} from '../../Shared/cssConstants';
+import { DARK_BLUE, SAND, WHITE, SIZE_XXS } from '../../Shared/cssConstants';
 
 export const useFooterStyles = makeStyles({
   topBlock: {

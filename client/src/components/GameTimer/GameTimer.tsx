@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Box, Paper, Button, Tooltip, Typography } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -6,8 +6,13 @@ import { useStyles } from './GameTimer.styles';
 import { getMinutesAndSecondsFromTime } from '../../Util/getMinutesAndSecondsFromTime';
 import { useInterval } from '../../Util/hooks/useInterval';
 import { TimerStatus } from '../../Shared/enums';
-import { SettingsContext } from '../../context';
-import { convertToSeconds } from '../../Util/convertToSeconds';
+import { UsersContext } from '../../context/users.context';
+import {
+  handleEndRoundSubmit,
+  handleResetTimerSubmit,
+  handleStartTimerSubmit,
+} from '../../api/game';
+import { IssueContext } from '../../context/issue.context';
 
 type Props = {
   secondsRemaining: number;
@@ -26,25 +31,22 @@ export const GameTimer: React.FC<Props> = ({
   secondsRemaining,
   setSecondsRemaining,
   buttonDisabled,
-  setButtonDisabled,
 }) => {
   const classes = useStyles();
   const {
-    settingsState: {
-      currentSets: { minutes, seconds },
+    appState: {
+      currentPlayer: { isAdmin, roomId },
     },
-  } = useContext(SettingsContext);
+  } = useContext(UsersContext);
+  const {
+    issueState: { currentId },
+  } = useContext(IssueContext);
 
   const handleStart = () => {
-    setStatusStarted(TimerStatus.STARTED);
-    setIsRoundEnded(false);
-    setButtonDisabled(!buttonDisabled);
+    handleStartTimerSubmit(roomId);
   };
   const handleReset = () => {
-    setStatusStarted(TimerStatus.STOPPED);
-    setSecondsRemaining(convertToSeconds(minutes, seconds));
-    setButtonDisabled(!buttonDisabled);
-    setIsRoundEnded(true);
+    handleResetTimerSubmit(roomId);
   };
   useInterval(
     () => {
@@ -53,6 +55,7 @@ export const GameTimer: React.FC<Props> = ({
       } else {
         setStatusStarted(TimerStatus.STOPPED);
         setIsRoundEnded(true);
+        handleEndRoundSubmit({ roomId, issueId: currentId });
       }
     },
     statusStarted === TimerStatus.STARTED ? 1000 : null
@@ -65,30 +68,32 @@ export const GameTimer: React.FC<Props> = ({
           {getMinutesAndSecondsFromTime(secondsRemaining)}
         </Typography>
       </Paper>
-      <Box className={classes.buttonsBlock}>
-        <Tooltip title="Run Round" aria-label="Run Round">
-          <Button
-            className={classes.timerButton}
-            onClick={handleStart}
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<PlayArrowIcon />}
-            disabled={buttonDisabled}
-          ></Button>
-        </Tooltip>
-        <Tooltip title="Reset Round" aria-label="Reset Round">
-          <Button
-            className={classes.timerButton}
-            onClick={handleReset}
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<RestoreIcon />}
-            disabled={!buttonDisabled}
-          ></Button>
-        </Tooltip>
-      </Box>
+      {isAdmin && (
+        <Box className={classes.buttonsBlock}>
+          <Tooltip title="Run Round" aria-label="Run Round">
+            <Button
+              className={classes.timerButton}
+              onClick={handleStart}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<PlayArrowIcon />}
+              disabled={buttonDisabled}
+            ></Button>
+          </Tooltip>
+          <Tooltip title="Reset Round" aria-label="Reset Round">
+            <Button
+              className={classes.timerButton}
+              onClick={handleReset}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<RestoreIcon />}
+              disabled={!buttonDisabled}
+            ></Button>
+          </Tooltip>
+        </Box>
+      )}
     </Box>
   );
 };

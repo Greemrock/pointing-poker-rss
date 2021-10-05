@@ -2,17 +2,17 @@ import { makeStyles } from '@material-ui/core';
 
 export const useVoteGraphStyled = makeStyles({
   root: {
-    width: '100%',
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   graph: {
-    maxnWidth: 300,
+    maxWidth: '300px',
   },
   overallResult: {
     width: '100%',
     position: 'absolute',
-    bottom: '24%',
+    bottom: '38%',
   },
 });

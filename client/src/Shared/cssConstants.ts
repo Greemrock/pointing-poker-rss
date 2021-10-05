@@ -19,14 +19,15 @@ export const SIZE_XL = `${3.25 * TEXT_SIZE_UNIT}px`; // 52px
 
 export const DARK_BLUE = '#2B3A67';
 export const RED = '#FF0000';
-export const GREEN_1 = '#60DABF75';
+export const GREEN_1 = '#60DABF30';
 export const GREEN_2 = '#60DABF';
 export const GREEN_3 = '#66999B';
-export const GREEN_4 = '#a4f7dc';
-export const BLUE = '#a8ddfd';
+export const GREEN_4 = '#A4F7DC';
+export const GREEN_5 = '#aaafae';
+export const BLUE = '#A8DDFD';
 export const SAND = '#FFC482';
 export const WHITE = '#FFFFFF';
 export const GRAY = '#888888';
-export const GRAY_2 = '#f2f2f2';
+export const GRAY_2 = '#F2F2F2';
 
 export const SHADOW = `5px 3px 13px 0px ${GRAY}`;
