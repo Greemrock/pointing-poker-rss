@@ -31,6 +31,7 @@ export const RoundControlsButton: React.FC<Props> = ({
     setRoundButtonDisabled(!roundButtonDisabled);
     handleStartTimerSubmit(roomId);
   };
+
   const handleStopRound = () => {
     setIsRoundEnded(true);
     setRoundButtonDisabled(!roundButtonDisabled);

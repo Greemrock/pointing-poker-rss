@@ -69,7 +69,6 @@ export const issueReducer = (
         currentId: state.issues[state.currentIdNumber - 1].id,
       };
     case IssueActionType.SET_ISSUE_DONE:
-      console.log(3);
       return {
         ...state,
         issues: [

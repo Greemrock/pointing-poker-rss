@@ -108,7 +108,7 @@ export const Settings: React.FC = () => {
             />
           ) : null}
           <Container className={classes.cardsPreviewBlock}>
-            <CardContainer cardSelected={true} deck={currentSets.deck} />
+            <CardContainer deck={currentSets.deck} />
           </Container>
         </AccordionDetails>
       </Accordion>

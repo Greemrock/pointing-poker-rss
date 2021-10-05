@@ -15,7 +15,7 @@ export const ChatBlock: React.FC = () => {
 
   const { messageState } = useContext(MessageContext);
   const {
-    appState: { currentPlayer },
+    appState: { isAuth, currentPlayer },
   } = useContext(UsersContext);
 
   const scrollToBottom = () => {
@@ -40,18 +40,18 @@ export const ChatBlock: React.FC = () => {
 
   return (
     <>
-      {/* {isAuth && ( */}
-      <Tooltip title="Chat" placement="left">
-        <Fab
-          onClick={toggleDrawer(true)}
-          color="secondary"
-          aria-label="add"
-          className={classes.btnChat}
-        >
-          <ChatIcon />
-        </Fab>
-      </Tooltip>
-      {/* )} */}
+      {isAuth && (
+        <Tooltip title="Chat" placement="left">
+          <Fab
+            onClick={toggleDrawer(true)}
+            color="secondary"
+            aria-label="add"
+            className={classes.btnChat}
+          >
+            <ChatIcon />
+          </Fab>
+        </Tooltip>
+      )}
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         <Box role="presentation" className={classes.container}>
           <div className={classes.paper}>

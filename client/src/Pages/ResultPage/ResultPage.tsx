@@ -1,17 +1,23 @@
 import React, { useContext } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Button, Container, Typography } from '@material-ui/core';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { useResultPageStyles } from './ResultPage.styles';
 import { IssueCard } from '../../components/Issue/IssueCard';
-import { IssueContext } from '../../context';
+import { IssueContext, UsersContext } from '../../context';
 import { VoteGraph } from '../../components/VoteGraph';
+import { Redirect } from 'react-router-dom';
 
 export const ResultPage: React.FC = () => {
   const classes = useResultPageStyles();
+
   const { issueState } = useContext(IssueContext);
+  const {
+    appState: { isAuth },
+  } = useContext(UsersContext);
 
   return (
     <>
+      {!isAuth && <Redirect to="/" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
           <div className={classes.nameGame}>
@@ -39,6 +45,9 @@ export const ResultPage: React.FC = () => {
               }
             )}
           </Container>
+          <Button variant="contained" className={classes.download}>
+            Download results
+          </Button>
         </div>
       </Container>
       <ScorePlayers />
