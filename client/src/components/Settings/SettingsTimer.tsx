@@ -38,11 +38,13 @@ export const SettingsTimer: React.FC<Props> = ({
       {el}
     </MenuItem>
   ));
+
   const secondsItems = secondsArray.map((el: number) => (
     <MenuItem key={el} value={el}>
       {el}
     </MenuItem>
   ));
+
   return (
     <Box className={stylesBox}>
       <Typography className={stylesText}>Timer: </Typography>

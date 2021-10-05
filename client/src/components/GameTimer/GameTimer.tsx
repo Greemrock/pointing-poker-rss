@@ -6,13 +6,13 @@ import { useStyles } from './GameTimer.styles';
 import { getMinutesAndSecondsFromTime } from '../../Util/getMinutesAndSecondsFromTime';
 import { useInterval } from '../../Util/hooks/useInterval';
 import { TimerStatus } from '../../Shared/enums';
-import { UsersContext } from '../../context/users.context';
 import {
   handleEndRoundSubmit,
   handleResetTimerSubmit,
   handleStartTimerSubmit,
 } from '../../api/game';
-import { IssueContext } from '../../context/issue.context';
+import { ScoreContext, IssueContext, UsersContext } from '../../context';
+import { IsSelectedCardActionCreator } from '../../reducers/score';
 
 type Props = {
   secondsRemaining: number;
@@ -38,16 +38,23 @@ export const GameTimer: React.FC<Props> = ({
       currentPlayer: { isAdmin, roomId },
     },
   } = useContext(UsersContext);
+
   const {
     issueState: { currentId },
   } = useContext(IssueContext);
 
+  const { scoreDispatch } = useContext(ScoreContext);
+
   const handleStart = () => {
     handleStartTimerSubmit(roomId);
+    // scoreDispatch(IsSelectedCardActionCreator(false));
   };
+
   const handleReset = () => {
     handleResetTimerSubmit(roomId);
+    // scoreDispatch(IsSelectedCardActionCreator(false));
   };
+
   useInterval(
     () => {
       if (secondsRemaining > 0) {

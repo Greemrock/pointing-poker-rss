@@ -19,6 +19,7 @@ import { handleSendCurrentIssueIdSubmit } from '../../api/issue';
 import { handleResetTimerSubmit } from '../../api/game';
 import { socket } from '../../api/playersRequests';
 import {
+  IsSelectedCardActionCreator,
   ResetScoresActionCreator,
   SetScoresWaitingActionCreator,
 } from '../../reducers/score';
@@ -55,10 +56,12 @@ export const GameControlsBlock: React.FC<Props> = ({
 
   const [statusStarted, setStatusStarted] = useState(TimerStatus.STOPPED);
   const [secondsRemaining, setSecondsRemaining] = useState(
-    minutes * 60 + seconds
+    convertToSeconds(minutes, seconds)
   );
 
-  console.log(secondsRemaining);
+  useEffect(() => {
+    setSecondsRemaining(convertToSeconds(minutes, seconds));
+  }, [minutes, seconds]);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [roundButtonDisabled, setRoundButtonDisabled] = useState(false);
@@ -76,16 +79,19 @@ export const GameControlsBlock: React.FC<Props> = ({
   const handleResetRound = () => {
     handleResetTimerSubmit(roomId);
   };
+
   const handleNextIssue = () => {
     issueDispatch(NextIssueActionCreator());
     handleResetRound();
     handleIssueCurrentId(true);
   };
+
   const handlePrevIssue = () => {
     issueDispatch(PrevIssueActionCreator());
     handleResetRound();
     handleIssueCurrentId(false);
   };
+
   useEffect(() => {
     socket.off('isTimerStarted');
     socket.on('isTimerStarted', () => {
@@ -93,6 +99,7 @@ export const GameControlsBlock: React.FC<Props> = ({
       setIsRoundEnded(false);
       setButtonDisabled(true);
       scoreDispatch(SetScoresWaitingActionCreator());
+      scoreDispatch(IsSelectedCardActionCreator(false));
     });
   });
 
@@ -103,6 +110,7 @@ export const GameControlsBlock: React.FC<Props> = ({
       setSecondsRemaining(convertToSeconds(minutes, seconds));
       setButtonDisabled(false);
       scoreDispatch(ResetScoresActionCreator());
+      scoreDispatch(IsSelectedCardActionCreator(false));
     });
   });
 

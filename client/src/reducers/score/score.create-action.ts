@@ -7,6 +7,7 @@ import {
   ResetScoresAction,
   SetDefaultScoreAction,
   SetVoteArrayAction,
+  IsSelectedCardAction,
 } from './score.type';
 
 export const UpdateScoreActionCreator = (
@@ -35,5 +36,12 @@ export const SetVoteArrayActionCreator = (
   payload: number[]
 ): SetVoteArrayAction => ({
   type: ScoreActionType.SET_VOTE_ARRAY,
+  payload,
+});
+
+export const IsSelectedCardActionCreator = (
+  payload: boolean
+): IsSelectedCardAction => ({
+  type: ScoreActionType.IS_SELECTED_CARD,
   payload,
 });

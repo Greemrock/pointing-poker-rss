@@ -9,7 +9,6 @@ import {
   SettingsContext,
   UsersContext,
 } from '../../context/';
-import { ChatBlock } from '../../components/Chat';
 import { CardContainer } from '../../components/CardContainer';
 import { AdminBlock } from '../../components/AdminBlock';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
@@ -133,7 +132,7 @@ export const MeetingRoomPage: React.FC = () => {
           </Container>
           {!currentPlayer.observer && !isRoundEnded && (
             <Container className={classes.cardsContainer}>
-              <CardContainer cardSelected={false} deck={currentSets.deck} />
+              <CardContainer deck={currentSets.deck} />
             </Container>
           )}
           {currentPlayer.isAdmin && (
@@ -148,7 +147,6 @@ export const MeetingRoomPage: React.FC = () => {
         </div>
         <ScorePlayers />
       </Container>
-      <ChatBlock />
     </>
   );
 };
