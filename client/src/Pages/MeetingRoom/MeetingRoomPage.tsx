@@ -35,7 +35,7 @@ export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
 
   const {
-    appState: { isAuth, currentPlayer, isGameEnded, players },
+    appState: { currentPlayer, isGameEnded, players },
     dispatch,
   } = useContext(UsersContext);
 
@@ -112,7 +112,6 @@ export const MeetingRoomPage: React.FC = () => {
 
   return (
     <>
-      {!isAuth && <Redirect to="/" />}
       {isGameEnded && <Redirect to="/result" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
