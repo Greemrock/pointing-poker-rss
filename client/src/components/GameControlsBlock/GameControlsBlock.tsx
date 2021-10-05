@@ -33,15 +33,18 @@ export const GameControlsBlock: React.FC<Props> = ({
   setIsRoundEnded,
 }) => {
   const classes = useStartExitGameStyles();
+
   const {
     settingsState: {
       currentSets: { isTimerNeeded, minutes, seconds },
     },
   } = useContext(SettingsContext);
+
   const {
     issueState: { currentIdNumber, issues },
     issueDispatch,
   } = useContext(IssueContext);
+
   const {
     appState: {
       currentPlayer: { isAdmin, roomId },
@@ -52,8 +55,11 @@ export const GameControlsBlock: React.FC<Props> = ({
 
   const [statusStarted, setStatusStarted] = useState(TimerStatus.STOPPED);
   const [secondsRemaining, setSecondsRemaining] = useState(
-    convertToSeconds(minutes, seconds)
+    minutes * 60 + seconds
   );
+
+  console.log(secondsRemaining);
+
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [roundButtonDisabled, setRoundButtonDisabled] = useState(false);
 

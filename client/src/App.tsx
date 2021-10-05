@@ -52,7 +52,6 @@ export const App: React.FC = () => {
           <SettingsContext.Provider value={{ settingsState, settingsDispatch }}>
             <ScoreContext.Provider value={{ scoreState, scoreDispatch }}>
               <Router>
-                {!appState.isAuth && <Redirect to="/" />}
                 <Header />
                 <div className={classes.container}>
                   <Switch>

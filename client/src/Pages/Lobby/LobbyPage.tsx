@@ -19,7 +19,7 @@ type Props = {
 export const LobbyPage: React.FC<Props> = ({ link, view }) => {
   const classes = useLobbyPageStyles();
   const {
-    appState: { currentPlayer, isGameStarted },
+    appState: { isAuth, currentPlayer, isGameStarted },
     dispatch,
   } = useContext(UsersContext);
 
@@ -32,6 +32,7 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
 
   return (
     <>
+      {!isAuth && <Redirect to="/" />}
       {isGameStarted && <Redirect to="/game" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.nameGame}>

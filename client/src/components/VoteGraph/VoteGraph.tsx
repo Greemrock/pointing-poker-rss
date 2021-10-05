@@ -4,7 +4,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { dataForGraph } from './dataForGraph';
 import { useVoteGraphStyled } from './VoteGraph.styled';
 import { cardsArrays, Place } from '../../Shared';
-import { ScoreContext } from '../../context';
+import { ScoreContext, SettingsContext } from '../../context';
 import { getOverallVoite } from '../../Util/getOveralVote';
 import { removeZeros } from '../../Util/removeZeros';
 
@@ -18,7 +18,9 @@ export const VoteGraph: React.FC<Props> = ({ view }) => {
     scoreState: { voteArray },
   } = useContext(ScoreContext);
 
-  const typeCard = cardsArrays.tshirts;
+  const {
+    settingsState: { currentSets },
+  } = useContext(SettingsContext);
 
   return (
     <div className={classes.root}>
@@ -29,7 +31,10 @@ export const VoteGraph: React.FC<Props> = ({ view }) => {
       )}
       <div className={classes.graph}>
         <Doughnut
-          data={dataForGraph(removeZeros(typeCard, voteArray), voteArray)}
+          data={dataForGraph(
+            removeZeros(cardsArrays[currentSets.deck], voteArray),
+            voteArray
+          )}
         />
       </div>
       <Typography variant="h4" align="center" className={classes.overallResult}>
