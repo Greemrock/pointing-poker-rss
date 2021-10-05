@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Button, Container, Typography } from '@material-ui/core';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { useResultPageStyles } from './ResultPage.styles';
 import { IssueCard } from '../../components/Issue/IssueCard';
@@ -38,6 +38,9 @@ export const ResultPage: React.FC = () => {
               }
             )}
           </Container>
+          <Button variant="contained" className={classes.download}>
+            Download results
+          </Button>
         </div>
       </Container>
       <ScorePlayers />

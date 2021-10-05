@@ -1,4 +1,4 @@
-export const getOverallVoite = (voteArr: number[]) => {
+export const getOverallVoite = (voteArr: number[]): number => {
   const votes = voteArr.reduce((a, b) => a + b);
   const allPointsArr: number[] = [];
 

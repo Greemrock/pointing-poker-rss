@@ -13,9 +13,11 @@ type Props = {
 export const StartExitBtn: React.FC<Props> = ({ isAdmin, link }) => {
   const { settingsState, settingsDispatch } = useContext(SettingsContext);
   const classes = useStartExitGameStyles({ isAdmin });
+
   const handleStartGame = () => {
     handleSendSettings(settingsState.currentSets);
   };
+
   return (
     <Container className={classes.root} maxWidth="md">
       {isAdmin ? (
