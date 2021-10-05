@@ -14,6 +14,10 @@ export const handleUserSubmit = (payload: payloadType): void => {
   socket.emit('joinGame', payload);
 };
 
+export const handleStartGameSubmit = (payload: string): void => {
+  socket.emit('startGame', payload);
+};
+
 export const handleVotingSubmit = (candidate: Player, nominant: Player) => {
   socket.emit('voteKick', candidate, nominant);
 };

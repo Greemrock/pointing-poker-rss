@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const IssueContainer: React.FC<Props> = ({ view }) => {
-  const classes = useIssueContainerStyles();
+  const classes = useIssueContainerStyles({ view });
   const [open, setOpen] = useState(false);
   const { issueState } = useContext(IssueContext);
 
@@ -24,13 +24,13 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
   };
 
   return (
-    <>
+    <div>
       <Typography variant="h6" align="center" className={classes.title}>
         Issue:
       </Typography>
       <Container className={classes.container} maxWidth="md">
         {issueState.issues.map(
-          ({ id, link, isDone, priority, title, roomId }) => {
+          ({ id, link, isDone, priority, title, roomId, createdAt }) => {
             return (
               <IssueCard
                 key={id}
@@ -41,22 +41,24 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
                 title={title}
                 roomId={roomId}
                 view={view}
+                createdAt={createdAt}
                 handleOpen={handleOpen}
               />
             );
           }
         )}
-        {view && (
+        {view && view !== Issue.game && (
           <IssueCard
             id={Issue.create}
             view={Issue.create}
             isDone={false}
             size={view === Issue.delete ? SizeCard.small : undefined}
+            createdAt={''}
             handleOpen={handleOpen}
           />
         )}
       </Container>
       <IssueDialogForm open={open} handleClose={handleClose} />
-    </>
+    </div>
   );
 };

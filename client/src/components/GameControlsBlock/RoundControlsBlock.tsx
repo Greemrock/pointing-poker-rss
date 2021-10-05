@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useStartExitGameStyles } from './GameControlsBlock.styled';
+import { UsersContext } from '../../context/users.context';
+import { handleEndRoundSubmit, handleStartTimerSubmit } from '../../api/game';
+import { IssueContext } from '../../context/issue.context';
 
 type Props = {
   setIsRoundEnded: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,14 +17,24 @@ export const RoundControlsButton: React.FC<Props> = ({
   setRoundButtonDisabled,
 }) => {
   const classes = useStartExitGameStyles();
+  const {
+    appState: {
+      currentPlayer: { roomId },
+    },
+  } = useContext(UsersContext);
+  const {
+    issueState: { currentId },
+  } = useContext(IssueContext);
 
   const handleStartRound = () => {
     setIsRoundEnded(false);
     setRoundButtonDisabled(!roundButtonDisabled);
+    handleStartTimerSubmit(roomId);
   };
   const handleStopRound = () => {
     setIsRoundEnded(true);
     setRoundButtonDisabled(!roundButtonDisabled);
+    handleEndRoundSubmit({ roomId, issueId: currentId });
   };
 
   return (

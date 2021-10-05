@@ -1,33 +1,14 @@
 import { Priority } from '../../Shared';
-import { IssueActions, IssueActionType, IssueStateType } from './issue.type';
+import { convertDate } from '../../Util/convertDate';
+import {
+  IssueActions,
+  IssueActionType,
+  IssueStateType,
+  IssueType,
+} from './issue.type';
 
 export const initialIssueState: IssueStateType = {
-  issues: [
-    {
-      id: 'd',
-      link: 'd',
-      priority: Priority.hight,
-      title: 'd',
-      isDone: false,
-      roomId: 'd',
-    },
-    {
-      id: 'c',
-      link: 'c',
-      priority: Priority.hight,
-      title: 'c',
-      isDone: false,
-      roomId: 'c',
-    },
-    {
-      id: 'a',
-      link: 'a',
-      priority: Priority.hight,
-      title: 'a',
-      isDone: false,
-      roomId: 'a',
-    },
-  ],
+  issues: [],
   isEdit: false,
   editIssue: {
     id: '',
@@ -36,8 +17,10 @@ export const initialIssueState: IssueStateType = {
     title: '',
     isDone: false,
     roomId: '',
+    createdAt: '',
   },
-  currentIssue: 0,
+  currentId: 'd',
+  currentIdNumber: 0,
 };
 
 export const issueReducer = (
@@ -48,7 +31,15 @@ export const issueReducer = (
     case IssueActionType.UPDATE_ISSUE:
       return {
         ...state,
-        issues: action.payload,
+        issues: action.payload.sort((a, b) => {
+          return convertDate(a.createdAt) - convertDate(b.createdAt);
+        }),
+        currentId: action.payload[0].id,
+      };
+    case IssueActionType.SET_CURRENT_ISSUE_ID:
+      return {
+        ...state,
+        currentId: action.payload,
       };
     case IssueActionType.ADD_EDIT_ISSUE:
       return {
@@ -68,12 +59,29 @@ export const issueReducer = (
     case IssueActionType.NEXT_ISSUE:
       return {
         ...state,
-        currentIssue: state.currentIssue + 1,
+        currentIdNumber: state.currentIdNumber + 1,
+        currentId: state.issues[state.currentIdNumber + 1].id,
       };
     case IssueActionType.PREV_ISSUE:
       return {
         ...state,
-        currentIssue: state.currentIssue - 1,
+        currentIdNumber: state.currentIdNumber - 1,
+        currentId: state.issues[state.currentIdNumber - 1].id,
+      };
+    case IssueActionType.SET_ISSUE_DONE:
+      console.log(3);
+      return {
+        ...state,
+        issues: [
+          ...state.issues
+            .sort((a, b) => {
+              return convertDate(a.createdAt) - convertDate(b.createdAt);
+            })
+            .map((el: IssueType) => {
+              if (el.id === action.payload) el.isDone = true;
+              return el;
+            }),
+        ],
       };
     default:
       return state;

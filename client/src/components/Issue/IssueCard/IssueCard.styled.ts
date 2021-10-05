@@ -34,7 +34,17 @@ export const useIssueCardStyles = makeStyles({
       currentId: string;
       view?: Issue;
       size?: SizeCard;
-    }) => (isDone ? GREEN_1 : id === currentId ? GREEN_2 : ''),
+    }) => (isDone ? GREEN_2 : id === currentId ? GREEN_1 : ''),
+    border: ({
+      view,
+      currentId,
+      id,
+    }: {
+      currentId: string;
+      view?: Issue;
+      id: string;
+    }) =>
+      view === Issue.game && currentId === id ? `3px solid ${GREEN_2}` : 'none',
   },
   wrapperText: {
     display: 'flex',

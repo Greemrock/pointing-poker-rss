@@ -102,23 +102,27 @@ export const PlayerContainer: React.FC<Props> = ({ view }) => {
                 image={image}
                 playerId={currentPlayer.id}
                 isAdmin={isAdmin}
-                size={view === Place.game ? SizeCard.small : undefined}
-                removeUser={() => {
-                  if (isAdmin) {
-                    openKickMenu();
-                  } else {
-                    openKickMenu({
-                      id,
-                      name,
-                      surname,
-                      job,
-                      image,
-                      isAdmin,
-                      observer,
-                      roomId,
-                    });
-                  }
-                }}
+                size={undefined}
+                removeUser={
+                  view !== Place.game && view !== Place.result
+                    ? () => {
+                        if (isAdmin) {
+                          openKickMenu();
+                        } else {
+                          openKickMenu({
+                            id,
+                            name,
+                            surname,
+                            job,
+                            image,
+                            isAdmin,
+                            observer,
+                            roomId,
+                          });
+                        }
+                      }
+                    : null
+                }
                 isDisabled={voteState.votingStarted}
               />
             );

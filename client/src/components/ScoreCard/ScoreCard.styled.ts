@@ -1,11 +1,11 @@
-import { SIZE_MD, SIZE_SM } from './../../Shared/cssConstants';
+import { SIZE_SM } from './../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
-import { SIZE_XS, SPACE_XXS, SPACE_XXXS } from '../../Shared';
+import { SPACE_XXS, SPACE_XXXS } from '../../Shared';
 
 export const useScoreCardStyles = makeStyles({
   field: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     margin: SPACE_XXXS,
     width: '100px',

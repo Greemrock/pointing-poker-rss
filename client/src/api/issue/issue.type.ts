@@ -14,4 +14,9 @@ export type payloadDeleteIssue = {
   roomId: string;
 };
 
+export type payloadIssueId = {
+  currentIssueId: string;
+  roomId: string;
+};
+
 export type payloadIssue = IssueType;

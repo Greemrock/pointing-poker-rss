@@ -21,7 +21,7 @@ export const ResultPage: React.FC = () => {
           </div>
           <Container className={classes.container} maxWidth="md">
             {issueState.issues.map(
-              ({ id, link, isDone, priority, title, roomId }) => {
+              ({ id, link, isDone, priority, title, roomId, createdAt }) => {
                 return (
                   <div key={id} className={classes.statistic}>
                     <IssueCard
@@ -31,6 +31,7 @@ export const ResultPage: React.FC = () => {
                       priority={priority}
                       title={title}
                       roomId={roomId}
+                      createdAt={createdAt}
                     />
                     <VoteGraph />
                   </div>
