@@ -56,6 +56,7 @@ export const IssueCard: React.FC<Props> = ({
     isDone: isDone,
     roomId: roomId as string,
     createdAt,
+    overall: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   };
 
   const {

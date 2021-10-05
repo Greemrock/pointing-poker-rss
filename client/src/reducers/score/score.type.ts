@@ -6,6 +6,7 @@ export enum ScoreActionType {
   RESET_SCORES = 'RESET_SCORES',
   SET_SCORES_WAITING = 'SET-SCORES-WAINTING',
   SET_VOTE_ARRAY = 'SET-VOTE-ARRAY',
+  SET_WHOLE_GAME_RESULTS = 'SET-WHOLE-GAME-RESULTS',
 }
 
 export type IssueScore = {
@@ -21,6 +22,7 @@ export type ScoreType = {
   results: IssueScore[];
   isWaitingResults: boolean;
   voteArray: number[];
+  wholeGameResults: IssueScore[];
 };
 
 export type UpdateScoresAction = {
@@ -41,10 +43,15 @@ export type SetVoteArrayAction = {
   type: ScoreActionType.SET_VOTE_ARRAY;
   payload: number[];
 };
+export type SetWholeResultsAction = {
+  type: ScoreActionType.SET_WHOLE_GAME_RESULTS;
+  payload: IssueScore[];
+};
 
 export type ScoreActions =
   | UpdateScoresAction
   | SetDefaultScoreAction
   | SetScoresWaitingAction
   | ResetScoresAction
-  | SetVoteArrayAction;
+  | SetVoteArrayAction
+  | SetWholeResultsAction;

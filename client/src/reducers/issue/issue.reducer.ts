@@ -18,6 +18,7 @@ export const initialIssueState: IssueStateType = {
     isDone: false,
     roomId: '',
     createdAt: '',
+    overall: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
   currentId: 'd',
   currentIdNumber: 0,
@@ -69,7 +70,6 @@ export const issueReducer = (
         currentId: state.issues[state.currentIdNumber - 1].id,
       };
     case IssueActionType.SET_ISSUE_DONE:
-      console.log(3);
       return {
         ...state,
         issues: [

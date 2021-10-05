@@ -7,6 +7,7 @@ import {
   ResetScoresAction,
   SetDefaultScoreAction,
   SetVoteArrayAction,
+  SetWholeResultsAction,
 } from './score.type';
 
 export const UpdateScoreActionCreator = (
@@ -35,5 +36,12 @@ export const SetVoteArrayActionCreator = (
   payload: number[]
 ): SetVoteArrayAction => ({
   type: ScoreActionType.SET_VOTE_ARRAY,
+  payload,
+});
+
+export const SetWholeResultsActionCreator = (
+  payload: IssueScore[]
+): SetWholeResultsAction => ({
+  type: ScoreActionType.SET_WHOLE_GAME_RESULTS,
   payload,
 });

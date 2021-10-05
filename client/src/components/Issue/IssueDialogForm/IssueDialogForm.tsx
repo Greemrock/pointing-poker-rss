@@ -51,6 +51,7 @@ export const IssueDialogForm: React.FC<Props> = ({ open, handleClose }) => {
       createdAt: '',
       isDone: false,
       roomId: currentPlayer.roomId,
+      overall: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     if (isEdit) {

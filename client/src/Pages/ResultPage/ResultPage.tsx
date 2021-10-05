@@ -1,14 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { useResultPageStyles } from './ResultPage.styles';
 import { IssueCard } from '../../components/Issue/IssueCard';
 import { IssueContext } from '../../context';
 import { VoteGraph } from '../../components/VoteGraph';
+import { UsersContext } from '../../context/users.context';
+import { handleGetIssueSubmit } from '../../api/issue';
 
 export const ResultPage: React.FC = () => {
   const classes = useResultPageStyles();
   const { issueState } = useContext(IssueContext);
+  const {
+    appState: {
+      currentPlayer: { roomId },
+    },
+  } = useContext(UsersContext);
+
+  useEffect(() => {
+    handleGetIssueSubmit(roomId);
+  }, []);
 
   return (
     <>
@@ -33,7 +44,7 @@ export const ResultPage: React.FC = () => {
                       roomId={roomId}
                       createdAt={createdAt}
                     />
-                    <VoteGraph />
+                    <VoteGraph issueId={id} isGame={false} />
                   </div>
                 );
               }
