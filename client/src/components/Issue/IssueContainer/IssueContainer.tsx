@@ -24,7 +24,7 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
   };
 
   return (
-    <>
+    <div>
       <Typography variant="h6" align="center" className={classes.title}>
         Issue:
       </Typography>
@@ -59,6 +59,6 @@ export const IssueContainer: React.FC<Props> = ({ view }) => {
         )}
       </Container>
       <IssueDialogForm open={open} handleClose={handleClose} />
-    </>
+    </div>
   );
 };

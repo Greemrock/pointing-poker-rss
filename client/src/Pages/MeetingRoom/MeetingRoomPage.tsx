@@ -24,10 +24,12 @@ import {
 import { GameControlsBlock } from '../../components/GameControlsBlock';
 import {
   SetDefaultScoreActionCreator,
+  SetVoteArrayActionCreator,
   UpdateScoreActionCreator,
 } from '../../reducers/score';
 import { handleEndGameSubmit } from '../../api/game';
 import { EndGameActionCreator } from '../../reducers/users';
+import { VoteGraph } from '../../components/VoteGraph';
 
 export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
@@ -48,6 +50,9 @@ export const MeetingRoomPage: React.FC = () => {
   const { scoreState, scoreDispatch } = useContext(ScoreContext);
 
   const [isRoundEnded, setIsRoundEnded] = useState(true);
+
+  const isResultExist =
+    scoreState.results.length !== 0 && scoreState.results[0].issueId !== '';
 
   const endGame = () => {
     handleEndGameSubmit(currentPlayer.roomId);
@@ -74,7 +79,7 @@ export const MeetingRoomPage: React.FC = () => {
   useEffect(() => {
     socket.off('overallInfo');
     socket.on('overallInfo', (score) => {
-      console.log(score);
+      scoreDispatch(SetVoteArrayActionCreator(score));
     });
   });
 
@@ -83,6 +88,9 @@ export const MeetingRoomPage: React.FC = () => {
     socket.on('userResults', (results, currentIssue) => {
       scoreDispatch(UpdateScoreActionCreator(results));
       issueDispatch(SetIssueDoneActionCreator(currentIssue));
+      {
+        !currentSets.isTimerNeeded && setIsRoundEnded(true);
+      }
     });
   });
   useEffect(() => {
@@ -108,7 +116,10 @@ export const MeetingRoomPage: React.FC = () => {
             isRoundEnded={isRoundEnded}
             setIsRoundEnded={setIsRoundEnded}
           />
-          <IssueContainer view={Issue.game} />
+          <Container className={classes.middleBlock}>
+            <IssueContainer view={Issue.game} />
+            {isRoundEnded && isResultExist && <VoteGraph />}
+          </Container>
           {!currentPlayer.observer && !isRoundEnded && (
             <Container className={classes.cardsContainer}>
               <CardContainer cardSelected={false} deck={currentSets.deck} />

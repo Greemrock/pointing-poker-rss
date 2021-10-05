@@ -9,6 +9,7 @@ import {
 export const initialScoreState: ScoreType = {
   results: [],
   isWaitingResults: false,
+  voteArray: [],
 };
 
 const createDefaultResults = (players: Player[]): IssueScore[] => {
@@ -29,7 +30,6 @@ export const scoreReducer = (
 ): ScoreType => {
   switch (action.type) {
     case ScoreActionType.UPDATE_SCORES:
-      console.log(0);
       return {
         ...state,
         isWaitingResults: false,
@@ -56,6 +56,11 @@ export const scoreReducer = (
       return {
         ...state,
         results: createDefaultResults(action.payload),
+      };
+    case ScoreActionType.SET_VOTE_ARRAY:
+      return {
+        ...state,
+        voteArray: action.payload,
       };
     default:
       return state;

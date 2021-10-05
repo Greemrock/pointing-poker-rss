@@ -4,8 +4,9 @@ import { Doughnut } from 'react-chartjs-2';
 import { dataForGraph } from './dataForGraph';
 import { useVoteGraphStyled } from './VoteGraph.styled';
 import { cardsArrays, Place } from '../../Shared';
-import { SettingsContext } from '../../context';
+import { ScoreContext } from '../../context';
 import { getOverallVoite } from '../../Util/getOveralVote';
+import { removeZeros } from '../../Util/removeZeros';
 
 type Props = {
   view?: Place.lobby;
@@ -13,13 +14,11 @@ type Props = {
 
 export const VoteGraph: React.FC<Props> = ({ view }) => {
   const classes = useVoteGraphStyled();
-
   const {
-    settingsState: { currentSets },
-  } = useContext(SettingsContext);
+    scoreState: { voteArray },
+  } = useContext(ScoreContext);
 
   const typeCard = cardsArrays.tshirts;
-  const voteAmount = [1, 0, 0, 2, 0, 2];
 
   return (
     <div className={classes.root}>
@@ -29,10 +28,12 @@ export const VoteGraph: React.FC<Props> = ({ view }) => {
         </Typography>
       )}
       <div className={classes.graph}>
-        <Doughnut data={dataForGraph(typeCard, voteAmount)} />
+        <Doughnut
+          data={dataForGraph(removeZeros(typeCard, voteArray), voteArray)}
+        />
       </div>
       <Typography variant="h4" align="center" className={classes.overallResult}>
-        {cardsArrays.tshirts[getOverallVoite(voteAmount)]}
+        {cardsArrays.tshirts[getOverallVoite(voteArray)]}
       </Typography>
     </div>
   );

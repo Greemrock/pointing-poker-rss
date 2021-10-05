@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { Issue } from '../../../Shared';
-import { SPACE_SM } from '../../../Shared/cssConstants';
+import { SPACE_SM, SPACE_L } from '../../../Shared/cssConstants';
 
 export const useIssueContainerStyles = makeStyles({
   title: {
@@ -12,5 +12,6 @@ export const useIssueContainerStyles = makeStyles({
       view === Issue.game ? 'nowrap' : 'wrap',
     flexDirection: ({ view }: { view?: Issue }) =>
       view === Issue.game ? 'column' : 'row',
+    marginBottom: SPACE_L,
   },
 });

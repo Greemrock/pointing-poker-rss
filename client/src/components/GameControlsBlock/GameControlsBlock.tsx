@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Container } from '@material-ui/core';
 import { useStartExitGameStyles } from './GameControlsBlock.styled';
 import {
@@ -17,6 +17,11 @@ import { convertToSeconds } from '../../Util/convertToSeconds';
 import { RoundControlsButton } from './RoundControlsBlock';
 import { handleSendCurrentIssueIdSubmit } from '../../api/issue';
 import { handleResetTimerSubmit } from '../../api/game';
+import { socket } from '../../api/playersRequests';
+import {
+  ResetScoresActionCreator,
+  SetScoresWaitingActionCreator,
+} from '../../reducers/score';
 
 type Props = {
   isRoundEnded: boolean;
@@ -75,6 +80,25 @@ export const GameControlsBlock: React.FC<Props> = ({
     handleResetRound();
     handleIssueCurrentId(false);
   };
+  useEffect(() => {
+    socket.off('isTimerStarted');
+    socket.on('isTimerStarted', () => {
+      setStatusStarted(TimerStatus.STARTED);
+      setIsRoundEnded(false);
+      setButtonDisabled(true);
+      scoreDispatch(SetScoresWaitingActionCreator());
+    });
+  });
+
+  useEffect(() => {
+    socket.off('isTimerReset');
+    socket.on('isTimerReset', () => {
+      setStatusStarted(TimerStatus.STOPPED);
+      setSecondsRemaining(convertToSeconds(minutes, seconds));
+      setButtonDisabled(false);
+      scoreDispatch(ResetScoresActionCreator());
+    });
+  });
 
   return (
     <Container className={classes.root} maxWidth="md">
