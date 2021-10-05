@@ -17,7 +17,10 @@ import {
 import { socket } from '../../api/playersRequests';
 import { IssueContext } from '../../context/issue.context';
 import { ScoreContext } from '../../context/score.context';
-import { SetScoresWaitingActionCreator } from '../../reducers/score';
+import {
+  ResetScoresActionCreator,
+  SetScoresWaitingActionCreator,
+} from '../../reducers/score';
 
 type Props = {
   secondsRemaining: number;
@@ -70,6 +73,7 @@ export const GameTimer: React.FC<Props> = ({
       setStatusStarted(TimerStatus.STOPPED);
       setSecondsRemaining(convertToSeconds(minutes, seconds));
       setButtonDisabled(false);
+      scoreDispatch(ResetScoresActionCreator());
     });
   });
 

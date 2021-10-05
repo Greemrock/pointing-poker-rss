@@ -1,3 +1,5 @@
+import { Player } from '../users';
+
 export enum ScoreActionType {
   UPDATE_SCORES = 'UPDATE_SCORES',
   SET_DEFAULT_SCORES = 'SET-DEFAULT-SCORES',
@@ -31,7 +33,7 @@ export type SetScoresWaitingAction = {
 };
 export type SetDefaultScoreAction = {
   type: ScoreActionType.SET_DEFAULT_SCORES;
-  payload: IssueScore;
+  payload: Player[];
 };
 
 export type ScoreActions =

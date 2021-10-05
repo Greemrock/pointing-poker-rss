@@ -1,8 +1,26 @@
-import { ScoreActions, ScoreType, ScoreActionType } from './score.type';
+import { Player } from '../users';
+import {
+  ScoreActions,
+  ScoreType,
+  ScoreActionType,
+  IssueScore,
+} from './score.type';
 
 export const initialScoreState: ScoreType = {
   results: [],
   isWaitingResults: false,
+};
+
+const createDefaultResults = (players: Player[]): IssueScore[] => {
+  const playersCopy = [...players];
+  return playersCopy.map((el, i) => ({
+    id: `${i}`,
+    issueId: '',
+    userId: el.id,
+    voteResult: '',
+    roomId: el.roomId,
+    cardType: '',
+  }));
 };
 
 export const scoreReducer = (
@@ -30,10 +48,14 @@ export const scoreReducer = (
         ],
       };
     case ScoreActionType.SET_SCORES_WAITING:
-      console.log(2);
       return {
         ...state,
         isWaitingResults: true,
+      };
+    case ScoreActionType.SET_DEFAULT_SCORES:
+      return {
+        ...state,
+        results: createDefaultResults(action.payload),
       };
     default:
       return state;

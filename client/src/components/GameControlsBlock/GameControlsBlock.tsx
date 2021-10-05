@@ -17,7 +17,6 @@ import { convertToSeconds } from '../../Util/convertToSeconds';
 import { RoundControlsButton } from './RoundControlsBlock';
 import { handleSendCurrentIssueIdSubmit } from '../../api/issue';
 import { handleResetTimerSubmit } from '../../api/game';
-import { ResetScoresActionCreator } from '../../reducers/score';
 
 type Props = {
   isRoundEnded: boolean;
@@ -65,7 +64,6 @@ export const GameControlsBlock: React.FC<Props> = ({
 
   const handleResetRound = () => {
     handleResetTimerSubmit(roomId);
-    scoreDispatch(ResetScoresActionCreator());
   };
   const handleNextIssue = () => {
     issueDispatch(NextIssueActionCreator());
@@ -91,11 +89,13 @@ export const GameControlsBlock: React.FC<Props> = ({
           setButtonDisabled={setButtonDisabled}
         />
       ) : (
-        <RoundControlsButton
-          setIsRoundEnded={setIsRoundEnded}
-          roundButtonDisabled={roundButtonDisabled}
-          setRoundButtonDisabled={setRoundButtonDisabled}
-        />
+        isAdmin && (
+          <RoundControlsButton
+            setIsRoundEnded={setIsRoundEnded}
+            roundButtonDisabled={roundButtonDisabled}
+            setRoundButtonDisabled={setRoundButtonDisabled}
+          />
+        )
       )}
       {isAdmin && (
         <div className={classes.container}>

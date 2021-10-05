@@ -22,7 +22,10 @@ import {
   SetIssueDoneActionCreator,
 } from '../../reducers/issue/issue.create-action';
 import { GameControlsBlock } from '../../components/GameControlsBlock';
-import { UpdateScoreActionCreator } from '../../reducers/score';
+import {
+  SetDefaultScoreActionCreator,
+  UpdateScoreActionCreator,
+} from '../../reducers/score';
 import { handleEndGameSubmit } from '../../api/game';
 import { EndGameActionCreator } from '../../reducers/users';
 
@@ -30,7 +33,7 @@ export const MeetingRoomPage: React.FC = () => {
   const classes = useMeetingRoomPageStyles();
 
   const {
-    appState: { isAuth, currentPlayer, isGameEnded },
+    appState: { isAuth, currentPlayer, isGameEnded, players },
     dispatch,
   } = useContext(UsersContext);
 
@@ -42,7 +45,7 @@ export const MeetingRoomPage: React.FC = () => {
     issueDispatch,
   } = useContext(IssueContext);
 
-  const { scoreDispatch } = useContext(ScoreContext);
+  const { scoreState, scoreDispatch } = useContext(ScoreContext);
 
   const [isRoundEnded, setIsRoundEnded] = useState(true);
 
@@ -56,6 +59,8 @@ export const MeetingRoomPage: React.FC = () => {
     socket.on('allIssues', (data, currentIssueId) => {
       issueDispatch(UpdateIssueActionCreator(data));
       issueDispatch(SetCurrentIssueIdActionCreator(currentIssueId));
+      if (scoreState.results.length === 0)
+        scoreDispatch(SetDefaultScoreActionCreator(players));
     });
   }, []);
 
@@ -110,7 +115,7 @@ export const MeetingRoomPage: React.FC = () => {
             </Container>
           )}
           {currentPlayer.isAdmin && (
-            <div>
+            <div className={classes.endGameBlock}>
               {issues.every((el) => el.isDone === true) && (
                 <Button variant="contained" color="primary" onClick={endGame}>
                   End Game

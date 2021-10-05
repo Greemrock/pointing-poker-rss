@@ -25,4 +25,9 @@ export const useMeetingRoomPageStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     marginTop: SPACE_XL,
   },
+  endGameBlock: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: SPACE_XL,
+  },
 }));
