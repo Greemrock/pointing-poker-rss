@@ -15,7 +15,7 @@ export const ChatBlock: React.FC = () => {
 
   const { messageState } = useContext(MessageContext);
   const {
-    appState: { currentPlayer, isAuth },
+    appState: { currentPlayer },
   } = useContext(UsersContext);
 
   const scrollToBottom = () => {

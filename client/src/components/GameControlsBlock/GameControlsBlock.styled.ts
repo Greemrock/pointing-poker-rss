@@ -1,4 +1,4 @@
-import { SPACE_LG, SPACE_MD, SPACE_XS } from '../../Shared/cssConstants';
+import { SPACE_MD, SPACE_XS } from '../../Shared/cssConstants';
 import { makeStyles } from '@material-ui/core';
 
 export const useStartExitGameStyles = makeStyles({

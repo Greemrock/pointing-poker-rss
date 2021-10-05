@@ -15,7 +15,6 @@ import {
 } from '../../api/game';
 import { UsersContext } from '../../context/users.context';
 import { IssueContext, SettingsContext } from '../../context';
-import { Decks } from '../../Shared';
 
 type Props = {
   isCardSelected: boolean;

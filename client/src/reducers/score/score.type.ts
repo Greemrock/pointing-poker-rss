@@ -1,6 +1,8 @@
 export enum ScoreActionType {
   UPDATE_SCORES = 'UPDATE_SCORES',
-  UPDATE_MY_SCORE = 'UPDATE_MY_SCORES',
+  SET_DEFAULT_SCORES = 'SET-DEFAULT-SCORES',
+  RESET_SCORES = 'RESET_SCORES',
+  SET_SCORES_WAITING = 'SET-SCORES-WAINTING',
 }
 
 export type IssueScore = {
@@ -14,15 +16,26 @@ export type IssueScore = {
 
 export type ScoreType = {
   results: IssueScore[];
+  isWaitingResults: boolean;
 };
 
 export type UpdateScoresAction = {
   type: ScoreActionType.UPDATE_SCORES;
   payload: IssueScore[];
 };
-export type UpdateMyScoreAction = {
-  type: ScoreActionType.UPDATE_MY_SCORE;
+export type ResetScoresAction = {
+  type: ScoreActionType.RESET_SCORES;
+};
+export type SetScoresWaitingAction = {
+  type: ScoreActionType.SET_SCORES_WAITING;
+};
+export type SetDefaultScoreAction = {
+  type: ScoreActionType.SET_DEFAULT_SCORES;
   payload: IssueScore;
 };
 
-export type ScoreActions = UpdateScoresAction | UpdateMyScoreAction;
+export type ScoreActions =
+  | UpdateScoresAction
+  | SetDefaultScoreAction
+  | SetScoresWaitingAction
+  | ResetScoresAction;

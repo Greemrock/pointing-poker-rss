@@ -16,6 +16,8 @@ import {
 } from '../../api/game';
 import { socket } from '../../api/playersRequests';
 import { IssueContext } from '../../context/issue.context';
+import { ScoreContext } from '../../context/score.context';
+import { SetScoresWaitingActionCreator } from '../../reducers/score';
 
 type Props = {
   secondsRemaining: number;
@@ -50,6 +52,7 @@ export const GameTimer: React.FC<Props> = ({
   const {
     issueState: { currentId },
   } = useContext(IssueContext);
+  const { scoreDispatch } = useContext(ScoreContext);
 
   useEffect(() => {
     socket.off('isTimerStarted');
@@ -57,6 +60,7 @@ export const GameTimer: React.FC<Props> = ({
       setStatusStarted(TimerStatus.STARTED);
       setIsRoundEnded(false);
       setButtonDisabled(true);
+      scoreDispatch(SetScoresWaitingActionCreator());
     });
   });
 

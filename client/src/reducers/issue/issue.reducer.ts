@@ -8,35 +8,7 @@ import {
 } from './issue.type';
 
 export const initialIssueState: IssueStateType = {
-  issues: [
-    {
-      id: 'd',
-      link: 'd',
-      priority: Priority.hight,
-      title: 'd',
-      isDone: false,
-      roomId: 'd',
-      createdAt: '',
-    },
-    {
-      id: 'c',
-      link: 'c',
-      priority: Priority.hight,
-      title: 'c',
-      isDone: false,
-      roomId: 'c',
-      createdAt: '',
-    },
-    {
-      id: 'a',
-      link: 'a',
-      priority: Priority.hight,
-      title: 'a',
-      isDone: false,
-      roomId: 'a',
-      createdAt: '',
-    },
-  ],
+  issues: [],
   isEdit: false,
   editIssue: {
     id: '',

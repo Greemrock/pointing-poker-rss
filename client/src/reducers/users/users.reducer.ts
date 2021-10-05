@@ -55,6 +55,7 @@ export const usersReducer = (
       return {
         ...state,
         isGameEnded: true,
+        isGameStarted: false,
       };
     default:
       return state;

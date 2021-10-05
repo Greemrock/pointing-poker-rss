@@ -1,7 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Container } from '@material-ui/core';
 import { useStartExitGameStyles } from './GameControlsBlock.styled';
-import { IssueContext, SettingsContext, UsersContext } from '../../context';
+import {
+  IssueContext,
+  ScoreContext,
+  SettingsContext,
+  UsersContext,
+} from '../../context';
 import {
   NextIssueActionCreator,
   PrevIssueActionCreator,
@@ -12,6 +17,7 @@ import { convertToSeconds } from '../../Util/convertToSeconds';
 import { RoundControlsButton } from './RoundControlsBlock';
 import { handleSendCurrentIssueIdSubmit } from '../../api/issue';
 import { handleResetTimerSubmit } from '../../api/game';
+import { ResetScoresActionCreator } from '../../reducers/score';
 
 type Props = {
   isRoundEnded: boolean;
@@ -38,6 +44,8 @@ export const GameControlsBlock: React.FC<Props> = ({
     },
   } = useContext(UsersContext);
 
+  const { scoreDispatch } = useContext(ScoreContext);
+
   const [statusStarted, setStatusStarted] = useState(TimerStatus.STOPPED);
   const [secondsRemaining, setSecondsRemaining] = useState(
     convertToSeconds(minutes, seconds)
@@ -57,6 +65,7 @@ export const GameControlsBlock: React.FC<Props> = ({
 
   const handleResetRound = () => {
     handleResetTimerSubmit(roomId);
+    scoreDispatch(ResetScoresActionCreator());
   };
   const handleNextIssue = () => {
     issueDispatch(NextIssueActionCreator());
@@ -68,10 +77,6 @@ export const GameControlsBlock: React.FC<Props> = ({
     handleResetRound();
     handleIssueCurrentId(false);
   };
-
-  useEffect(() => {
-    console.log('Waiting votes...');
-  });
 
   return (
     <Container className={classes.root} maxWidth="md">

@@ -82,8 +82,7 @@ export const MeetingRoomPage: React.FC = () => {
   });
   useEffect(() => {
     socket.off('isGameEnded');
-    socket.on('isGameEnded', (isGameEnded) => {
-      console.log(isGameEnded);
+    socket.on('isGameEnded', () => {
       dispatch(EndGameActionCreator());
     });
   });
@@ -91,7 +90,7 @@ export const MeetingRoomPage: React.FC = () => {
   return (
     <>
       {!isAuth && <Redirect to="/" />}
-      {isGameEnded && <Redirect to="/" />}
+      {isGameEnded && <Redirect to="/result" />}
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.wrapper}>
           <div className={classes.nameGame}>
