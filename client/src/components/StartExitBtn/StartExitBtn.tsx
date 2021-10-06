@@ -68,7 +68,7 @@ export const StartExitBtn: React.FC = () => {
             variant="contained"
             color="primary"
             onClick={handleStartGame}
-            disabled={players.length < 2 && issues.length === 0}
+            disabled={players.length < 2 || issues.length === 0}
           >
             Start
           </Button>
