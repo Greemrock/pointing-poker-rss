@@ -12,6 +12,12 @@ import { Issue } from './issues/issue.model';
 import { SettingsModule } from './settings/settings.module';
 import { Sets } from './settings/sets.model';
 import { EventsModule } from './events/events.module';
+import { UserResultsModule } from './userResults/userResults.module';
+import { UserResult } from './userResults/userResult.model';
+import { OverallResult } from './overallResults/overallResult.model';
+import { VoteKick } from './voteKicks/voteKick.model';
+import { OverallResultsModule } from './overallResults/overallResults.module';
+import { VoteKicksModule } from './voteKicks/voteKicks.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,12 +25,19 @@ import { EventsModule } from './events/events.module';
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: Number(process.env.POSTGRES_PORT),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      models: [User, Room, Issue, Sets],
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
+      host: 'ec2-52-0-93-3.compute-1.amazonaws.com',
+      port: 5432,
+      username: 'ytuepbgvxhwbsi',
+      password:
+        '65a2c34855ced522d94e4e1d7038ebbab133909f5377c3fc5c57dd0f1f388917',
+      database: 'd6018k4gg86fim',
+      models: [User, Room, Issue, Sets, UserResult, OverallResult, VoteKick],
       autoLoadModels: true,
     }),
     UsersModule,
@@ -32,6 +45,9 @@ import { EventsModule } from './events/events.module';
     IssuesModule,
     SettingsModule,
     EventsModule,
+    UserResultsModule,
+    OverallResultsModule,
+    VoteKicksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

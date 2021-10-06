@@ -17,6 +17,11 @@ export class UsersService {
     return users;
   }
 
+  async getOneUser(id: string) {
+    const user = await this.userRepository.findByPk(id);
+    return user;
+  }
+
   async updateUser(id: string, dto: UpdateUserDto) {
     await this.userRepository.update(dto, {
       where: { id: id },
@@ -26,10 +31,20 @@ export class UsersService {
   }
 
   async removeUser(id: string) {
+    const user = await this.userRepository.findByPk(id);
     await this.userRepository.destroy({
       where: { id: id },
     });
-    const users = await this.userRepository.findAll();
-    return users;
+    return user;
+  }
+
+  async removeUserByClient(clientId: string) {
+    const user = await this.userRepository.findOne({
+      where: { clientId: clientId },
+    });
+    await this.userRepository.destroy({
+      where: { clientId: clientId },
+    });
+    return user;
   }
 }
