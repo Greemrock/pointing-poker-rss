@@ -10,8 +10,6 @@ import { Redirect } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { getOverallVoite } from '../../Util/getOveralVote';
 import { cardsArrays } from '../../Shared';
-import { handleLeaveRoom } from '../../api/game';
-import { AuthActionCreator } from '../../reducers/users';
 
 export const ResultPage: React.FC = () => {
   const classes = useResultPageStyles();
@@ -31,7 +29,6 @@ export const ResultPage: React.FC = () => {
       currentPlayer: { roomId },
       isAuth,
     },
-    dispatch,
   } = useContext(UsersContext);
 
   const createArrayResults = () => {
@@ -51,7 +48,7 @@ export const ResultPage: React.FC = () => {
   ];
 
   const handleExit = () => {
-    dispatch(AuthActionCreator(false));
+    window.location.reload();
   };
 
   useEffect(() => {

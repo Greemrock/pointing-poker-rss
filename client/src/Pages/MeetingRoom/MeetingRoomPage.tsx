@@ -14,7 +14,7 @@ import { AdminBlock } from '../../components/AdminBlock';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 import { Issue } from '../../Shared';
 import { socket } from '../../api/playersRequests';
-import { handleGetIssueSubmit } from '../../api/issue';
+import { handleGetIssuesGameSubmit } from '../../api/issue';
 import {
   UpdateIssueActionCreator,
   SetCurrentIssueIdActionCreator,
@@ -77,11 +77,15 @@ export const MeetingRoomPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    handleGetIssueSubmit(currentPlayer.roomId);
-    socket.off('allIssues');
-    socket.on('allIssues', (data, currentIssueId) => {
+    handleGetIssuesGameSubmit(currentPlayer.roomId);
+    socket.off('allIssuesGame');
+    socket.on('allIssuesGame', (data, currentIssueId) => {
       issueDispatch(UpdateIssueActionCreator(data));
-      issueDispatch(SetCurrentIssueIdActionCreator(currentIssueId));
+      if (!currentIssueId) {
+        issueDispatch(SetCurrentIssueIdActionCreator(data[0].id));
+      } else {
+        issueDispatch(SetCurrentIssueIdActionCreator(currentIssueId));
+      }
       if (results.length === 0)
         scoreDispatch(SetDefaultScoreActionCreator(players));
     });

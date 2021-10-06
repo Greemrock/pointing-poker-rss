@@ -1,6 +1,10 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
-export const useVoteGraphStyled = makeStyles({
+interface StyleProps {
+  isGame: boolean;
+}
+
+export const useVoteGraphStyled = makeStyles<Theme, StyleProps>((theme) => ({
   root: {
     position: 'relative',
     display: 'flex',
@@ -13,6 +17,9 @@ export const useVoteGraphStyled = makeStyles({
   overallResult: {
     width: '100%',
     position: 'absolute',
-    bottom: '38%',
+    bottom: ({ isGame }) => (!isGame ? '42%' : '38%'),
+    [theme.breakpoints.down(748)]: {
+      bottom: '38%',
+    },
   },
-});
+}));

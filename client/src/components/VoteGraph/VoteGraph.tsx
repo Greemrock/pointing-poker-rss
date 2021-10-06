@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const VoteGraph: React.FC<Props> = ({ view, isGame, issueId }) => {
-  const classes = useVoteGraphStyled();
+  const classes = useVoteGraphStyled({ isGame });
 
   const {
     scoreState: { voteArray },
