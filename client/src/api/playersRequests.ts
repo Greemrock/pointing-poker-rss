@@ -1,8 +1,7 @@
 import { io } from 'socket.io-client';
 import { Player } from '../reducers/users/users.type';
 
-// export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
-export const socket = io('ws://localhost:8080', {
+export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
   transports: ['websocket'],
   upgrade: false,
 });
@@ -19,7 +18,10 @@ export const handleStartGameSubmit = (payload: string): void => {
   socket.emit('startGame', payload);
 };
 
-export const handleVotingSubmit = (candidate: Player, nominant: Player) => {
+export const handleVotingSubmit = (
+  candidate: Player,
+  nominant: Player
+): void => {
   socket.emit('voteKick', candidate, nominant);
 };
 export const handleVotingYesSubmit = (
@@ -27,7 +29,7 @@ export const handleVotingYesSubmit = (
   userQuantity: number,
   roomId: string,
   userId: string
-) => {
+): void => {
   socket.emit('voteYes', {
     voteKickId,
     userQuantity,
@@ -39,6 +41,6 @@ export const handleVotingNoSubmit = (
   userQuantity: number,
   roomId: string,
   userId: string
-) => {
+): void => {
   socket.emit('voteNo', { voteKickId, userQuantity, user: { roomId, userId } });
 };
