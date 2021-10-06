@@ -1,3 +1,4 @@
+import { WHITE } from './../../Shared/cssConstants';
 import { makeStyles, Theme } from '@material-ui/core';
 import { SPACE_MD, SPACE_XL } from '../../Shared';
 
@@ -28,5 +29,9 @@ export const useResultPageStyles = makeStyles((theme: Theme) => ({
   },
   download: {
     width: '200px',
+    '& a': {
+      textDecoration: 'none',
+      color: WHITE,
+    },
   },
 }));

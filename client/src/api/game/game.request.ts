@@ -30,3 +30,7 @@ export const handleMyCardChoiceSubmit = (
 export const handleEndRoundSubmit = (payload: payloadEndRound): void => {
   socket.emit('roundEnd', payload);
 };
+
+export const handleLeaveRoom = (payload: string): void => {
+  socket.emit('leaveRoom', payload);
+};

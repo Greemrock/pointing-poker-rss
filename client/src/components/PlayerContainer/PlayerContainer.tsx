@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerCard } from '../PlayerCard';
 import { usePlayerContainerStyles } from '../PlayerContainer/PlayerContainer.styled';
-import { Place, SizeCard } from '../../Shared/enums';
+import { Place } from '../../Shared/enums';
 import { Player } from '../../reducers/users/';
 import { DeletePlayerBlock } from '../DeletePlayerBlock';
 import { initialState, VoteReducer } from '../../reducers/vote/';

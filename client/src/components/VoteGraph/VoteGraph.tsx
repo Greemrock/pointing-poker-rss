@@ -34,6 +34,7 @@ export const VoteGraph: React.FC<Props> = ({ view, isGame, issueId }) => {
   } = useContext(SettingsContext);
 
   const typeCard = cardsArrays[deck];
+
   const usersVoteArray = isGame
     ? voteArray
     : issues.find((el: IssueType) => el.id === issueId)?.overall;

@@ -3,21 +3,49 @@ import { Container, Typography, Button } from '@material-ui/core';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { useResultPageStyles } from './ResultPage.styles';
 import { IssueCard } from '../../components/Issue/IssueCard';
-import { IssueContext, UsersContext } from '../../context';
+import { IssueContext, SettingsContext, UsersContext } from '../../context';
 import { VoteGraph } from '../../components/VoteGraph';
 import { handleGetIssueSubmit } from '../../api/issue';
 import { Redirect } from 'react-router-dom';
+import { CSVLink } from 'react-csv';
+import { getOverallVoite } from '../../Util/getOveralVote';
+import { cardsArrays } from '../../Shared';
 
 export const ResultPage: React.FC = () => {
   const classes = useResultPageStyles();
 
-  const { issueState } = useContext(IssueContext);
+  const {
+    issueState: { issues },
+  } = useContext(IssueContext);
+
+  const {
+    settingsState: {
+      currentSets: { deck },
+    },
+  } = useContext(SettingsContext);
+
   const {
     appState: {
       currentPlayer: { roomId },
       isAuth,
     },
   } = useContext(UsersContext);
+
+  const createArrayResults = () => {
+    return issues.map(({ title, link, overall }, index) => {
+      return [
+        index + 1,
+        title,
+        link,
+        cardsArrays[deck][getOverallVoite(overall)],
+      ];
+    });
+  };
+
+  const csvData = [
+    ['Issue', 'Title', 'Link', 'Result'],
+    ...createArrayResults(),
+  ];
 
   useEffect(() => {
     handleGetIssueSubmit(roomId);
@@ -34,7 +62,7 @@ export const ResultPage: React.FC = () => {
             </Typography>
           </div>
           <Container className={classes.container} maxWidth="md">
-            {issueState.issues.map(
+            {issues.map(
               ({ id, link, isDone, priority, title, roomId, createdAt }) => {
                 return (
                   <div key={id} className={classes.statistic}>
@@ -53,8 +81,14 @@ export const ResultPage: React.FC = () => {
               }
             )}
           </Container>
-          <Button variant="contained" className={classes.download}>
-            Download results
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.download}
+          >
+            <CSVLink data={csvData} filename={'results.csv'} target="_blank">
+              Download results
+            </CSVLink>
           </Button>
         </div>
       </Container>

@@ -53,8 +53,7 @@ export const MeetingRoomPage: React.FC = () => {
 
   const [isRoundEnded, setIsRoundEnded] = useState(true);
 
-  const isResultExist =
-    scoreState.results.length !== 0 && scoreState.results[0].issueId !== '';
+  const isResultExist = scoreState.results.length;
 
   const endGame = () => {
     handleEndGameSubmit(currentPlayer.roomId);
@@ -64,6 +63,7 @@ export const MeetingRoomPage: React.FC = () => {
     socket.off('returnSettings');
     socket.on('returnSettings', (settings) => {
       settingsDispatch(ReloadSetsActionCreator(settings));
+      console.log(currentSets);
     });
   }, []);
 
