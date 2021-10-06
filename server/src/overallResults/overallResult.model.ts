@@ -6,14 +6,24 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Room } from '../rooms/room.model';
+import { Issue } from 'src/issues/issue.model';
 
-interface UserCreationAttributes {
-  name: string;
+interface OverallResultCreationAttributes {
+  card_1: string;
+  card_2: string;
+  card_3: string;
+  card_4: string;
+  card_5: string;
+  card_6: string;
+  card_7: string;
+  issueId: string;
 }
 
-@Table({ tableName: 'users' })
-export class User extends Model<User, UserCreationAttributes> {
+@Table({ tableName: 'overallResults' })
+export class OverallResult extends Model<
+  OverallResult,
+  OverallResultCreationAttributes
+> {
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
@@ -22,56 +32,62 @@ export class User extends Model<User, UserCreationAttributes> {
     primaryKey: true,
   })
   id: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: false,
-  })
-  name: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: true,
-  })
-  surname: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: true,
-  })
-  job: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: true,
-  })
-  image: string;
-  @Column({
-    type: DataType.BOOLEAN,
-    unique: false,
-    defaultValue: false,
-  })
-  isAdmin: boolean;
-  @Column({
-    type: DataType.BOOLEAN,
-    unique: false,
-    defaultValue: false,
-  })
-  observer: boolean;
 
   @Column({
     type: DataType.STRING,
     unique: false,
     allowNull: true,
   })
-  clientId: string;
+  card_1: string;
 
-  @ForeignKey(() => Room)
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_2: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_3: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_4: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_5: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_6: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  card_7: string;
+
+  @ForeignKey(() => Issue)
   @Column({
     type: DataType.UUID,
   })
-  roomId: string;
+  issueId: string;
 
-  @BelongsTo(() => Room)
-  room: Room;
+  @BelongsTo(() => Issue)
+  issue: Issue;
 }

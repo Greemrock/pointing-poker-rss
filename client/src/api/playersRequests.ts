@@ -1,7 +1,8 @@
 import { io } from 'socket.io-client';
 import { Player } from '../reducers/users/users.type';
 
-export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
+// export const socket = io('wss://safe-lowlands-48809.herokuapp.com', {
+export const socket = io('ws://localhost:8080', {
   transports: ['websocket'],
   upgrade: false,
 });

@@ -9,9 +9,9 @@ import {
 import { Room } from '../rooms/room.model';
 
 interface SetsCreationAttributes {
-  timer: string;
-  cardValue: string;
-  scoreType: string;
+  minutes: number;
+  seconds: number;
+  deck: string;
   isTimerNeeded: boolean;
 }
 
@@ -26,23 +26,23 @@ export class Sets extends Model<Sets, SetsCreationAttributes> {
   })
   id: string;
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     unique: false,
     allowNull: false,
   })
-  timer: string;
+  minutes: number;
+  @Column({
+    type: DataType.INTEGER,
+    unique: false,
+    allowNull: false,
+  })
+  seconds: number;
   @Column({
     type: DataType.STRING,
     unique: false,
     allowNull: false,
   })
-  cardValue: string;
-  @Column({
-    type: DataType.STRING,
-    unique: false,
-    allowNull: false,
-  })
-  scoreType: string;
+  deck: string;
   @Column({
     type: DataType.BOOLEAN,
     unique: false,

@@ -3,5 +3,7 @@ export class CreateRoomDto {
 }
 
 export class UpdateRoomDto {
+  readonly id: string;
   readonly roomName: string;
+  readonly currentIssueId: string;
 }

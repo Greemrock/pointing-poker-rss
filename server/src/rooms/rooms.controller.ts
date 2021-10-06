@@ -25,7 +25,7 @@ export class RoomsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateRoomDto: UpdateRoomDto) {
+  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
     return this.roomsService.updateRoom(id, updateRoomDto);
   }
 
