@@ -157,6 +157,7 @@ export const WelcomeFormDialog: FC<Props> = ({
         className={welcomeDialogFormStyles.welcomeDialogTitle}
         component="h3"
         variant="h3"
+        align="center"
       >
         Connect to lobby
       </Typography>
