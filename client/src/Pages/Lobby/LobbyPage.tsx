@@ -3,20 +3,18 @@ import { Redirect } from 'react-router-dom';
 import { Container, Typography } from '@material-ui/core';
 import { PlayerContainer } from '../../components/PlayerContainer';
 import { StartExitBtn } from '../../components/StartExitBtn';
-import { Issue, Place } from '../../Shared/enums';
+import { Issue } from '../../Shared/enums';
 import { useLobbyPageStyles } from './LobbyPage.styled';
 import { UsersContext } from '../../context/';
 import { Settings } from '../../components/Settings';
 import { IssueContainer } from '../../components/Issue/IssueContainer';
 import { socket } from '../../api/playersRequests';
-import { StartGameActionCreator } from '../../reducers/users';
+import {
+  AuthActionCreator,
+  StartGameActionCreator,
+} from '../../reducers/users';
 
-type Props = {
-  link: string;
-  view?: Place;
-};
-
-export const LobbyPage: React.FC<Props> = ({ link, view }) => {
+export const LobbyPage: React.FC = () => {
   const classes = useLobbyPageStyles();
   const {
     appState: { isAuth, currentPlayer, isGameStarted },
@@ -30,6 +28,13 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
     });
   });
 
+  useEffect(() => {
+    socket.off('adminLeft');
+    socket.on('adminLeft', () => {
+      dispatch(AuthActionCreator(false));
+    });
+  });
+
   return (
     <>
       {!isAuth && <Redirect to="/" />}
@@ -40,12 +45,8 @@ export const LobbyPage: React.FC<Props> = ({ link, view }) => {
             Meeting room
           </Typography>
         </div>
-        <StartExitBtn
-          link={link}
-          isAdmin={currentPlayer.isAdmin}
-          roomId={currentPlayer.roomId}
-        />
-        <PlayerContainer view={view} />
+        <StartExitBtn />
+        <PlayerContainer />
         {currentPlayer.isAdmin && (
           <>
             <IssueContainer view={Issue.update} />

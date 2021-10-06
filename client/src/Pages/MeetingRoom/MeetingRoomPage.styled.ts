@@ -7,7 +7,7 @@ export const useMeetingRoomPageStyles = makeStyles((theme: Theme) => ({
     paddingBottom: SPACE_XL,
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   wrapper: {
     maxWidth: '70%',
@@ -27,7 +27,7 @@ export const useMeetingRoomPageStyles = makeStyles((theme: Theme) => ({
   },
   middleBlock: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
   endGameBlock: {

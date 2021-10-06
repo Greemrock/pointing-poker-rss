@@ -3,22 +3,33 @@ import { Button, Container, Paper, TextField } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useStartExitGameStyles } from './StartExitBtn.styled';
 import { handleSendSettings } from '../../api/settings/settings.request';
-import { SettingsContext } from '../../context/settings.context';
 import { handleStartGameSubmit } from '../../api/playersRequests';
+import { handleLeaveRoom } from '../../api/game';
+import { UsersContext, SettingsContext } from '../../context';
+import { AuthActionCreator } from '../../reducers/users';
 
-type Props = {
-  isAdmin: boolean;
-  link: string;
-  roomId: string;
-};
+export const StartExitBtn: React.FC = () => {
+  const {
+    settingsState: { currentSets },
+  } = useContext(SettingsContext);
 
-export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
-  const { settingsState } = useContext(SettingsContext);
+  const {
+    appState: {
+      currentPlayer: { isAdmin, roomId },
+    },
+    dispatch,
+  } = useContext(UsersContext);
+
   const classes = useStartExitGameStyles({ isAdmin });
 
   const handleStartGame = () => {
-    handleSendSettings(settingsState.currentSets);
+    handleSendSettings(currentSets);
     handleStartGameSubmit(roomId);
+  };
+
+  const handleExit = () => {
+    handleLeaveRoom(roomId);
+    dispatch(AuthActionCreator(false));
   };
 
   return (
@@ -31,7 +42,7 @@ export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
               readOnly: true,
             }}
             variant="outlined"
-            value={link}
+            value={roomId}
           />
           <Button
             className={classes.btn}
@@ -39,7 +50,7 @@ export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
             aria-label="copy"
             variant="contained"
             color="primary"
-            onClick={() => navigator.clipboard.writeText(link)}
+            onClick={() => navigator.clipboard.writeText(roomId)}
             startIcon={<FileCopyIcon />}
           >
             copy
@@ -52,7 +63,7 @@ export const StartExitBtn: React.FC<Props> = ({ isAdmin, link, roomId }) => {
             Start
           </Button>
         ) : null}
-        <Button variant="outlined" color="secondary">
+        <Button variant="outlined" color="secondary" onClick={handleExit}>
           Exit
         </Button>
       </div>

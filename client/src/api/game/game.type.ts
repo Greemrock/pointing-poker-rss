@@ -3,8 +3,8 @@ export type payloadCardChoice = {
   roomId: string;
   cardNumber: number;
 };
-export type payloadEndRound = {
-  issueId: string;
+export type payloadStartEndRound = {
+  currentId: string;
   roomId: string;
 };
 

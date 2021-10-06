@@ -1,8 +1,8 @@
 export const removeZeros = (
-  array: string[],
-  array2: number[]
+  labelArray: string[],
+  numberArray: number[]
 ): [string[], number[]] => {
-  const textArray = array.filter((el, i) => array2[i] !== 0 && el);
-  const valueArray = array2.filter((el) => el !== 0);
+  const textArray = labelArray.filter((el, i) => numberArray[i] !== 0 && el);
+  const valueArray = numberArray.filter((el) => el !== 0);
   return [textArray, valueArray];
 };

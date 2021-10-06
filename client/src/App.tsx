@@ -63,7 +63,7 @@ export const App: React.FC = () => {
                       )}
                     </Route>
                     <Route exact path="/lobby">
-                      <LobbyPage link={appState.currentPlayer.roomId} />
+                      <LobbyPage />
                     </Route>
                     <Route exact path="/game">
                       {appState.isAuth ? (
