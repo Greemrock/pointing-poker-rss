@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize';
 import {
   Column,
   DataType,
@@ -5,13 +6,17 @@ import {
   Table,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
+import { OverallResult } from 'src/overallResults/overallResult.model';
+import { UserResult } from 'src/userResults/userResult.model';
 import { Room } from '../rooms/room.model';
 
 interface IssueCreationAttributes {
   title: string;
   link: string;
   priority: string;
+  overall: number[];
 }
 
 @Table({ tableName: 'issues' })
@@ -44,16 +49,17 @@ export class Issue extends Model<Issue, IssueCreationAttributes> {
   priority: string;
   @Column({
     type: DataType.BOOLEAN,
+    defaultValue: false,
     unique: false,
     allowNull: false,
   })
   isDone: boolean;
+
   @Column({
-    type: DataType.INTEGER,
-    unique: false,
-    allowNull: true,
+    type: DataType.ARRAY(DataType.INTEGER),
+    defaultValue: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   })
-  currentId: number;
+  overall: number[];
 
   @ForeignKey(() => Room)
   @Column({
@@ -63,4 +69,10 @@ export class Issue extends Model<Issue, IssueCreationAttributes> {
 
   @BelongsTo(() => Room)
   room: Room;
+
+  @HasMany(() => UserResult)
+  userResults: UserResult[];
+
+  // @HasMany(() => OverallResult)
+  // overallResults: OverallResult[];
 }

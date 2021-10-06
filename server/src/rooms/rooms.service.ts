@@ -29,11 +29,11 @@ export class RoomsService {
     return room;
   }
 
-  async updateRoom(id: number, dto: UpdateRoomDto) {
+  async updateRoom(id: string, dto: UpdateRoomDto) {
     await this.roomRepository.update(dto, {
       where: { id: id },
     });
-    const room = await this.roomRepository.findByPk(id);
+    const room = await this.roomRepository.findByPk(dto.id);
     return room;
   }
 

@@ -25,6 +25,13 @@ export class Room extends Model<Room, RoomCreationAttributes> {
   })
   roomName: string;
 
+  @Column({
+    type: DataType.UUID,
+    unique: false,
+    allowNull: true,
+  })
+  currentIssueId: string;
+
   @HasMany(() => User)
   users: User[];
 
