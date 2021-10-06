@@ -1,5 +1,4 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { lightGreen } from '@material-ui/core/colors';
 import { SPACE_XL, SPACE_XS, SPACE_XXS } from '../../../Shared/cssConstants';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField/TextField';
@@ -32,7 +31,6 @@ export const useStyles = makeStyles(() => ({
   },
   welcomeStartHeading: {
     fontWeight: 700,
-    color: lightGreen[500],
   },
   welcomeStartButton: {
     padding: SPACE_XS,
