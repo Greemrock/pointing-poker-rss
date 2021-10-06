@@ -11,8 +11,7 @@ import {
   handleResetTimerSubmit,
   handleStartTimerSubmit,
 } from '../../api/game';
-import { ScoreContext, IssueContext, UsersContext } from '../../context';
-import { IsSelectedCardActionCreator } from '../../reducers/score';
+import { IssueContext, UsersContext } from '../../context';
 
 type Props = {
   secondsRemaining: number;

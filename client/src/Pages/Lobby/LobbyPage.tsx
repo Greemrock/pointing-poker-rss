@@ -42,7 +42,7 @@ export const LobbyPage: React.FC = () => {
       <Container maxWidth="lg" className={classes.container}>
         <div className={classes.nameGame}>
           <Typography variant="h6" align="center">
-            Meeting room
+            Lobby page
           </Typography>
         </div>
         <StartExitBtn />

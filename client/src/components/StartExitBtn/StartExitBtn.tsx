@@ -5,7 +5,7 @@ import { useStartExitGameStyles } from './StartExitBtn.styled';
 import { handleSendSettings } from '../../api/settings/settings.request';
 import { handleStartGameSubmit } from '../../api/playersRequests';
 import { handleLeaveRoom } from '../../api/game';
-import { UsersContext, SettingsContext } from '../../context';
+import { UsersContext, SettingsContext, IssueContext } from '../../context';
 import { AuthActionCreator } from '../../reducers/users';
 
 export const StartExitBtn: React.FC = () => {
@@ -16,9 +16,14 @@ export const StartExitBtn: React.FC = () => {
   const {
     appState: {
       currentPlayer: { isAdmin, roomId },
+      players,
     },
     dispatch,
   } = useContext(UsersContext);
+
+  const {
+    issueState: { issues },
+  } = useContext(IssueContext);
 
   const classes = useStartExitGameStyles({ isAdmin });
 
@@ -59,7 +64,12 @@ export const StartExitBtn: React.FC = () => {
       ) : null}
       <div className={classes.container}>
         {isAdmin ? (
-          <Button variant="contained" color="primary" onClick={handleStartGame}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleStartGame}
+            disabled={players.length < 2 && issues.length === 0}
+          >
             Start
           </Button>
         ) : null}
