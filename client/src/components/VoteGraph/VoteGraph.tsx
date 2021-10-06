@@ -7,21 +7,36 @@ import { cardsArrays, Place } from '../../Shared';
 import { ScoreContext, SettingsContext } from '../../context';
 import { getOverallVoite } from '../../Util/getOveralVote';
 import { removeZeros } from '../../Util/removeZeros';
+import { IssueContext } from '../../context/issue.context';
+import { IssueType } from '../../reducers/issue/issue.type';
 
 type Props = {
   view?: Place.lobby;
+  isGame: boolean;
+  issueId?: string;
 };
 
-export const VoteGraph: React.FC<Props> = ({ view }) => {
+export const VoteGraph: React.FC<Props> = ({ view, isGame, issueId }) => {
   const classes = useVoteGraphStyled();
+
   const {
     scoreState: { voteArray },
   } = useContext(ScoreContext);
 
   const {
-    settingsState: { currentSets },
+    issueState: { issues },
+  } = useContext(IssueContext);
+
+  const {
+    settingsState: {
+      currentSets: { deck },
+    },
   } = useContext(SettingsContext);
 
+  const typeCard = cardsArrays[deck];
+  const usersVoteArray = isGame
+    ? voteArray
+    : issues.find((el: IssueType) => el.id === issueId)?.overall;
   return (
     <div className={classes.root}>
       {view && (
@@ -32,13 +47,12 @@ export const VoteGraph: React.FC<Props> = ({ view }) => {
       <div className={classes.graph}>
         <Doughnut
           data={dataForGraph(
-            removeZeros(cardsArrays[currentSets.deck], voteArray),
-            voteArray
+            ...removeZeros(typeCard, usersVoteArray as number[])
           )}
         />
       </div>
       <Typography variant="h4" align="center" className={classes.overallResult}>
-        {cardsArrays.tshirts[getOverallVoite(voteArray)]}
+        {typeCard[getOverallVoite(usersVoteArray as number[])]}
       </Typography>
     </div>
   );

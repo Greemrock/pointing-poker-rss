@@ -127,7 +127,7 @@ export const MeetingRoomPage: React.FC = () => {
           />
           <Container className={classes.middleBlock}>
             <IssueContainer view={Issue.game} />
-            {isRoundEnded && isResultExist && <VoteGraph />}
+            {isRoundEnded && isResultExist && <VoteGraph isGame={true} />}
           </Container>
           {!currentPlayer.observer && !isRoundEnded && (
             <Container className={classes.cardsContainer}>

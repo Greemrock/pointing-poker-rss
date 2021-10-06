@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { Button, Container, Typography } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react';
+import { Container, Typography, Button } from '@material-ui/core';
 import { ScorePlayers } from '../../components/ScorePlayers';
 import { useResultPageStyles } from './ResultPage.styles';
 import { IssueCard } from '../../components/Issue/IssueCard';
 import { IssueContext, UsersContext } from '../../context';
 import { VoteGraph } from '../../components/VoteGraph';
+import { handleGetIssueSubmit } from '../../api/issue';
 import { Redirect } from 'react-router-dom';
 
 export const ResultPage: React.FC = () => {
@@ -12,8 +13,15 @@ export const ResultPage: React.FC = () => {
 
   const { issueState } = useContext(IssueContext);
   const {
-    appState: { isAuth },
+    appState: {
+      currentPlayer: { roomId },
+      isAuth,
+    },
   } = useContext(UsersContext);
+
+  useEffect(() => {
+    handleGetIssueSubmit(roomId);
+  }, []);
 
   return (
     <>
@@ -39,7 +47,7 @@ export const ResultPage: React.FC = () => {
                       roomId={roomId}
                       createdAt={createdAt}
                     />
-                    <VoteGraph />
+                    <VoteGraph issueId={id} isGame={false} />
                   </div>
                 );
               }

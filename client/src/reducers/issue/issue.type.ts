@@ -19,6 +19,7 @@ export type IssueType = {
   title: string;
   isDone: boolean;
   roomId: string;
+  overall: number[];
 };
 
 export type IssueStateType = {

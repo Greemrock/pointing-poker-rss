@@ -10,6 +10,7 @@ export const initialScoreState: ScoreType = {
   results: [],
   isWaitingResults: false,
   voteArray: [],
+  wholeGameResults: [],
   isSelectedCard: true,
 };
 
@@ -61,6 +62,11 @@ export const scoreReducer = (
       return {
         ...state,
         voteArray: action.payload,
+      };
+    case ScoreActionType.SET_WHOLE_GAME_RESULTS:
+      return {
+        ...state,
+        wholeGameResults: action.payload,
       };
     case ScoreActionType.IS_SELECTED_CARD:
       return {

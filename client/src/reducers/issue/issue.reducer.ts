@@ -18,6 +18,7 @@ export const initialIssueState: IssueStateType = {
     isDone: false,
     roomId: '',
     createdAt: '',
+    overall: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
   currentId: 'd',
   currentIdNumber: 0,
