@@ -7,7 +7,7 @@ export const useStyles = makeStyles(() => ({
   },
   boxBlock: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   adminCardBlock: {

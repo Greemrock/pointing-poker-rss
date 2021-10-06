@@ -4,5 +4,6 @@ export const useCardContainerStyled = makeStyles(() => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 }));

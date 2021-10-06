@@ -10,6 +10,8 @@ import { Redirect } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { getOverallVoite } from '../../Util/getOveralVote';
 import { cardsArrays } from '../../Shared';
+import { handleLeaveRoom } from '../../api/game';
+import { AuthActionCreator } from '../../reducers/users';
 
 export const ResultPage: React.FC = () => {
   const classes = useResultPageStyles();
@@ -29,6 +31,7 @@ export const ResultPage: React.FC = () => {
       currentPlayer: { roomId },
       isAuth,
     },
+    dispatch,
   } = useContext(UsersContext);
 
   const createArrayResults = () => {
@@ -47,6 +50,10 @@ export const ResultPage: React.FC = () => {
     ...createArrayResults(),
   ];
 
+  const handleExit = () => {
+    dispatch(AuthActionCreator(false));
+  };
+
   useEffect(() => {
     handleGetIssueSubmit(roomId);
   }, []);
@@ -58,7 +65,7 @@ export const ResultPage: React.FC = () => {
         <div className={classes.wrapper}>
           <div className={classes.nameGame}>
             <Typography variant="h6" align="center">
-              Meeting room
+              Results
             </Typography>
           </div>
           <Container className={classes.container} maxWidth="md">
@@ -81,6 +88,14 @@ export const ResultPage: React.FC = () => {
               }
             )}
           </Container>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.download}
+            onClick={handleExit}
+          >
+            Exit
+          </Button>
           <Button
             variant="contained"
             color="primary"

@@ -43,16 +43,12 @@ export const GameTimer: React.FC<Props> = ({
     issueState: { currentId },
   } = useContext(IssueContext);
 
-  const { scoreDispatch } = useContext(ScoreContext);
-
   const handleStart = () => {
-    handleStartTimerSubmit(roomId);
-    // scoreDispatch(IsSelectedCardActionCreator(false));
+    handleStartTimerSubmit({ roomId, currentId });
   };
 
   const handleReset = () => {
     handleResetTimerSubmit(roomId);
-    // scoreDispatch(IsSelectedCardActionCreator(false));
   };
 
   useInterval(
@@ -62,7 +58,7 @@ export const GameTimer: React.FC<Props> = ({
       } else {
         setStatusStarted(TimerStatus.STOPPED);
         setIsRoundEnded(true);
-        handleEndRoundSubmit({ roomId, issueId: currentId });
+        handleEndRoundSubmit({ roomId, currentId });
       }
     },
     statusStarted === TimerStatus.STARTED ? 1000 : null

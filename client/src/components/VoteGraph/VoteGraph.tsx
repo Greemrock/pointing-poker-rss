@@ -38,6 +38,7 @@ export const VoteGraph: React.FC<Props> = ({ view, isGame, issueId }) => {
   const usersVoteArray = isGame
     ? voteArray
     : issues.find((el: IssueType) => el.id === issueId)?.overall;
+
   return (
     <div className={classes.root}>
       {view && (

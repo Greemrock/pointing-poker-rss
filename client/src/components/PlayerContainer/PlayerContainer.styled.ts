@@ -12,6 +12,5 @@ export const usePlayerContainerStyles = makeStyles({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
   },
 });

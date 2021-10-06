@@ -1,28 +1,33 @@
 import React, { useContext } from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, Container, Typography } from '@material-ui/core';
 import { useStyles } from './AdminBlock.styles';
 import { PlayerCard } from '../PlayerCard/PlayerCard';
 import { UsersContext } from '../../context';
-import { Player } from '../../reducers/users';
+import { AuthActionCreator, Player } from '../../reducers/users';
+import { handleLeaveRoom } from '../../api/game';
 
 export const AdminBlock: React.FC = () => {
   const classes = useStyles();
-  const { appState } = useContext(UsersContext);
+  const {
+    appState: { currentPlayer, players },
+    dispatch,
+  } = useContext(UsersContext);
 
   const handleStopGame = () => {
-    console.log('Stop game');
+    handleLeaveRoom(currentPlayer.roomId);
+    dispatch(AuthActionCreator(false));
   };
 
-  const admin = appState.players.find((el: Player) => el.isAdmin)!;
+  const admin = players.find((el: Player) => el.isAdmin)!;
 
   return (
-    <Box className={classes.mainBlock}>
+    <Container className={classes.mainBlock}>
       <Box className={classes.boxBlock}>
         <div>
           <Typography>Game admin</Typography>
           <PlayerCard
             {...admin}
-            playerId={appState.currentPlayer.id}
+            playerId={currentPlayer.id}
             isDisabled={false}
             removeUser={null}
           />
@@ -33,9 +38,9 @@ export const AdminBlock: React.FC = () => {
           variant="outlined"
           color="primary"
         >
-          {appState.currentPlayer.isAdmin ? 'Stop Game' : 'Exit'}
+          {currentPlayer.isAdmin ? 'Stop Game' : 'Exit'}
         </Button>
       </Box>
-    </Box>
+    </Container>
   );
 };

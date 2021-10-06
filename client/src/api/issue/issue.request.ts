@@ -22,6 +22,10 @@ export const handleGetIssueSubmit = (payload: string): void => {
   socket.emit('getIssues', payload);
 };
 
+export const handleGetIssuesGameSubmit = (payload: string): void => {
+  socket.emit('getIssuesGame', payload);
+};
+
 export const handleSendCurrentIssueIdSubmit = (
   payload: payloadIssueId
 ): void => {

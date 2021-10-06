@@ -1,11 +1,11 @@
 import { socket } from '../playersRequests';
 import {
   payloadCardChoice,
-  payloadEndRound,
+  payloadStartEndRound,
   payloadUserVoteResult,
 } from './game.type';
 
-export const handleStartTimerSubmit = (payload: string): void => {
+export const handleStartTimerSubmit = (payload: payloadStartEndRound): void => {
   socket.emit('startTimer', payload);
 };
 
@@ -27,7 +27,7 @@ export const handleMyCardChoiceSubmit = (
   socket.emit('userVote', payload);
 };
 
-export const handleEndRoundSubmit = (payload: payloadEndRound): void => {
+export const handleEndRoundSubmit = (payload: payloadStartEndRound): void => {
   socket.emit('roundEnd', payload);
 };
 

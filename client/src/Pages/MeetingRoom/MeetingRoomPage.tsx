@@ -27,7 +27,7 @@ import {
   UpdateScoreActionCreator,
 } from '../../reducers/score';
 import { handleEndGameSubmit } from '../../api/game';
-import { EndGameActionCreator } from '../../reducers/users';
+import { AuthActionCreator, EndGameActionCreator } from '../../reducers/users';
 import { VoteGraph } from '../../components/VoteGraph';
 import { ReloadSetsActionCreator } from '../../reducers/settings';
 
@@ -49,21 +49,30 @@ export const MeetingRoomPage: React.FC = () => {
     issueDispatch,
   } = useContext(IssueContext);
 
-  const { scoreState, scoreDispatch } = useContext(ScoreContext);
+  const {
+    scoreState: { results },
+    scoreDispatch,
+  } = useContext(ScoreContext);
 
   const [isRoundEnded, setIsRoundEnded] = useState(true);
 
-  const isResultExist = scoreState.results.length;
+  const isResultExist = results.length !== 0 && results[0].issueId !== '';
 
   const endGame = () => {
     handleEndGameSubmit(currentPlayer.roomId);
   };
 
   useEffect(() => {
+    socket.off('adminLeft');
+    socket.on('adminLeft', () => {
+      dispatch(AuthActionCreator(false));
+    });
+  });
+
+  useEffect(() => {
     socket.off('returnSettings');
     socket.on('returnSettings', (settings) => {
       settingsDispatch(ReloadSetsActionCreator(settings));
-      console.log(currentSets);
     });
   }, []);
 
@@ -73,7 +82,7 @@ export const MeetingRoomPage: React.FC = () => {
     socket.on('allIssues', (data, currentIssueId) => {
       issueDispatch(UpdateIssueActionCreator(data));
       issueDispatch(SetCurrentIssueIdActionCreator(currentIssueId));
-      if (scoreState.results.length === 0)
+      if (results.length === 0)
         scoreDispatch(SetDefaultScoreActionCreator(players));
     });
   }, []);

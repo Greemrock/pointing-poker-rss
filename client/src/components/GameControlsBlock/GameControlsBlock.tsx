@@ -115,7 +115,7 @@ export const GameControlsBlock: React.FC<Props> = ({
   });
 
   return (
-    <Container className={classes.root} maxWidth="md">
+    <Container className={classes.root} maxWidth="lg">
       {isTimerNeeded ? (
         <GameTimer
           setIsRoundEnded={setIsRoundEnded}

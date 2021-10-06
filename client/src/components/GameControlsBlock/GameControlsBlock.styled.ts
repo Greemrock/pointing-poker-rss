@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 export const useStartExitGameStyles = makeStyles({
   root: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: SPACE_MD,
     marginBottom: SPACE_MD,
